@@ -1,7 +1,7 @@
 require 'sidekiq/web'
 
 Rbo::Application.routes.draw do
-  resources :movies
+  resources :movies, only: [:index, :show]
 
   mount Sidekiq::Web => '/sidekiq'
 
