@@ -3,7 +3,7 @@ class Movie < ActiveRecord::Base
   validates :title, uniqueness: true
 
   def meta_score
-    if (self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score)
+    if (self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score && self.rotten_critics_score > 0 && self.rotten_audience_score > 0)
       return ((self.imdb_rating.to_f*10 + self.rotten_critics_score.to_f + self.rotten_audience_score.to_f) / 3).round
     else
       return 0

@@ -1,28 +1,37 @@
-== README
+HBIZZLE
+=======
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Hbizzle is a discovery tool for HBO Go.  The goal of the project is to make easier to find quality content as quickly and intuitively as possible.
 
-Things you may want to cover:
+INSTALL
+-------
 
-* Ruby version
+After installing ruby 2.0.0, rails 4 and Redis, follow the instructions below.
 
-* System dependencies
+Clone the git repository to your local system
+```bash
+git clone git@github.com:tylerdavis/hbizzle.git    
+```
 
-* Configuration
+Install the project dependencies    
+```
+bundle install    
+```
 
-* Database creation
+Setup your database.yml and run the initial migrations    
+```
+rake db:migrate    
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+In order to run the population task, you'll need to get your own rotten tomato api key
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Run your initial population task    
+```
+rake update_listing    
+```
+
+
+##Dependencies
+* Redis
+
