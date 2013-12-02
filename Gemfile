@@ -12,12 +12,10 @@ gem 'pg'
 gem 'rottentomatoes'
 gem 'sass-rails', '~> 4.0.0'
 gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
-
-group :development do
-  gem 'sinatra', '>= 1.3.0', :require => nil
-end
+gem 'unicorn'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
