@@ -21,7 +21,7 @@
 
     <tbody>
       <tr ng-repeat="movie in movies | orderBy:predicate:reverse">
-        <td><strong><a href="http://www.hbogo.com/#movies/video&assetID={{ movie.hbo_id }}?videoMode=embeddedVideo" target="_blank">{{ movie.title }}</a></strong></td>
+        <td><strong><a href="{{ movie.hbo_link }}" target="_blank">{{ movie.title }}</a></strong></td>
         <td><img src="{{ movie.image }}" alt="" height="100"></td>
         <td>{{ movie.summary }}</td>
         <td>{{ movie.year }}</td>
