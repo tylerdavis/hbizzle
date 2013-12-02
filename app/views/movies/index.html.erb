@@ -1,0 +1,39 @@
+<div ng-app="controllers.index" ng-controller="IndexCtrl">
+  
+  <h1>Now Playing on HBO Go</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th><a href="" ng-click="predicate = 'title'; reverse=!reverse">Title</a></th>
+        <th>Image</th>
+        <th>Summary</th>
+        <th><a href="" ng-click="predicate = 'year'; reverse=!reverse">Year</a></th>
+        <th>IMDB</th>
+        <th><a href="" ng-click="predicate = 'rating'; reverse=!reverse">Rating</a></th>
+        <th><a href="" ng-click="predicate = 'imdb_rating'; reverse=!reverse">IMDB Rating</a></th>
+        <th><a href="" ng-click="predicate = 'rotten_critics_score'; reverse=!reverse">Rotten Critics</a></th>
+        <th><a href="" ng-click="predicate = 'rotten_audience_score'; reverse=!reverse">Rotten Audience</a></th>
+        <th><a href="" ng-click="predicate = 'meta_score'; reverse=!reverse">Meta Score</a></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="movie in movies | orderBy:predicate:reverse">
+        <td><strong><a href="http://www.hbogo.com/#movies/video&assetID={{ movie.hbo_id }}?videoMode=embeddedVideo">{{ movie.title }}</a></strong></td>
+        <td><img src="{{ movie.image }}" alt="" height="100"></td>
+        <td>{{ movie.summary }}</td>
+        <td>{{ movie.year }}</td>
+        <td><a href="{{ movie.imdb_link }}">IMDB</a></td>
+        <td>{{ movie.rating }}</td>
+        <td>{{ movie.imdb_rating }}</td>
+        <td>{{ movie.rotten_critics_score }}</td>
+        <td>{{ movie.rotten_audience_score }}</td>
+        <td>{{ movie.meta_score }}</td>
+        <td><a href="{{ movie.url }}">Show</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
