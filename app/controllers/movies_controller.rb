@@ -5,7 +5,7 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.order(sort_column + " " + sort_direction + " NULLS LAST")
+    @movies = Movie.where("expire >= ?", Time.now).order(sort_column + " " + sort_direction + " NULLS LAST")
   end
 
   # GET /movies/1
