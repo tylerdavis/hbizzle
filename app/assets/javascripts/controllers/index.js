@@ -1,5 +1,5 @@
-angular.module('controllers.index', ['factories.movie']);
-angular.module('controllers.index').controller('IndexCtrl', ['Movie', '$scope', function (Movie, $scope) {
-  $scope.movies = Movie.list();
+angular.module('controllers.index', []);
+angular.module('controllers.index').controller('IndexCtrl', ['$scope', function ($scope) {
+  $scope.movies = window.movies;
   $scope.predicate = '-imdb_rating';
 }]);
