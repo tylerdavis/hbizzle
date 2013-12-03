@@ -2,6 +2,7 @@ require 'sidekiq/web'
 
 Rbo::Application.routes.draw do
   resources :movies, only: [:index, :show]
+  post '/play' => 'movies#play'
 
   mount Sidekiq::Web => '/sidekiq'
 

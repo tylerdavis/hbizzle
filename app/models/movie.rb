@@ -2,6 +2,10 @@ class Movie < ActiveRecord::Base
 
   validates :title, uniqueness: true
 
+  def hbo_link
+    return "http://www.hbogo.com/#movies/video&assetID=" + self.hbo_id + "?videoMode=embeddedVideo"
+  end
+
   def meta_score
     if (self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score)
       return ((self.imdb_rating.to_f*10 + self.rotten_critics_score.to_f + self.rotten_audience_score.to_f) / 3).round
@@ -10,8 +14,8 @@ class Movie < ActiveRecord::Base
     end
   end
 
-  def hbo_link
-    return "http://www.hbogo.com/#movies/video&assetID=" + self.hbo_id + "?videoMode=embeddedVideo"
+  def play
+    self.plays += 1
   end
 
   def self.get_ratings

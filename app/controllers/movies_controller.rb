@@ -1,5 +1,6 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token
+  before_action :set_movie, only: [:show, :edit, :update, :destroy, :play]
   helper_method :sort_column, :sort_direction
 
   # GET /movies
@@ -38,6 +39,15 @@ class MoviesController < ApplicationController
     end
   end
 
+  def play
+    @movie.play
+    if @movie.save
+      render json: {}, status: :ok
+    else
+      render json: @movie.errors, status: :unprocessable_entity
+    end
+  end
+
   # PATCH/PUT /movies/1
   # PATCH/PUT /movies/1.json
   def update
@@ -65,12 +75,12 @@ class MoviesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
-      @movie = Movie.find(params[:id])
+      @movie = Movie.where(hbo_id: params[:hbo_id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
-      params.require(:movie).permit(:title, :summary, :year, :imdb_link, :image, :rating)
+      params.require(:movie).permit(:title, :summary, :year, :imdb_link, :image, :rating, :hbo_id)
     end
 
     # Sortable
