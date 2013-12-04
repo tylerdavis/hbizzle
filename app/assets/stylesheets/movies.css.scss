@@ -200,3 +200,8 @@
        -o-transition-duration: 0s;
           transition-duration: 0s;
 }
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
