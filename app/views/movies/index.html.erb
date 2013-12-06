@@ -1,8 +1,8 @@
-<div ng-app="controllers.index" ng-controller="IndexCtrl" class="container">
+<div ng-app="controllers.index" ng-controller="IndexCtrl">
   
   <h1>Now Playing on Hbizzle</h1>
 
-  <!-- <table class="table">
+  <table class="table">
     <thead>
       <tr>
         <th><a href="" ng-click="predicate = 'title'; reverse=!reverse">Title</a></th>
@@ -20,8 +20,8 @@
 
     <tbody ng-cloak>
       <tr ng-repeat="movie in movies | orderBy:predicate:reverse">
-        <td><strong><a href="" ng-click="play(movie, $event)">{{ movie.title }}</a></strong></td>
-        <td><img src="{{ movie.image }}" alt="" height="100"></td>
+        <td><strong><a href="{{ movie.hbo_link }}" target="_blank">{{ movie.title }}</a></strong></td>
+        <td><img ng-src="{{ movie.image }}" alt="" height="100"></td>
         <td>{{ movie.summary }}</td>
         <td>{{ movie.year }}</td>
         <td><a href="{{ movie.imdb_link }}" target="_blank">IMDB</a></td>
@@ -32,66 +32,10 @@
         <td>{{ movie.meta_score }}</td>
       </tr>
     </tbody>
-  </table> -->
-
-  <a href="#title" class="sort">Sort By Title</a>
-  <a href="#meta_score" class="sort">Sort By Hbizzle!</a>
-
-  <div id="movies">
-    <% @movies.each do |movie| %>
-      <div class="movie">
-        <div class="front">
-          <div class="image" style="background-image:url('<%= movie.image %>')"></div>
-          <div class="meta-score"><%= movie.meta_score %></div>
-          <div class="title"><%= movie.title %></div>
-        </div>
-        <div class="back">
-          <div class="image" style="background-image:url('<%= movie.image %>')"></div>
-          <div class="title"><%= movie.title %></div>
-          <p class="summary"><%= movie.summary %></p>
-          <a class="play" href="<%= movie.hbo_link %>" target="_blank">Play</a>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  </table>
 
   <script>
-    $('#movies').isotope({
-      itemSelector : '.movie',
-      masonry: {
-        columnWidth: 190,
-        gutterWidth: 10
-      },
-      getSortData : {
-        meta_score : function ($elem) {
-          return parseInt($elem.find('.meta-score').text());
-        },
-        title : function ($elem) {
-          return $elem.find('.title').text();
-        }
-      }
-    });
-    
-    $('.sort').click(function () {
-      var sortName = $(this).attr('href').slice(1);
-      var sortAscending = (sortName === 'title') ? true : false;
-      $('#movies').isotope({ sortBy : sortName, sortAscending : sortAscending });
-      return false;
-    });
-
-    $('.movie').click(function () {
-      $(this).toggleClass('flip').promise().done(function () {
-        $('#movies').isotope( 'reLayout');
-      });
-    });
-
-    $(function () {
-      $('#movies').fadeIn(100, function () {
-        $('#movies').isotope( 'reLayout');
-      });
-    });
-
+    window.movies = <%= raw @movies.to_json(except: [:expire, :hbo_id, :created_at, :updated_at], methods: [:hbo_link, :meta_score]) %>;
   </script>
-
 
 </div>
