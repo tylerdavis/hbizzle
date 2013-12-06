@@ -1,7 +1,7 @@
 desc "This task is called by the Heroku scheduler to update the movie listing"
-task :update_listing => :environment do
+task :fetch => :environment do
   puts "Updating movies..."
-  Movie.get_ratings
-  Movie.update_rotten
+  Movie.connection
+  Movie.fetch_update
   puts "done."
 end

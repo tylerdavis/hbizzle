@@ -11,10 +11,10 @@
         <th><a href="" ng-click="predicate = 'year'; reverse=!reverse">Year</a></th>
         <th>IMDB</th>
         <th><a href="" ng-click="predicate = 'rating'; reverse=!reverse">Rating</a></th>
+        <th><a href="" ng-click="predicate = 'meta_score'; reverse=!reverse">Hbizzle Score</a></th>
         <th><a href="" ng-click="predicate = 'imdb_rating'; reverse=!reverse">IMDB Rating</a></th>
         <th><a href="" ng-click="predicate = 'rotten_critics_score'; reverse=!reverse">Rotten Critics</a></th>
         <th><a href="" ng-click="predicate = 'rotten_audience_score'; reverse=!reverse">Rotten Audience</a></th>
-        <th><a href="" ng-click="predicate = 'meta_score'; reverse=!reverse">Hbizzle Score</a></th>
       </tr>
     </thead>
 
@@ -26,10 +26,10 @@
         <td>{{ movie.year }}</td>
         <td><a href="{{ movie.imdb_link }}" target="_blank">IMDB</a></td>
         <td>{{ movie.rating }}</td>
+        <td>{{ movie.meta_score }}</td>
         <td>{{ movie.imdb_rating }}</td>
         <td>{{ movie.rotten_critics_score }}</td>
         <td>{{ movie.rotten_audience_score }}</td>
-        <td>{{ movie.meta_score }}</td>
       </tr>
     </tbody>
   </table>
