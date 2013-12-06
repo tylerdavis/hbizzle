@@ -21,7 +21,7 @@
     <tbody ng-cloak>
       <tr ng-repeat="movie in movies | orderBy:predicate:reverse">
         <td><strong><a href="{{ movie.hbo_link }}" target="_blank">{{ movie.title }}</a></strong></td>
-        <td><img src="{{ movie.image }}" alt="" height="100"></td>
+        <td><img ng-src="{{ movie.image }}" alt="" height="100"></td>
         <td>{{ movie.summary }}</td>
         <td>{{ movie.year }}</td>
         <td><a href="{{ movie.imdb_link }}" target="_blank">IMDB</a></td>
