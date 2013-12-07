@@ -1,12 +1,14 @@
 #[HBIZZLE](http://www.hbizzle.com)
 
-Hbizzle is a discovery tool for HBO Go.  The goal of the project is to make it easier to find quality content as quickly and intuitively as possible.
+<p><strong>The problem:</strong> A certain online media streaming service, which we will affectionately call human body oder, has an awful user experience.  It's hard enough to find movies at all, let alone good movies.</p>
+<p><strong>The solution:</strong> Hbizzle.</p>
+<p>Hbizzle is a learning system.  Aggregating all the critical scores of each film from human body oder, the hbizzle score is a combination of these scores and <em>soon</em> a weighted representation of total plays derived from hbizzle.com.  That means, that if you use Hbizzle as an interface to human body odor, it's going to learn from you, and recommend you better movies over time.  Pretty sweet, right?</p>
+<p>A side note: I'm currently tracking plays, but have not implemented them in the hbizzle algorithm yet.  I need more data, so that means, get watching!</p>
+<p>For any feedback, feel free to drop an issue or tweet <a href="twitter.com/tylermdavis">me</a>.  Thanks for your interest!</p>
 
 ##Requirements
 
 Ruby 2.0.0, Rails 4~, Redis and Sidekiq
-
-###If you've got something you'd like to add or change, feel free to submit a pull request.  Thank you for your interest!
 
 ##TODOs
 
