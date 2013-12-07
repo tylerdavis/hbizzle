@@ -1,5 +1,12 @@
+$lightGrey: #F5F5F5;
 $grey: #DDDDDD;
 $greyBorder: 1px solid $grey;
+
+.movies {
+  .summary {
+    font-size: 1em;
+  }
+}
 
 .pagination {
   ul {
@@ -18,7 +25,7 @@ $greyBorder: 1px solid $grey;
       }
       &.disabled, &.active {
         cursor: default;
-        background-color: #F5F5F5;
+        background-color: $lightGrey;
       }
       &.disabled a, &.active a {
         color: $grey;
