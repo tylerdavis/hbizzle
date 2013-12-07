@@ -33,4 +33,8 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+group :production do
+  gem 'rack-cache', :require => 'rack/cache'
+end
+
 ruby "2.0.0"
