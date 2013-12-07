@@ -37,9 +37,10 @@ class Movie < ActiveRecord::Base
           title: feature['title'],
           rating: feature['ratingResponse']['ratingDisplay'],
           summary: feature['summary'],
-          year: feature['year'].to_s,
-          image: feature['imageResponses'].first['resourceUrl']
+          year: feature['year'].to_s
         )
+        poster_url = feature['imageResponses'].first['resourceUrl']
+        @movie.poster = Dragonfly.app.fetch_url(poster_url).thumb('180x')
         @movie.save
       end
     end
