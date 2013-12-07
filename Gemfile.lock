@@ -45,6 +45,9 @@ GEM
     deepopenstruct (0.1.2)
     erubis (2.7.0)
     execjs (2.0.2)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     hike (1.2.3)
     i18n (0.6.5)
     imdb (0.8.0)
@@ -162,6 +165,7 @@ PLATFORMS
 DEPENDENCIES
   angularjs-rails
   bootstrap-sass (~> 3.0.2.0)
+  figaro
   imdb
   jbuilder (~> 1.2)
   jquery-rails

@@ -61,7 +61,6 @@ p.kurt {
         white-space: normal;
       }
       td.score {
-        text-align: center;
         vertical-align: middle;
       }
     }
@@ -89,7 +88,6 @@ table.movies th {
 }
 /* line 10, ../sass/_sortable.sass */
 table.movies th, table.movies td {
-  text-align: center;
   padding: 10px;
   vertical-align: middle !important;
   border-top: none !important;

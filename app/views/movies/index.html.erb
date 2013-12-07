@@ -11,18 +11,18 @@
     </div>
   </div>
 
+  <div class="clearfix"></div>
+
   <div class="small-head visible-xs">
-    <div class="">
+    <div>
       <h1 class="text-center title">Hbizzle</h1>
       <p class="text-center kurt"><em>It's Go Time.</em></p>
     </div>
 
-    <div class="form-group col-lg-4 col-md-4 col-sm-6">
+    <div>
       <input type="text" class="form-control" ng-model="textFilter" placeholder="Search for a movie!">
     </div>
   </div>
-
-  <div class="clearfix"></div>
 
   <div class="movies-container">
 
@@ -30,16 +30,16 @@
       <table class="table movies">
         <thead>
           <tr>
-            <th data-sorted="{{predicate == '-title'}}" data-sorted-direction="{{sortDirection()}}" class="title" width="12%"><a href="" ng-click="predicate = '-title'; reverse=!reverse">Title</a></th>
-            <th data-sortable="false" class="hidden-xs">Image</th>
-            <th data-sortable="false" class="hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
-            <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-xs"><a href="" ng-click="predicate = '-year'; reverse=!reverse">Year</a></th>
-            <th data-sortable="false" class="hidden-xs">IMDB</th>
-            <th data-sorted="{{predicate == '-rating'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-xs"><a href="" ng-click="predicate = '-rating'; reverse=!reverse">Rating</a></th>
+            <th data-sorted="{{predicate == '-title'}}" data-sorted-direction="{{sortDirection()}}" class="text-center title" width="12%"><a href="" ng-click="predicate = '-title'; reverse=!reverse">Title</a></th>
+            <th data-sortable="false" class="text-center image hidden-xs">Image</th>
+            <th data-sortable="false" class="text-center summary hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
+            <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs"><a href="" ng-click="predicate = '-year'; reverse=!reverse">Year</a></th>
+            <th data-sortable="false" class="text-center hidden-xs">IMDB</th>
+            <th data-sorted="{{predicate == '-rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs"><a href="" ng-click="predicate = '-rating'; reverse=!reverse">Rating</a></th>
             <th data-sorted="{{predicate == '-meta_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center"><a href="" ng-click="predicate = '-meta_score'; reverse=!reverse">Hbizzle</a></th>
-            <th data-sorted="{{predicate == '-imdb_rating'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-imdb_rating'; reverse=!reverse">IMDB</a></th>
-            <th data-sorted="{{predicate == '-rotten_critics_score'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-rotten_critics_score'; reverse=!reverse">R/C</a></th>
-            <th data-sorted="{{predicate == '-rotten_audience_score'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-rotten_audience_score'; reverse=!reverse">R/A</a></th>
+            <th data-sorted="{{predicate == '-imdb_rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-imdb_rating'; reverse=!reverse">IMDB</a></th>
+            <th data-sorted="{{predicate == '-rotten_critics_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-rotten_critics_score'; reverse=!reverse">R/C</a></th>
+            <th data-sorted="{{predicate == '-rotten_audience_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-rotten_audience_score'; reverse=!reverse">R/A</a></th>
           </tr>
         </thead>
 
@@ -48,13 +48,13 @@
             <td class="title"><a href="{{ movie.hbo_link }}" target="_blank">{{ movie.title }}</a></td>
             <td class="hidden-xs" width="14%"><img ng-src="{{ movie.image }}" style="width:100%;"></td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
-            <td class="hidden-xs">{{ movie.year }}</td>
-            <td class="hidden-xs"><a href="{{ movie.imdb_link }}" target="_blank">IMDB</a></td>
-            <td class="hidden-xs">{{ movie.rating }}</td>
-            <td class="score">{{ movie.meta_score }}</td>
-            <td class="hidden-md hidden-sm hidden-xs">{{ movie.imdb_rating }}</td>
-            <td class="hidden-md hidden-sm hidden-xs">{{ movie.rotten_critics_score }}</td>
-            <td class="hidden-md hidden-sm hidden-xs">{{ movie.rotten_audience_score }}</td>
+            <td class="text-center hidden-xs">{{ movie.year }}</td>
+            <td class="text-center hidden-xs"><a href="{{ movie.imdb_link }}" target="_blank">IMDB</a></td>
+            <td class="text-center hidden-xs">{{ movie.rating }}</td>
+            <td class="text-center score">{{ movie.meta_score }}</td>
+            <td class="text-center hidden-md hidden-sm hidden-xs">{{ movie.imdb_rating }}</td>
+            <td class="text-center hidden-md hidden-sm hidden-xs">{{ movie.rotten_critics_score }}</td>
+            <td class="text-center hidden-md hidden-sm hidden-xs">{{ movie.rotten_audience_score }}</td>
           </tr>
         </tbody>
       </table>

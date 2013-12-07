@@ -1,3 +1,3 @@
 include RottenTomatoes
 
-Rotten.api_key = "6rwee4yu3e5suqe4w9suxkec"
+Rotten.api_key = ENV['ROTTEN_API_KEY']
