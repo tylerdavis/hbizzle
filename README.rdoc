@@ -1,37 +1,14 @@
 HBIZZLE
 =======
 
-Hbizzle is a discovery tool for HBO Go.  The goal of the project is to make easier to find quality content as quickly and intuitively as possible.
+Hbizzle is a discovery tool for HBO Go.  The goal of the project is to make it easier to find quality content as quickly and intuitively as possible.
 
-INSTALL
--------
+Requirements
+------------
+Ruby 2.0.0, Rails 4~, Redis and Sidekiq
 
-After installing ruby 2.0.0, rails 4 and Redis, follow the instructions below.
+###If you've got something you'd like to add or change, feel free to submit a pull request.  Thank you for your interest!
 
-Clone the git repository to your local system
-```bash
-git clone git@github.com:tylerdavis/hbizzle.git    
-```
-
-Install the project dependencies    
-```
-bundle install    
-```
-
-Setup your database.yml and run the initial migrations    
-```
-rake db:migrate    
-```
-
-In order to run the population task, you'll need to get your own rotten tomato api key
-
-
-Run your initial population task    
-```
-rake update_listing    
-```
-
-
-##Dependencies
-* Redis
-
+TODOs
+-----
+Optimize the imdb search algorithm (It's a terrible hack. I feel bad about it.)
