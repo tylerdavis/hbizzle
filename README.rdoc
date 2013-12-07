@@ -1,4 +1,4 @@
-#HBIZZLE
+#[HBIZZLE](http://www.hbizzle.com)
 
 Hbizzle is a discovery tool for HBO Go.  The goal of the project is to make it easier to find quality content as quickly and intuitively as possible.
 
