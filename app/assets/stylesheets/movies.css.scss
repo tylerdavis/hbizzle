@@ -13,6 +13,14 @@ p.kurt {
   margin-bottom: 30px;
 }
 
+.help {
+  position: relative;
+  bottom: 2px;
+  left: 2px;
+  opacity: 0.4;
+  width: 12px;
+}
+
 .movies-container {
   border-radius: 6px;
   border: $greyBorder;

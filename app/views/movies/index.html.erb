@@ -14,7 +14,7 @@
       <table class="table movies">
         <thead>
           <tr>
-            <th class="title" width="12%"><a href="" ng-click="predicate = 'title'; reverse=!reverse">Title</a></th>
+            <th data-sorted="{{predicate == '-title'}}" data-sorted-direction="{{sortDirection()}}" class="title" width="12%"><a href="" ng-click="predicate = '-title'; reverse=!reverse">Title</a></th>
             <th data-sortable="false" class="hidden-xs">Image</th>
             <th data-sortable="false" class="hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
             <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-xs"><a href="" ng-click="predicate = '-year'; reverse=!reverse">Year</a></th>
@@ -52,8 +52,16 @@
     <pager class="visible-xs col-centered" total-items="(movies | filter:textFilter).length" page="currentPage"></pager>
   </div>
 
+  <hr />
+
+  <footer>
+    <p>Made with ambivalence by <a href="http://www.twitter.com/tylermdavis">@tylermdavis</a>.</p>
+    <p>Code available at <a href="https://github.com/tylerdavis/hbizzle"></a>, licensed under <a href="http://opensource.org/licenses/MIT">MIT</a>.</p>
+  </footer>
+
   <script>
     window.movies = <%= raw @movies.to_json(except: [:expire, :hbo_id, :created_at, :updated_at], methods: [:hbo_link, :meta_score]) %>;
   </script>
+
 
 </div>
