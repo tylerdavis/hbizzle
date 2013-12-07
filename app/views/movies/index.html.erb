@@ -8,8 +8,8 @@
     </div>
   </div>
 
-  <div class="table-responsive">
-    <table class="table table-striped movies">
+  <div class="table-responsive" ng-show="(movies | filter:textFilter).length">
+    <table class="table movies">
       <thead>
         <tr>
           <th><a href="" ng-click="predicate = 'title'; reverse=!reverse">Title</a></th>
@@ -24,7 +24,6 @@
           <th class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = 'rotten_audience_score'; reverse=!reverse">Rotten Audience</a></th>
         </tr>
       </thead>
-
 
       <tbody ng-cloak>
         <tr ng-repeat="movie in (filteredMovies = (movies | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize | filter:textFilter))">
@@ -43,8 +42,12 @@
     </table>
   </div>
 
-  <pagination class="hidden-xs col-centered text-center" total-items="(movies | filter:textFilter).length" page="currentPage" items-per-page="pageSize" max-size="showPagesNum" boundary-links="true" rotate="false" first-text="&laquo;" last-text="&raquo;" class="pagination"></pagination>
-  <pager class="visible-xs col-centered" total-items="(movies | filter:textFilter).length" page="currentPage"></pager>
+  <p class="text-center" ng-hide="(movies | filter:textFilter).length">I couldn't find anything that matched your query, Bizzle.</p>
+
+  <div class="page text-center">
+    <pagination class="hidden-xs" total-items="(movies | filter:textFilter).length" page="currentPage" items-per-page="pageSize" max-size="showPagesNum" boundary-links="true" rotate="false" first-text="&laquo;" last-text="&raquo;" class="pagination"></pagination>
+    <pager class="visible-xs col-centered" total-items="(movies | filter:textFilter).length" page="currentPage"></pager>
+  </div>
 
   <script>
     window.movies = <%= raw @movies.to_json(except: [:expire, :hbo_id, :created_at, :updated_at], methods: [:hbo_link, :meta_score]) %>;

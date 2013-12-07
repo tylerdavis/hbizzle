@@ -5,7 +5,7 @@ angular.module('controllers.index').controller('IndexCtrl', ['$http', '$scope', 
   $scope.predicate = '-meta_score';
   $scope.currentPage = 1;
   $scope.pageSize = 10;
-  $scope.showPagesNum = 5;
+  $scope.showPagesNum = 8;
 
   $scope.play = function (movie, event) {
     event.preventDefault();

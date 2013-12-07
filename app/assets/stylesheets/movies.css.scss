@@ -2,10 +2,25 @@ $lightGrey: #F5F5F5;
 $grey: #DDDDDD;
 $greyBorder: 1px solid $grey;
 
-.movies {
+table.movies {
+  border: 1px solid #323232;
+  border-color: #323232;
   .summary {
     font-size: 1em;
   }
+  tr {
+    background-color: #252525;
+    th {
+      border-color: #323232;
+    }
+    td {
+      border-color: #323232;
+    }
+  }
+}
+
+ul {
+  padding-left: 0;
 }
 
 .pagination {
