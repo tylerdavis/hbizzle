@@ -29,6 +29,27 @@ p.kurt {
   }
 }
 
+@media (max-width: 767px) {
+  .table-responsive {
+    border: none;
+    margin-bottom: 0;
+    table.movies {
+      th.title, td.title {
+        width: 66%;
+        text-overflow: ellipsis;
+        white-space: normal;
+      }
+      td.score {
+        text-align: center;
+        vertical-align: middle;
+      }
+    }
+  }
+  ul {
+    padding-left: 0;
+  }
+}
+
 /* line 2, ../sass/_sortable.sass */
 table.movies {
   border-collapse: collapse;
