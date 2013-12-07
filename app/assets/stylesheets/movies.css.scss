@@ -131,6 +131,11 @@ table.movies {
   background: white;
   // border-radius: 0 0 6px 6px;
 }
+
+table.movies td.title {
+  padding-left: 20px;
+  padding-right: 20px;
+}
 /* line 11, ../sass/movies.sass */
 table.movies thead th {
   // background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eeeeee));
