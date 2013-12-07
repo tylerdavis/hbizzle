@@ -7,6 +7,10 @@ angular.module('controllers.index').controller('IndexCtrl', ['$http', '$scope', 
   $scope.pageSize = 10;
   $scope.showPagesNum = 8;
 
+  $scope.sortDirection = function () {
+    return ($scope.reverse) ? 'ascending' : 'descending';
+  }
+
   $scope.play = function (movie, event) {
     event.preventDefault();
     var data = { hbo_id : movie.hbo_id };

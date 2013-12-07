@@ -13,23 +13,23 @@
       <table class="table movies">
         <thead>
           <tr>
-            <th><a href="" ng-click="predicate = 'title'; reverse=!reverse">Title</a></th>
+            <th width="12%"><a href="" ng-click="predicate = 'title'; reverse=!reverse">Title</a></th>
             <th class="hidden-xs">Image</th>
-            <th class="hidden-md hidden-sm hidden-xs">Summary</th>
-            <th class="hidden-xs"><a href="" ng-click="predicate = 'year'; reverse=!reverse">Year</a></th>
+            <th class="hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
+            <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-xs"><a href="" ng-click="predicate = '-year'; reverse=!reverse">Year</a></th>
             <th class="hidden-xs">IMDB</th>
-            <th class="hidden-xs"><a href="" ng-click="predicate = 'rating'; reverse=!reverse">Rating</a></th>
-            <th><a href="" ng-click="predicate = 'meta_score'; reverse=!reverse">Hbizzle <span class="hidden-xs">Score</span></a></th>
-            <th class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = 'imdb_rating'; reverse=!reverse">IMDB Rating</a></th>
-            <th class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = 'rotten_critics_score'; reverse=!reverse">Rotten Critics</a></th>
-            <th class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = 'rotten_audience_score'; reverse=!reverse">Rotten Audience</a></th>
+            <th data-sorted="{{predicate == '-rating'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-xs"><a href="" ng-click="predicate = '-rating'; reverse=!reverse">Rating</a></th>
+            <th data-sorted="{{predicate == '-meta_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center"><a href="" ng-click="predicate = '-meta_score'; reverse=!reverse">Hbizzle</a></th>
+            <th data-sorted="{{predicate == '-imdb_rating'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-imdb_rating'; reverse=!reverse">IMDB</a></th>
+            <th data-sorted="{{predicate == '-rotten_critics_score'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-rotten_critics_score'; reverse=!reverse">R/C</a></th>
+            <th data-sorted="{{predicate == '-rotten_audience_score'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-rotten_audience_score'; reverse=!reverse">R/A</a></th>
           </tr>
         </thead>
 
         <tbody ng-cloak>
           <tr ng-repeat="movie in (filteredMovies = (movies | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize | filter:textFilter))">
             <td><strong><a href="{{ movie.hbo_link }}" target="_blank">{{ movie.title }}</a></strong></td>
-            <td class="hidden-xs"><img ng-src="{{ movie.image }}" alt="" height="60"></td>
+            <td class="hidden-xs" width="14%"><img ng-src="{{ movie.image }}" style="width:100%;"></td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
             <td class="hidden-xs">{{ movie.year }}</td>
             <td class="hidden-xs"><a href="{{ movie.imdb_link }}" target="_blank">IMDB</a></td>
@@ -45,10 +45,10 @@
 
     <p class="text-center" ng-hide="(movies | filter:textFilter).length">I couldn't find anything that matched your query, Bizzle.</p>
 
-    <div class="page text-center">
-      <pagination class="hidden-xs" total-items="(movies | filter:textFilter).length" page="currentPage" items-per-page="pageSize" max-size="showPagesNum" boundary-links="true" rotate="false" first-text="&laquo;" last-text="&raquo;" class="pagination"></pagination>
-      <pager class="visible-xs col-centered" total-items="(movies | filter:textFilter).length" page="currentPage"></pager>
-    </div>
+  </div>
+  <div class="page text-center">
+    <pagination class="hidden-xs" total-items="(movies | filter:textFilter).length" page="currentPage" items-per-page="pageSize" max-size="showPagesNum" boundary-links="true" rotate="false" first-text="&laquo;" last-text="&raquo;" class="pagination"></pagination>
+    <pager class="visible-xs col-centered" total-items="(movies | filter:textFilter).length" page="currentPage"></pager>
   </div>
 
   <script>
