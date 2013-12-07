@@ -1,14 +1,28 @@
 <div class="container" ng-app="controllers.index" ng-controller="IndexCtrl">
   
-  <h1 class="text-center title">Hbizzle</h1>
-  <p class="text-center kurt"><em>It's Go Time.</em></p>
+  <div class="big-head hidden-xs">
+    <div class="headline">
+      <h1 class="text-left title">Hbizzle</h1>
+      <p class="text-left kurt"><em>It's Go Time.</em></p>
+    </div>
+
+    <div class="form-group search-input col-lg-4 col-md-4 col-sm-6">
+      <input type="text" class="form-control" ng-model="textFilter" placeholder="Search for a movie!">
+    </div>
+  </div>
+
+  <div class="small-head visible-xs">
+    <div class="">
+      <h1 class="text-center title">Hbizzle</h1>
+      <p class="text-center kurt"><em>It's Go Time.</em></p>
+    </div>
+
+    <div class="form-group col-lg-4 col-md-4 col-sm-6">
+      <input type="text" class="form-control" ng-model="textFilter" placeholder="Search for a movie!">
+    </div>
+  </div>
 
   <div class="movies-container">
-    <div class="header">
-      <div class="form-group col-lg-4 col-md-6 col-sm-8 col-centered">
-        <input type="text" class="form-control" ng-model="textFilter" placeholder="Search for a movie!">
-      </div>
-    </div>
 
     <div class="table-responsive table-wrapper" ng-show="(movies | filter:textFilter).length">
       <table class="table movies">
@@ -54,9 +68,9 @@
 
   <hr />
 
-  <footer>
+  <footer class="text-center">
     <p>Made with ambivalence by <a href="http://www.twitter.com/tylermdavis">@tylermdavis</a>.</p>
-    <p>Code available at <a href="https://github.com/tylerdavis/hbizzle"></a>, licensed under <a href="http://opensource.org/licenses/MIT">MIT</a>.</p>
+    <p>Code available on <a href="https://github.com/tylerdavis/hbizzle">Github</a>, licensed under <a href="http://opensource.org/licenses/MIT">MIT</a>.</p>
   </footer>
 
   <script>

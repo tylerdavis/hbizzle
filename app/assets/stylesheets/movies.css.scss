@@ -2,6 +2,11 @@ $lightGrey: #F5F5F5;
 $grey: #DDDDDD;
 $greyBorder: 1px solid $grey;
 
+.headline {
+  float: left;
+  margin-left: 30px;
+}
+
 h1.title {
   font-size: 5em;
   margin-bottom: 0;
@@ -21,13 +26,18 @@ p.kurt {
   width: 12px;
 }
 
+.search-input {
+  float: right;
+  margin: 55px 20px 0 0;
+}
+
 .movies-container {
-  border-radius: 6px;
-  border: $greyBorder;
+  // border-radius: 6px;
+  // border: $greyBorder;
   margin: 0 0 20px 0;
   .header {
-    border-radius: 6px 6px 0 0;
-    border-bottom: $greyBorder;
+    // border-radius: 6px 6px 0 0;
+    // border-bottom: $greyBorder;
     background-color: $lightGrey;
     padding: 10px;
   }
@@ -39,9 +49,12 @@ p.kurt {
 
 @media (max-width: 767px) {
   .table-responsive {
-    border: none;
+    // border: none;
     margin-bottom: 0;
     table.movies {
+      thead {
+        border-bottom: none;
+      }
       th.title, td.title {
         width: 66%;
         text-overflow: ellipsis;
@@ -54,15 +67,19 @@ p.kurt {
     }
   }
   ul {
-    padding-left: 0;
+    padding: 0 20px;
   }
 }
 
 /* line 2, ../sass/_sortable.sass */
 table.movies {
-  border-collapse: collapse;
-  border-spacing: 0;
+  // border-collapse: collapse;
+  // border-spacing: 0;
   margin-bottom: 0;
+}
+
+table.movies > thead > tr > th {
+  border-bottom: none;
 }
 /* line 6, ../sass/_sortable.sass */
 table.movies th {
@@ -72,8 +89,10 @@ table.movies th {
 }
 /* line 10, ../sass/_sortable.sass */
 table.movies th, table.movies td {
-  text-align: left;
+  text-align: center;
   padding: 10px;
+  vertical-align: middle !important;
+  border-top: none !important;
 }
 /* line 14, ../sass/_sortable.sass */
 table.movies th:not([data-sortable="false"]) {
@@ -120,21 +139,21 @@ table.movies th[data-sorted-direction="ascending"]:after {
 table.movies {
   color: #333333;
   background: white;
-  border-radius: 0 0 6px 6px;
+  // border-radius: 0 0 6px 6px;
 }
 /* line 11, ../sass/movies.sass */
 table.movies thead th {
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eeeeee));
-  background-image: -webkit-linear-gradient(#ffffff, #eeeeee);
-  background-image: -moz-linear-gradient(#ffffff, #eeeeee);
-  background-image: -o-linear-gradient(#ffffff, #eeeeee);
-  background-image: linear-gradient(#ffffff, #eeeeee);
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #e0e0e0;
+  // background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eeeeee));
+  // background-image: -webkit-linear-gradient(#ffffff, #eeeeee);
+  // background-image: -moz-linear-gradient(#ffffff, #eeeeee);
+  // background-image: -o-linear-gradient(#ffffff, #eeeeee);
+  // background-image: linear-gradient(#ffffff, #eeeeee);
+  background-color: #EEEEEE;
+  // border-bottom: 1px solid #e0e0e0;
 }
 /* line 16, ../sass/movies.sass */
 table.movies tbody td {
-  border-top: 1px solid #e0e0e0;
+  // border-top: 1px solid #e0e0e0;
 }
 /* line 19, ../sass/movies.sass */
 table.movies tbody > tr:nth-child(odd) > td {
@@ -147,7 +166,7 @@ table.movies th[data-sorted="true"] {
   box-shadow: inset 1px 0 #bce8f1, inset -1px 0 #bce8f1;
   color: #3a87ad;
   background: #d9edf7;
-  border-bottom-color: #bce8f1;
+  // border-bottom-color: #bce8f1;
 }
 /* line 28, ../sass/movies.sass */
 table.movies th[data-sorted="true"]:first-child {
@@ -163,9 +182,9 @@ table.movies th[data-sorted="true"]:last-child {
 }
 /* line 34, ../sass/movies.sass */
 table.movies th[data-sorted="true"][data-sorted-direction="descending"]:after {
-  border-top-color: #3a87ad;
+  // border-top-color: #3a87ad;
 }
 /* line 37, ../sass/movies.sass */
 table.movies th[data-sorted="true"][data-sorted-direction="ascending"]:after {
-  border-bottom-color: #3a87ad;
+  // border-bottom-color: #3a87ad;
 }
