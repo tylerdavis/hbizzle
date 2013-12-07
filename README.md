@@ -4,7 +4,7 @@
 <p><strong>The solution:</strong> Hbizzle.</p>
 <p>Hbizzle is a learning system.  Aggregating all the critical scores of each film from human body oder, the hbizzle score is a combination of these scores and <em>soon</em> a weighted representation of total plays derived from hbizzle.com.  That means, that if you use Hbizzle as an interface to human body odor, it's going to learn from you, and recommend you better movies over time.  Pretty sweet, right?</p>
 <p>A side note: I'm currently tracking plays, but have not implemented them in the hbizzle algorithm yet.  I need more data, so that means, get watching!</p>
-<p>For any feedback, feel free to drop an issue or tweet <a href="twitter.com/tylermdavis">me</a>.  Thanks for your interest!</p>
+<p>For any feedback, feel free to drop an issue or tweet <a href="http://www.twitter.com/tylermdavis">me</a>.  Thanks for your interest!</p>
 
 ##Requirements
 

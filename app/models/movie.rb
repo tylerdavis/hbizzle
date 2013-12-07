@@ -22,6 +22,7 @@ class Movie < ActiveRecord::Base
 
   def self.fetch_update
     self.fetch_listing
+    self.update_poster
     self.fetch_imdb_info
     self.fetch_rotten_info
   end
@@ -62,7 +63,7 @@ class Movie < ActiveRecord::Base
   end
 
   def update_poster
-    if !self.poster && self.image != nil
+    unless self.poster && self.image == nil
       PosterWorker.perform_async(self.id)
     end
   end
