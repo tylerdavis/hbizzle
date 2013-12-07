@@ -2,6 +2,8 @@ class Movie < ActiveRecord::Base
 
   validates :title, uniqueness: true
 
+  dragonfly_accessor :poster
+
   def hbo_link
     return "http://www.hbogo.com/#movies/video&assetID=" + self.hbo_id + "?videoMode=embeddedVideo"
   end
@@ -52,6 +54,17 @@ class Movie < ActiveRecord::Base
   def self.fetch_rotten_info
     Movie.where('rotten_critics_score = ? OR rotten_critics_score = ? OR rotten_audience_score = ? OR rotten_audience_score = ?', '-1', nil, '-1', nil) do |movie|
       RottenWorker.perform_async(movie.id)
+    end
+  end
+
+  def image_url
+    self.poster.remote_url
+  end
+
+  def update_poster
+    if !self.poster && self.image != nil
+      self.poster = Dragonfly.app.fetch_url(self.image).thumb('180x')
+      self.save
     end
   end
 

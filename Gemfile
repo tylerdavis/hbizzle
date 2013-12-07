@@ -4,6 +4,8 @@ gem 'rails', '4.0.1'
 
 gem 'angularjs-rails'
 gem 'bootstrap-sass', '~> 3.0.2.0'
+gem 'dragonfly', "~>1.0.0"
+gem 'dragonfly-s3_data_store'
 gem 'imdb'
 gem 'jbuilder', '~> 1.2'
 gem 'jquery-rails'
@@ -19,6 +21,7 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
+gem 'unf'
 gem 'unicorn'
 
 group :development do

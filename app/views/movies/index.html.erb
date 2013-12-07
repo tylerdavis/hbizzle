@@ -46,7 +46,7 @@
         <tbody ng-cloak>
           <tr ng-repeat="movie in (filteredMovies = (movies | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize | filter:textFilter))">
             <td class="title"><a href="{{ movie.hbo_link }}" target="_blank">{{ movie.title }}</a></td>
-            <td class="hidden-xs" width="14%"><img ng-src="{{ movie.image }}" style="width:100%;"></td>
+            <td class="hidden-xs" width="14%"><img ng-src="{{ movie.image_url }}" style="width:100%;"></td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
             <td class="text-center hidden-xs">{{ movie.year }}</td>
             <td class="text-center hidden-xs"><a href="{{ movie.imdb_link }}" target="_blank">IMDB</a></td>
@@ -76,7 +76,7 @@
   </footer>
 
   <script>
-    window.movies = <%= raw @movies.to_json(except: [:expire, :hbo_id, :created_at, :updated_at], methods: [:hbo_link, :meta_score]) %>;
+    window.movies = <%= raw @movies.to_json(except: [:expire, :hbo_id, :created_at, :updated_at], methods: [:hbo_link, :meta_score, :image_url]) %>;
   </script>
 
 
