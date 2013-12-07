@@ -1,8 +1,11 @@
-angular.module('controllers.index', []);
+angular.module('controllers.index', ['filters.start_from', 'ui.bootstrap', 'ui.bootstrap.tpls']);
 angular.module('controllers.index').controller('IndexCtrl', ['$http', '$scope', '$location', function ($http, $scope, $location) {
   
   $scope.movies = window.movies;
   $scope.predicate = '-meta_score';
+  $scope.currentPage = 1;
+  $scope.pageSize = 10;
+  $scope.showPagesNum = 5;
 
   $scope.play = function (movie, event) {
     event.preventDefault();

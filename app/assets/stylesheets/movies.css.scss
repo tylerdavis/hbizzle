@@ -1,207 +1,31 @@
-// Place all the styles related to the movies controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$grey: #DDDDDD;
+$greyBorder: 1px solid $grey;
 
-/**** Isotope Filtering ****/
-
-#movies {
-  display: none;
-}
-
-.movie {
-  -webkit-transition: height, 0.8s;
-     -moz-transition: height, 0.8s;
-      -ms-transition: height, 0.8s;
-       -o-transition: height, 0.8s;
-          transition: height, 0.8s;
-    -webkit-transition: width, 0.8s;
-       -moz-transition: width, 0.8s;
-        -ms-transition: width, 0.8s;
-         -o-transition: width, 0.8s;
-            transition: width, 0.8s;
-}
-
-.isotope-item {
-  z-index: 2;
-  width: 180px;
-  height: 175px;
-  background: #F1F1F1;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  -webkit-perspective: 600px;
-  -moz-perspective: 600px;
-  border-radius: 0 20px 0 0;
-
-  &.flip {
-    width: 370px;
-    height: 360px;
-    border-radius: 20px 0 0 0;
-  }
-
-  .image {
-    width: 100%;
-    height: 7.6em;
-    background-size: cover;
-    border-radius: 0 20px 0 0;
-  }
-
-  .front {
-    position: absolute;
-    top: 0;
-    z-index: 900;
-    width: inherit;
-    height: inherit;
-    text-align: center;
-    -webkit-transform: rotateX(0deg) rotateY(0deg);
-    -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
-    -moz-transform: rotateX(0deg) rotateY(0deg);
-    -moz-transform-style: preserve-3d;
-    -moz-backface-visibility: hidden;
-    /* -- transition is the magic sauce for animation -- */
-    -o-transition: all .4s ease-in-out;
-    -ms-transition: all .4s ease-in-out;
-    -moz-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-  }
-
-  &.flip .front {
-    z-index: 900;
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-  }
-
-  .back {
-    position: absolute;
-    top: 0;
-    z-index: 800;
-    width: inherit;
-    height: inherit;
-    -webkit-transform: rotateY(-180deg);
-    -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
- 
-    -moz-transform: rotateY(-180deg);
-    -moz-transform-style: preserve-3d;
-    -moz-backface-visibility: hidden;
-    /* -- transition is the magic sauce for animation -- */
-    -o-transition: all .4s ease-in-out;
-    -ms-transition: all .4s ease-in-out;
-    -moz-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-
-    .image {
-      -moz-transform: scaleX(-1);
-      -o-transform: scaleX(-1);
-      -webkit-transform: scaleX(-1);
-      transform: scaleX(-1);
-      filter: FlipH;
-      -ms-filter: "FlipH";
-      opacity: 0.7;
-      border-radius: 0 20px 0 0;
-    }
-
-    .title {
-      color: #fff;
-      top: 10px;
-      text-transform: uppercase;
-      font-size: 1.6em;
-      line-height: 1.1em;
-    }
-
-    .summary {
-      top: 7.8em;
-      padding: 10px;
-    }
-
-    .play {
-      bottom: 10px;
-      right: 10px;
+.pagination {
+  ul {
+    li {
+      display: inline-block;
+      padding: 5px 12px;
+      border: $greyBorder;
+      border-right: none;
+      cursor: pointer;
+      &:last-child {
+        border-right: $greyBorder;
+        border-radius: 0 4px 4px 0;
+      }
+      &:first-child {
+        border-radius: 4px 0 0 4px;
+      }
+      &.disabled, &.active {
+        cursor: default;
+        background-color: #F5F5F5;
+      }
+      &.disabled a, &.active a {
+        color: $grey;
+          &:hover {
+            text-decoration: none;
+          }
+      }
     }
   }
-
-  &.flip .back {
-    z-index: 1000;
-    -webkit-transform: rotateX(0deg) rotateY(0deg);
-    -moz-transform: rotateX(0deg) rotateY(0deg);
-  }
-  
-  * {
-    position: absolute;
-    margin: 0;
-  }
-
-  .meta-score {
-    font-size: 1.25em;
-    font-weight: bold;
-    color: #fff;
-    right: 0.5em;
-    top: 0.5em;
-    border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 6px;
-    height: 30px;
-    width: 30px;
-    text-align: center;
-  }
-
-  .title {
-    left: 0.5em;
-    top: 7.8em;
-    font-size: 1.05em;
-    width: 90%;
-  }
-
-}
-
-
-.isotope-hidden.isotope-item {
-  pointer-events: none;
-  z-index: 1;
-}
-
-/**** Isotope CSS3 transitions ****/
-
-.isotope,
-.isotope .isotope-item {
-  -webkit-transition-duration: 0.8s;
-     -moz-transition-duration: 0.8s;
-      -ms-transition-duration: 0.8s;
-       -o-transition-duration: 0.8s;
-          transition-duration: 0.8s;
-}
-
-.isotope {
-  -webkit-transition-property: height, width;
-     -moz-transition-property: height, width;
-      -ms-transition-property: height, width;
-       -o-transition-property: height, width;
-          transition-property: height, width;
-}
-
-.isotope .isotope-item {
-  -webkit-transition-property: -webkit-transform, opacity;
-     -moz-transition-property:    -moz-transform, opacity;
-      -ms-transition-property:     -ms-transform, opacity;
-       -o-transition-property:      -o-transform, opacity;
-          transition-property:         transform, opacity;
-}
-
-/**** disabling Isotope CSS3 transitions ****/
-
-.isotope.no-transition,
-.isotope.no-transition .isotope-item,
-.isotope .isotope-item.no-transition {
-  -webkit-transition-duration: 0s;
-     -moz-transition-duration: 0s;
-      -ms-transition-duration: 0s;
-       -o-transition-duration: 0s;
-          transition-duration: 0s;
-}
-
-.isotope-hidden.isotope-item {
-  pointer-events: none;
-  z-index: 1;
 }
