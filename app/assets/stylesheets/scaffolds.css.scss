@@ -1,12 +1,11 @@
 body {
   background-color: #FAFAFA;
+  font-family: "proxima-nova", "Helvetica Neue", sans-serif;
 }
 
-* {
-}
-
-a {
-  font-weight: bold;
+h1, h2, h3, h4, h5 {
+  font-family: "proxima-nova", "Helvetica Neue", sans-serif;
+  font-weight: 300;
 }
 
 .col-centered{

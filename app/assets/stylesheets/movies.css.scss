@@ -2,6 +2,17 @@ $lightGrey: #F5F5F5;
 $grey: #DDDDDD;
 $greyBorder: 1px solid $grey;
 
+h1.title {
+  font-size: 5em;
+  margin-bottom: 0;
+  color: #4D4D4D;
+}
+
+p.kurt {
+  color: #7E7E7E;
+  margin-bottom: 30px;
+}
+
 .movies-container {
   border-radius: 6px;
   border: $greyBorder;
@@ -12,25 +23,31 @@ $greyBorder: 1px solid $grey;
     background-color: $lightGrey;
     padding: 10px;
   }
+  .no-match {
+    margin: 40px;
+    font-size: 2em;
+  }
 }
 
 /* line 2, ../sass/_sortable.sass */
-table {
+table.movies {
   border-collapse: collapse;
   border-spacing: 0;
+  margin-bottom: 0;
 }
 /* line 6, ../sass/_sortable.sass */
-table th {
+table.movies th {
   vertical-align: bottom;
   font-weight: bold;
+  font-size: 1.1em;
 }
 /* line 10, ../sass/_sortable.sass */
-table th, table td {
+table.movies th, table.movies td {
   text-align: left;
   padding: 10px;
 }
 /* line 14, ../sass/_sortable.sass */
-table th:not([data-sortable="false"]) {
+table.movies th:not([data-sortable="false"]) {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -41,7 +58,7 @@ table th:not([data-sortable="false"]) {
   cursor: pointer;
 }
 /* line 26, ../sass/_sortable.sass */
-table th:after {
+table.movies th:after {
   content: "";
   visibility: hidden;
   display: inline-block;
@@ -56,16 +73,16 @@ table th:after {
   float: right;
 }
 /* line 40, ../sass/_sortable.sass */
-table th[data-sorted="true"]:after {
+table.movies th[data-sorted="true"]:after {
   visibility: visible;
 }
 /* line 43, ../sass/_sortable.sass */
-table th[data-sorted-direction="descending"]:after {
+table.movies th[data-sorted-direction="descending"]:after {
   border-top-color: inherit;
   margin-top: 8px;
 }
 /* line 47, ../sass/_sortable.sass */
-table th[data-sorted-direction="ascending"]:after {
+table.movies th[data-sorted-direction="ascending"]:after {
   border-bottom-color: inherit;
   margin-top: 3px;
 }
@@ -74,6 +91,7 @@ table th[data-sorted-direction="ascending"]:after {
 table.movies {
   color: #333333;
   background: white;
+  border-radius: 0 0 6px 6px;
 }
 /* line 11, ../sass/movies.sass */
 table.movies thead th {

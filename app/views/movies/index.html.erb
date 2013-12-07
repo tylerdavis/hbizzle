@@ -1,6 +1,7 @@
 <div class="container" ng-app="controllers.index" ng-controller="IndexCtrl">
   
-  <h1 class="text-center">Now Playing on Hbizzle</h1>
+  <h1 class="text-center title">Hbizzle</h1>
+  <p class="text-center kurt"><em>It's Go Time.</em></p>
 
   <div class="movies-container">
     <div class="header">
@@ -14,10 +15,10 @@
         <thead>
           <tr>
             <th width="12%"><a href="" ng-click="predicate = 'title'; reverse=!reverse">Title</a></th>
-            <th class="hidden-xs">Image</th>
-            <th class="hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
+            <th data-sortable="false" class="hidden-xs">Image</th>
+            <th data-sortable="false" class="hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
             <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-xs"><a href="" ng-click="predicate = '-year'; reverse=!reverse">Year</a></th>
-            <th class="hidden-xs">IMDB</th>
+            <th data-sortable="false" class="hidden-xs">IMDB</th>
             <th data-sorted="{{predicate == '-rating'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-xs"><a href="" ng-click="predicate = '-rating'; reverse=!reverse">Rating</a></th>
             <th data-sorted="{{predicate == '-meta_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center"><a href="" ng-click="predicate = '-meta_score'; reverse=!reverse">Hbizzle</a></th>
             <th data-sorted="{{predicate == '-imdb_rating'}}" data-sorted-direction="{{sortDirection()}}" class="hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-imdb_rating'; reverse=!reverse">IMDB</a></th>
@@ -28,7 +29,7 @@
 
         <tbody ng-cloak>
           <tr ng-repeat="movie in (filteredMovies = (movies | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize | filter:textFilter))">
-            <td><strong><a href="{{ movie.hbo_link }}" target="_blank">{{ movie.title }}</a></strong></td>
+            <td><a href="{{ movie.hbo_link }}" target="_blank">{{ movie.title }}</a></td>
             <td class="hidden-xs" width="14%"><img ng-src="{{ movie.image }}" style="width:100%;"></td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
             <td class="hidden-xs">{{ movie.year }}</td>
@@ -43,7 +44,7 @@
       </table>
     </div>
 
-    <p class="text-center" ng-hide="(movies | filter:textFilter).length">I couldn't find anything that matched your query, Bizzle.</p>
+    <p class="text-center no-match" ng-hide="(movies | filter:textFilter).length">I couldn't find anything that matched your query, Bizzle.</p>
 
   </div>
   <div class="page text-center">

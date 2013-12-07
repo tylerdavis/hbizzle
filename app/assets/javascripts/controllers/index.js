@@ -4,7 +4,7 @@ angular.module('controllers.index').controller('IndexCtrl', ['$http', '$scope', 
   $scope.movies = window.movies;
   $scope.predicate = '-meta_score';
   $scope.currentPage = 1;
-  $scope.pageSize = 10;
+  $scope.pageSize = 6;
   $scope.showPagesNum = 8;
 
   $scope.sortDirection = function () {
