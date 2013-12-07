@@ -7,10 +7,6 @@ angular.module('controllers.index').controller('IndexCtrl', ['$http', '$scope', 
   $scope.pageSize = 6;
   $scope.showPagesNum = 8;
 
-  $scope.sortDirection = function () {
-    return ($scope.reverse) ? 'ascending' : 'descending';
-  }
-
   $scope.play = function (movie, event) {
     event.preventDefault();
     var data = { hbo_id : movie.hbo_id };
@@ -20,11 +16,15 @@ angular.module('controllers.index').controller('IndexCtrl', ['$http', '$scope', 
       });
   };
 
+  $scope.sortDirection = function () {
+    return ($scope.reverse) ? 'ascending' : 'descending';
+  }
+
   $scope.updatePredicate = function (predicate) {
     if ($scope.predicate === predicate) {
       $scope.reverse = !$scope.reverse
     };
       $scope.predicate = predicate;
+      $scope.currentPage = 1;
   };
-
 }]);
