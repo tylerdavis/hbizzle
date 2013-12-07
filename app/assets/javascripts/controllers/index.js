@@ -20,4 +20,11 @@ angular.module('controllers.index').controller('IndexCtrl', ['$http', '$scope', 
       });
   };
 
+  $scope.updatePredicate = function (predicate) {
+    if ($scope.predicate === predicate) {
+      $scope.reverse = !$scope.reverse
+    };
+      $scope.predicate = predicate;
+  };
+
 }]);

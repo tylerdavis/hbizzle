@@ -30,16 +30,16 @@
       <table class="table movies">
         <thead>
           <tr>
-            <th data-sorted="{{predicate == '-title'}}" data-sorted-direction="{{sortDirection()}}" class="text-center title" width="12%"><a href="" ng-click="predicate = '-title'; reverse=!reverse">Title</a></th>
+            <th data-sorted="{{predicate == '-title'}}" data-sorted-direction="{{sortDirection()}}" class="text-center title" width="12%"><a href="" ng-click="updatePredicate('-title')">Title</a></th>
             <th data-sortable="false" class="text-center image hidden-xs">Image</th>
             <th data-sortable="false" class="text-center summary hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
-            <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs"><a href="" ng-click="predicate = '-year'; reverse=!reverse">Year</a></th>
+            <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs"><a href="" ng-click="updatePredicate('-year')">Year</a></th>
             <th data-sortable="false" class="text-center hidden-xs">IMDB</th>
-            <th data-sorted="{{predicate == '-rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs"><a href="" ng-click="predicate = '-rating'; reverse=!reverse">Rating</a></th>
-            <th data-sorted="{{predicate == '-meta_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center"><a href="" ng-click="predicate = '-meta_score'; reverse=!reverse">Hbizzle</a></th>
-            <th data-sorted="{{predicate == '-imdb_rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-imdb_rating'; reverse=!reverse">IMDB</a></th>
-            <th data-sorted="{{predicate == '-rotten_critics_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-rotten_critics_score'; reverse=!reverse">R/C</a></th>
-            <th data-sorted="{{predicate == '-rotten_audience_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-md hidden-sm hidden-xs"><a href="" ng-click="predicate = '-rotten_audience_score'; reverse=!reverse">R/A</a></th>
+            <th data-sorted="{{predicate == '-rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs"><a href="" ng-click="updatePredicate('-rating')">Rating</a></th>
+            <th data-sorted="{{predicate == '-meta_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center"><a href="" ng-click="updatePredicate('-meta_score')">Hbizzle</a></th>
+            <th data-sorted="{{predicate == '-imdb_rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-md hidden-sm hidden-xs"><a href="" ng-click="updatePredicate('-imdb_rating')">IMDB</a></th>
+            <th data-sorted="{{predicate == '-rotten_critics_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-md hidden-sm hidden-xs"><a href="" ng-click="updatePredicate('-rotten_critics_score')">R/C</a></th>
+            <th data-sorted="{{predicate == '-rotten_audience_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-md hidden-sm hidden-xs"><a href="" ng-click="updatePredicate('-rotten_audience_score')">R/A</a></th>
           </tr>
         </thead>
 
