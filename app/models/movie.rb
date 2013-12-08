@@ -4,8 +4,10 @@ class Movie < ActiveRecord::Base
 
   dragonfly_accessor :poster
 
+  HBO_XML_URL = 'http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'
+
   def hbo_link
-    return "http://www.hbogo.com/#movies/video&assetID=" + self.hbo_id + "?videoMode=embeddedVideo"
+    return "http://www.hbogo.com/#movies/video&assetID=#{self.hbo_id}?videoMode=embeddedVideo"
   end
 
   def meta_score
@@ -28,7 +30,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.fetch_listing
-    xml = Nokogiri::XML(open('http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'))
+    xml = Nokogiri::XML(open(HBO_XML_URL))
     hbo_features = Hash.from_xml(xml.to_s)['response']['body']['productResponses']['featureResponse']
     hbo_features.each do |feature|
       if self.where(title: feature['title']).blank?
@@ -69,7 +71,7 @@ class Movie < ActiveRecord::Base
   end
 
   def update_poster
-    unless self.poster && self.image == nil
+  unless self.poster
       PosterWorker.perform_async(self.id)
     end
   end

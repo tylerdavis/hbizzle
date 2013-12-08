@@ -4,7 +4,9 @@ class PosterWorker
   def perform(id)
     @movie = Movie.find(id)
     @movie.poster = Dragonfly.app.fetch_url(@movie.image).thumb('180x')
-    @movie.save
+    if @movie.save
+      logger.info("PosterWorker - Updated #{@movie.title}")
+    end
   end
 
 end
