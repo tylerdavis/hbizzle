@@ -60,7 +60,9 @@
       </table>
     </div>
 
-    <p class="text-center no-match" ng-cloak ng-hide="(movies | filter:textFilter).length">I couldn't find anything that matched your query, Bizzle.</p>
+    <div id="spin" ng-hide="movies"></div>
+
+    <p class="text-center no-match" ng-cloak ng-hide="(movies | filter:textFilter)">I couldn't find anything that matched your query, Bizzle.</p>
 
   </div>
   <div class="page text-center">
@@ -84,7 +86,7 @@
           <h4 class="modal-title">What is Hbizzle?</h4>
         </div>
         <div class="modal-body">
-          <p><strong>The problem:</strong> A certain online media streaming service, which we will affectionately call human body odor, has an awful user experience.  It's hard enough to find movies at all, let alone good movies.</p>
+          <p><strong>The problem:</strong> A certain online media streaming service, which we will affectionately call human body odor, has an awful user experience.  It stinks.  It's hard enough to find movies at all, let alone good movies.</p>
           <p><strong>The solution:</strong> Hbizzle.</p>
           <p>Hbizzle is a learning system.  Aggregating all the critical scores of each film from human body odor, the hbizzle score is a combination of these scores and <em>soon</em> a weighted representation of total plays derived from hbizzle.com.  That means, if you use Hbizzle as an interface to human body odor, it's going to learn from you, and recommend better movies over time.  Pretty sweet, right?</p>
           <p>A side note: I'm currently tracking plays, but have not implemented them in the hbizzle algorithm yet.  I need more data, so that means, get watching!</p>
@@ -98,7 +100,16 @@
   </div>
 
   <script>
-    window.movies = <%= raw @movies.to_json(except: [:expire, :created_at, :updated_at], methods: [:hbo_link, :meta_score, :image_url]) %>;
+    var spin_opts = {
+      lines: 15, length: 0, width: 18, radius: 53, corners: 1, rotate: 0,
+      direction: 1, color: '#AAAAAA', speed: 1, trail: 60, shadow: false,
+      hwaccel: false, className: 'spinner', zIndex: 2e9, top: 'auto',
+      left: 'auto'
+    };
+    var target = document.getElementById('spin');
+    var spinner = new Spinner(spin_opts).spin(target);
+
+    window.movies = <%= raw @movies.to_json(except: [:id, :expire, :created_at, :updated_at], methods: [:hbo_link, :meta_score, :image_url]) %>;
   </script>
 
 

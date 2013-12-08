@@ -1,10 +1,10 @@
 angular.module('controllers.index', ['filters.start_from', 'ui.bootstrap', 'ui.bootstrap.tpls']);
 angular.module('controllers.index').controller('IndexCtrl', ['$http', '$scope', '$location', function ($http, $scope, $location) {
   
-  $scope.movies = window.movies;
-  $scope.predicate = '-meta_score';
   $scope.currentPage = 1;
+  $scope.movies = window.movies;
   $scope.pageSize = 6;
+  $scope.predicate = '-meta_score';
   $scope.showPagesNum = 8;
 
   $scope.goToCurrentPage = function () {
@@ -14,11 +14,10 @@ angular.module('controllers.index').controller('IndexCtrl', ['$http', '$scope', 
   };
 
   $scope.play = function (movie, event) {
-    var data = { hbo_id : movie.hbo_id };
     $http({
-      url : '/play',
+      data : { hbo_id : movie.hbo_id },
       method : 'POST',
-      data : data
+      url : '/play'
     });
   };
 
@@ -30,7 +29,7 @@ angular.module('controllers.index').controller('IndexCtrl', ['$http', '$scope', 
     if ($scope.predicate === predicate) {
       $scope.reverse = !$scope.reverse
     };
-      $scope.predicate = predicate;
       $scope.currentPage = 1;
+      $scope.predicate = predicate;
   };
 }]);
