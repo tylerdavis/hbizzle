@@ -60,8 +60,6 @@
       </table>
     </div>
 
-    <div id="spin" ng-hide="movies"></div>
-
     <p class="text-center no-match" ng-cloak ng-hide="(movies | filter:textFilter)">I couldn't find anything that matched your query, Bizzle.</p>
 
   </div>
@@ -100,15 +98,6 @@
   </div>
 
   <script>
-    var spin_opts = {
-      lines: 15, length: 0, width: 18, radius: 53, corners: 1, rotate: 0,
-      direction: 1, color: '#AAAAAA', speed: 1, trail: 60, shadow: false,
-      hwaccel: false, className: 'spinner', zIndex: 2e9, top: 'auto',
-      left: 'auto'
-    };
-    var target = document.getElementById('spin');
-    var spinner = new Spinner(spin_opts).spin(target);
-
     window.movies = <%= raw @movies.to_json(except: [:id, :expire, :created_at, :updated_at], methods: [:hbo_link, :meta_score, :image_url]) %>;
   </script>
 
