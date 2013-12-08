@@ -12,7 +12,6 @@ gem 'jquery-rails'
 gem 'nokogiri'
 gem 'newrelic_rpm'
 gem 'pg'
-gem 'rails_12factor', group: :production
 gem 'rails-perftest'
 gem 'ruby-prof'
 gem 'rottentomatoes'
@@ -35,6 +34,7 @@ end
 
 group :production do
   gem 'rack-cache', :require => 'rack/cache'
+  gem 'rails_12factor'
 end
 
 ruby "2.0.0"
