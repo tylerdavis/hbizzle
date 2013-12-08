@@ -1,7 +1,7 @@
 <div class="container" ng-app="controllers.index" ng-controller="IndexCtrl">
   
   <div class="big-head hidden-xs">
-    <div class="headline">
+    <div class="headline" ng-click="goToCurrentPage()">
       <h1 class="text-left title">Hbizzle</h1>
       <p class="text-left kurt"><em>It's Go Time.</em></p>
     </div>
@@ -14,7 +14,7 @@
   <div class="clearfix"></div>
 
   <div class="small-head visible-xs">
-    <div>
+    <div ng-click="goToCurrentPage()">
       <h1 class="text-center title">Hbizzle</h1>
       <p class="text-center kurt"><em>It's Go Time.</em></p>
     </div>
@@ -30,8 +30,8 @@
       <table class="table movies">
         <thead>
           <tr>
-            <th data-sorted="{{predicate == '-title'}}" data-sorted-direction="{{sortDirection()}}" class="text-center title" width="12%"><a href="" ng-click="updatePredicate('-title')">Title</a></th>
-            <th data-sortable="false" class="text-center image hidden-xs">Image</th>
+            <th data-sorted="{{predicate == '-title'}}" data-sorted-direction="{{sortDirection()}}" class="text-left title" width="12%"><a href="" ng-click="updatePredicate('-title')">Title</a></th>
+            <th data-sortable="false" class="text-center image hidden-xs" width="180px">Image</th>
             <th data-sortable="false" class="text-center summary hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
             <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs"><a href="" ng-click="updatePredicate('-year')">Year</a></th>
             <th data-sortable="false" class="text-center hidden-xs">IMDB</th>
@@ -45,8 +45,8 @@
 
         <tbody ng-cloak>
           <tr ng-repeat="movie in (filteredMovies = (movies | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize | filter:textFilter))">
-            <td class="title"><a href="{{ movie.hbo_link }}" target="_blank">{{ movie.title }}</a></td>
-            <td class="hidden-xs text-center"><img ng-src="{{ movie.image_url }}"></td>
+            <td class="title"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a></td>
+            <td class="hidden-xs text-center" width="180px"><img ng-src="{{ movie.image_url }}"></td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
             <td class="text-center hidden-xs">{{ movie.year }}</td>
             <td class="text-center hidden-xs"><a href="{{ movie.imdb_link }}" target="_blank">IMDB</a></td>
@@ -98,7 +98,7 @@
   </div>
 
   <script>
-    window.movies = <%= raw @movies.to_json(except: [:expire, :hbo_id, :created_at, :updated_at], methods: [:hbo_link, :meta_score, :image_url]) %>;
+    window.movies = <%= raw @movies.to_json(except: [:expire, :created_at, :updated_at], methods: [:hbo_link, :meta_score, :image_url]) %>;
   </script>
 
 

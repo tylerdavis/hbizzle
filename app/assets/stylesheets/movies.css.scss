@@ -5,6 +5,7 @@ $greyBorder: 1px solid $grey;
 .headline {
   float: left;
   margin-left: 30px;
+  cursor: pointer;
 }
 
 h1.title {
@@ -24,12 +25,8 @@ p.kurt {
 }
 
 .movies-container {
-  // border-radius: 6px;
-  // border: $greyBorder;
   margin: 0 0 20px 0;
   .header {
-    // border-radius: 6px 6px 0 0;
-    // border-bottom: $greyBorder;
     background-color: $lightGrey;
     padding: 10px;
   }
@@ -41,7 +38,6 @@ p.kurt {
 
 @media (max-width: 767px) {
   .table-responsive {
-    // border: none;
     margin-bottom: 0;
     table.movies {
       thead {
@@ -62,29 +58,36 @@ p.kurt {
   }
 }
 
-/* line 2, ../sass/_sortable.sass */
 table.movies {
-  // border-collapse: collapse;
-  // border-spacing: 0;
   margin-bottom: 0;
 }
 
 table.movies > thead > tr > th {
   border-bottom: none;
 }
-/* line 6, ../sass/_sortable.sass */
+
 table.movies th {
   vertical-align: bottom;
   font-weight: bold;
   font-size: 1.1em;
+  position: relative;
 }
-/* line 10, ../sass/_sortable.sass */
+
+table.movies th.title {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+table.movies th.image {
+  width: 196px;
+}
+
 table.movies th, table.movies td {
   padding: 10px;
   vertical-align: middle !important;
   border-top: none !important;
 }
-/* line 14, ../sass/_sortable.sass */
+
 table.movies th:not([data-sortable="false"]) {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -95,7 +98,7 @@ table.movies th:not([data-sortable="false"]) {
   -webkit-touch-callout: none;
   cursor: pointer;
 }
-/* line 26, ../sass/_sortable.sass */
+
 table.movies th:after {
   content: "";
   visibility: hidden;
@@ -109,77 +112,70 @@ table.movies th:after {
   margin-right: 1px;
   margin-left: 10px;
   float: right;
+  position: absolute;
+  right: 10px;
 }
-/* line 40, ../sass/_sortable.sass */
+
 table.movies th[data-sorted="true"]:after {
   visibility: visible;
 }
-/* line 43, ../sass/_sortable.sass */
+
 table.movies th[data-sorted-direction="descending"]:after {
   border-top-color: inherit;
   margin-top: 8px;
 }
-/* line 47, ../sass/_sortable.sass */
+
 table.movies th[data-sorted-direction="ascending"]:after {
   border-bottom-color: inherit;
   margin-top: 3px;
 }
 
-/* line 6, ../sass/movies.sass */
+
 table.movies {
   color: #333333;
   background: white;
-  // border-radius: 0 0 6px 6px;
+  
 }
 
 table.movies td.title {
   padding-left: 20px;
   padding-right: 20px;
 }
-/* line 11, ../sass/movies.sass */
+
 table.movies thead th {
-  // background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eeeeee));
-  // background-image: -webkit-linear-gradient(#ffffff, #eeeeee);
-  // background-image: -moz-linear-gradient(#ffffff, #eeeeee);
-  // background-image: -o-linear-gradient(#ffffff, #eeeeee);
-  // background-image: linear-gradient(#ffffff, #eeeeee);
   background-color: #EEEEEE;
-  // border-bottom: 1px solid #e0e0e0;
 }
-/* line 16, ../sass/movies.sass */
+
 table.movies tbody td {
-  // border-top: 1px solid #e0e0e0;
 }
-/* line 19, ../sass/movies.sass */
+
 table.movies tbody > tr:nth-child(odd) > td {
   background-color: #f9f9f9;
 }
-/* line 22, ../sass/movies.sass */
+
 table.movies th[data-sorted="true"] {
   -webkit-box-shadow: inset 1px 0 #bce8f1, inset -1px 0 #bce8f1;
   -moz-box-shadow: inset 1px 0 #bce8f1, inset -1px 0 #bce8f1;
   box-shadow: inset 1px 0 #bce8f1, inset -1px 0 #bce8f1;
   color: #3a87ad;
   background: #d9edf7;
-  // border-bottom-color: #bce8f1;
+
 }
-/* line 28, ../sass/movies.sass */
+
 table.movies th[data-sorted="true"]:first-child {
   -webkit-box-shadow: inset -1px 0 #bce8f1;
   -moz-box-shadow: inset -1px 0 #bce8f1;
   box-shadow: inset -1px 0 #bce8f1;
 }
-/* line 31, ../sass/movies.sass */
+
 table.movies th[data-sorted="true"]:last-child {
   -webkit-box-shadow: inset 1px 0 #bce8f1;
   -moz-box-shadow: inset 1px 0 #bce8f1;
   box-shadow: inset 1px 0 #bce8f1;
 }
-/* line 34, ../sass/movies.sass */
+
 table.movies th[data-sorted="true"][data-sorted-direction="descending"]:after {
-  // border-top-color: #3a87ad;
 }
-/* line 37, ../sass/movies.sass */
+
 table.movies th[data-sorted="true"][data-sorted-direction="ascending"]:after {
-  // border-bottom-color: #3a87ad;
 }
