@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require angular
+//= require angular-cookies
 //= require bootstrap/transition
 //= require bootstrap/modal
 //= require_tree .
