@@ -22,7 +22,7 @@ class Movie < ActiveRecord::Base
 
   def self.fetch_update
     self.fetch_listing
-    self.update_poster
+    self.fetch_posters
     self.fetch_imdb_info
     self.fetch_rotten_info
   end
@@ -49,6 +49,12 @@ class Movie < ActiveRecord::Base
   def self.fetch_imdb_info
     Movie.where(imdb_rating: nil || '0.0') do |movie|
       ImdbWorker.perform_async(movie.id)
+    end
+  end
+
+  def self.fetch_posters
+    Movie.where(poster_uid: nil).each do |movie|
+      movie.update_poster
     end
   end
 
