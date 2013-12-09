@@ -53,19 +53,7 @@ p.kurt {
 
 @media (max-width: 767px) {
   .share {
-    width: 100%;
-    bottom: 10px;
-    top: 95%;
-    .fb {
-      position: absolute;
-      left: 36px;
-    top: -5px;
-    }
-    .twitter {
-      right: -10px;
-      position: absolute;
-      top: -5px;
-    }
+    display: none;
   }
   .table-responsive {
     margin-bottom: 0;
