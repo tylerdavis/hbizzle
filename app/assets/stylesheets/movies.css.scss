@@ -2,6 +2,17 @@ $lightGrey: #F5F5F5;
 $grey: #DDDDDD;
 $greyBorder: 1px solid $grey;
 
+
+.twitter-share-button {
+  position: absolute;
+  right: 20px;
+}
+
+.fb-share-button {
+  position: absolute;
+  right: 100px;
+}
+
 .headline {
   float: left;
   margin-left: 30px;
