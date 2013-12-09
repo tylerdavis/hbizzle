@@ -3,14 +3,18 @@ $grey: #DDDDDD;
 $greyBorder: 1px solid $grey;
 
 
-.twitter-share-button {
+.share {
   position: absolute;
-  right: 20px;
-}
-
-.fb-share-button {
-  position: absolute;
-  right: 100px;
+  top: 10px;
+  right: 16px;
+  .twitter, .fb {
+    display: inline-block;
+  }
+  .fb {
+    position: relative;
+    bottom: 6px;
+    right: 10px;
+  }
 }
 
 .headline {
@@ -48,6 +52,21 @@ p.kurt {
 }
 
 @media (max-width: 767px) {
+  .share {
+    width: 100%;
+    bottom: 10px;
+    top: 95%;
+    .fb {
+      position: absolute;
+      left: 36px;
+    top: -5px;
+    }
+    .twitter {
+      right: -10px;
+      position: absolute;
+      top: -5px;
+    }
+  }
   .table-responsive {
     margin-bottom: 0;
     table.movies {
