@@ -1,6 +1,6 @@
 class Movie < ActiveRecord::Base
 
-  attr_accessor :plays_percentile
+  attr_accessor :play_rating, :meta_score
 
   validates :title, uniqueness: true
 
@@ -8,14 +8,14 @@ class Movie < ActiveRecord::Base
 
   HBO_XML_URL = 'http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'
 
-  def view_json
+  def self.current
     @movies = Movie.where("expire >= ?", Time.now).order('plays')
-    @percentile_map = Movie.percentile_map(@movies)
-    @movie_hashes = @movies.collect do |movie|
-      movie.play_percentile = @percentile_map[movie.plays]
-      // @TODO - Finish this shit.
+    @map = Movie.percentile_map(@movies)
+    @movies.each do |movie|
+      movie.set_play_rating(@map)
+      movie.set_meta_score
     end
-    
+    return @movies
   end
 
   def self.percentile_map(movies)
@@ -84,16 +84,27 @@ class Movie < ActiveRecord::Base
     self.poster.remote_url
   end
 
-  def meta_score
+  def play
+    self.plays += 1
+  end
+
+  def set_meta_score
     if (self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score)
-      return ((self.imdb_rating.to_f*10 + self.rotten_critics_score.to_f + self.rotten_audience_score.to_f) / 3).round
+      self.meta_score = (
+        (
+          self.imdb_rating.to_f*10 +
+          self.rotten_critics_score.to_f + 
+          self.rotten_audience_score.to_f +
+          self.play_rating
+        ) / 4
+      ).round
     else
-      return 0
+      self.meta_score = 0
     end
   end
 
-  def play
-    self.plays += 1
+  def set_play_rating(percentile_map)
+    self.play_rating = percentile_map[self.plays]
   end
 
   def update_poster
