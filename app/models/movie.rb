@@ -104,7 +104,7 @@ class Movie < ActiveRecord::Base
           self.rotten_critics_score.to_f + 
           self.rotten_audience_score.to_f +
           self.play_rating +
-          self.recency_rating
+          self.recency_rating * 1.2
         ) / 5
       ).round
     else
