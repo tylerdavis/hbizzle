@@ -9,7 +9,7 @@ class Movie < ActiveRecord::Base
   HBO_XML_URL = 'http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'
 
   def self.current
-    @movies = Movie.where("expire >= ?", Time.now).order('plays')
+    @movies = Movie.where("expire >= ?", Time.now).order('plays').select {|m| !m.title.downcase.include? 'hbo'}
     @play_map = Movie.plays_percentile_map(@movies)
     @recency_map = Movie.time_delta_percentle_map(@movies)
     @movies.each do |movie|

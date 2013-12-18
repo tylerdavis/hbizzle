@@ -34,7 +34,7 @@
             <th data-sortable="false" class="text-center image hidden-xs" width="180px">Image</th>
             <th data-sortable="false" class="text-center summary hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
             <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs"><a href="" ng-click="updatePredicate('-year')">Year</a></th>
-            <th data-sortable="false" class="text-center hidden-xs">IMDB</th>
+            <th data-sorted="{{predicate == '-created_at'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs"><a href="" ng-click="updatePredicate('-created_at')">Added</a></th>
             <th data-sorted="{{predicate == '-rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs"><a href="" ng-click="updatePredicate('-rating')">Rating</a></th>
             <th data-sorted="{{predicate == '-meta_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center"><a href="" ng-click="updatePredicate('-meta_score')">Hbizzle</a></th>
             <th data-sorted="{{predicate == '-imdb_rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-md hidden-sm hidden-xs"><a href="" ng-click="updatePredicate('-imdb_rating')">IMDB</a></th>
@@ -49,7 +49,7 @@
             <td class="hidden-xs text-center" width="180px"><img ng-src="{{ movie.image_url }}" style="width:170px"></td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
             <td class="text-center hidden-xs">{{ movie.year }}</td>
-            <td class="text-center hidden-xs"><a href="{{ movie.imdb_link }}" target="_blank">IMDB</a></td>
+            <td class="text-center hidden-xs">{{ movie.created_at | date:'shortDate' }}</td>
             <td class="text-center hidden-xs">{{ movie.rating }}</td>
             <td class="text-center score">{{ movie.meta_score }}</td>
             <td class="text-center hidden-md hidden-sm hidden-xs">{{ movie.imdb_rating }}</td>
@@ -98,7 +98,7 @@
   </div>
 
   <script>
-    window.movies = <%= raw @movies.to_json(except: [:id, :expire, :created_at, :updated_at], methods: [:hbo_link, :image_url, :meta_score]) %>;
+    window.movies = <%= raw @movies.to_json(except: [:id, :expire, :updated_at, :poster_uid, :image], methods: [:hbo_link, :image_url, :meta_score]) %>;
     !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
   </script>
 
