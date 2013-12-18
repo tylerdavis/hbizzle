@@ -1,25 +1,31 @@
 class Movie < ActiveRecord::Base
 
+  attr_accessor :plays_percentile
+
   validates :title, uniqueness: true
 
   dragonfly_accessor :poster
 
   HBO_XML_URL = 'http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'
 
-  def hbo_link
-    return "http://www.hbogo.com/#movies/video&assetID=#{self.hbo_id}?videoMode=embeddedVideo"
-  end
-
-  def meta_score
-    if (self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score)
-      return ((self.imdb_rating.to_f*10 + self.rotten_critics_score.to_f + self.rotten_audience_score.to_f) / 3).round
-    else
-      return 0
+  def view_json
+    @movies = Movie.where("expire >= ?", Time.now).order('plays')
+    @percentile_map = Movie.percentile_map(@movies)
+    @movie_hashes = @movies.collect do |movie|
+      movie.play_percentile = @percentile_map[movie.plays]
+      // @TODO - Finish this shit.
     end
+    
   end
 
-  def play
-    self.plays += 1
+  def self.percentile_map(movies)
+    movie_array = movies.map {|m| m.plays}.uniq.sort
+    count = movie_array.count
+    percentile_map = {}
+    movie_array.each_with_index do |play_count, index|
+      percentile_map[play_count] = ((index + 1) / count.to_f * 100).round
+    end
+    return percentile_map
   end
 
   def self.fetch_update
@@ -66,12 +72,32 @@ class Movie < ActiveRecord::Base
     end
   end
 
+  def to_hash
+    return self.attributes
+  end
+
+  def hbo_link
+    return "http://www.hbogo.com/#movies/video&assetID=#{self.hbo_id}?videoMode=embeddedVideo"
+  end
+
   def image_url
     self.poster.remote_url
   end
 
+  def meta_score
+    if (self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score)
+      return ((self.imdb_rating.to_f*10 + self.rotten_critics_score.to_f + self.rotten_audience_score.to_f) / 3).round
+    else
+      return 0
+    end
+  end
+
+  def play
+    self.plays += 1
+  end
+
   def update_poster
-  unless self.poster
+    unless self.poster
       PosterWorker.perform_async(self.id)
     end
   end

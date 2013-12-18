@@ -6,7 +6,14 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.where("expire >= ?", Time.now).order(sort_column + " " + sort_direction + " NULLS LAST")
+    @movies = Movie.where("expire >= ?", Time.now).order('plays')
+    @percentile_map = Movie.percentile_map(@movies)
+    @movie_hashes = @movies.collect do |movie|
+      movie = movie.to_hash
+      movie['play_percentile'] = @percentile_map[movie['plays']]
+      movie
+    end
+    @movies_js = raw @movie_hashes.to_json
   end
 
   # GET /movies/1
@@ -83,12 +90,4 @@ class MoviesController < ApplicationController
       params.require(:movie).permit(:title, :summary, :year, :imdb_link, :image, :rating, :hbo_id)
     end
 
-    # Sortable
-    def sort_column
-      Movie.column_names.include?(params[:sort]) ? params[:sort] : "title"
-    end
-    
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-    end
 end

@@ -44,7 +44,7 @@
         </thead>
 
         <tbody ng-cloak>
-          <tr ng-repeat="movie in (filteredMovies = (movies | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize | filter:textFilter))">
+          <tr ng-repeat="movie in (filteredMovies = (movies | filter:textFilter | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize))">
             <td class="title"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a></td>
             <td class="hidden-xs text-center" width="180px"><img ng-src="{{ movie.image_url }}"></td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
