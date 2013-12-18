@@ -1,6 +1,6 @@
 class Movie < ActiveRecord::Base
 
-  attr_accessor :play_rating, :meta_score
+  attr_accessor :meta_score, :play_rating, :recency_rating
 
   validates :title, uniqueness: true
 
@@ -10,22 +10,34 @@ class Movie < ActiveRecord::Base
 
   def self.current
     @movies = Movie.where("expire >= ?", Time.now).order('plays')
-    @map = Movie.percentile_map(@movies)
+    @play_map = Movie.plays_percentile_map(@movies)
+    @recency_map = Movie.time_delta_percentle_map(@movies)
     @movies.each do |movie|
-      movie.set_play_rating(@map)
+      movie.set_play_rating(@play_map)
+      movie.set_recency_rating(@recency_map)
       movie.set_meta_score
     end
     return @movies
   end
 
-  def self.percentile_map(movies)
+  def self.plays_percentile_map(movies)
     movie_array = movies.map {|m| m.plays}.uniq.sort
     count = movie_array.count
-    percentile_map = {}
+    plays_percentile_map = {}
     movie_array.each_with_index do |play_count, index|
-      percentile_map[play_count] = ((index + 1) / count.to_f * 100).round
+      plays_percentile_map[play_count] = ((index + 1) / count.to_f * 100).round
     end
-    return percentile_map
+    return plays_percentile_map
+  end
+
+  def self.time_delta_percentle_map(movies)
+    movie_array = movies.map {|m| m.created_at}.uniq.sort
+    count = movie_array.count
+    time_delta_percentle_map = {}
+    movie_array.each_with_index do |time_delta, index|
+      time_delta_percentle_map[time_delta] = ((index + 1) / count.to_f * 100).round
+    end
+    return time_delta_percentle_map
   end
 
   def self.fetch_update
@@ -55,25 +67,21 @@ class Movie < ActiveRecord::Base
   end
 
   def self.fetch_imdb_info
-    Movie.where(imdb_rating: nil || '0.0') do |movie|
+    Movie.where(imdb_rating: nil).each do |movie|
       ImdbWorker.perform_async(movie.id)
     end
   end
 
   def self.fetch_posters
     Movie.where(poster_uid: nil).each do |movie|
-      movie.update_poster
+      PosterWorker.perform_async(self.id)
     end
   end
 
   def self.fetch_rotten_info
-    Movie.where('rotten_critics_score = ? OR rotten_critics_score = ? OR rotten_audience_score = ? OR rotten_audience_score = ?', '-1', nil, '-1', nil) do |movie|
+    Movie.where(rotten_critics_score: nil).each do |movie|
       RottenWorker.perform_async(movie.id)
     end
-  end
-
-  def to_hash
-    return self.attributes
   end
 
   def hbo_link
@@ -95,22 +103,21 @@ class Movie < ActiveRecord::Base
           self.imdb_rating.to_f*10 +
           self.rotten_critics_score.to_f + 
           self.rotten_audience_score.to_f +
-          self.play_rating
-        ) / 4
+          self.play_rating +
+          self.recency_rating
+        ) / 5
       ).round
     else
       self.meta_score = 0
     end
   end
 
-  def set_play_rating(percentile_map)
-    self.play_rating = percentile_map[self.plays]
+  def set_play_rating(plays_percentile_map)
+    self.play_rating = plays_percentile_map[self.plays]
   end
 
-  def update_poster
-    unless self.poster
-      PosterWorker.perform_async(self.id)
-    end
+  def set_recency_rating(time_delta_percentle_map)
+    self.recency_rating = time_delta_percentle_map[self.created_at]
   end
 
 end

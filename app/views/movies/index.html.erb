@@ -46,7 +46,7 @@
         <tbody ng-cloak>
           <tr ng-repeat="movie in (filteredMovies = (movies | filter:textFilter | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize))">
             <td class="title"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a></td>
-            <td class="hidden-xs text-center" width="180px"><img ng-src="{{ movie.image_url }}"></td>
+            <td class="hidden-xs text-center" width="180px"><img ng-src="{{ movie.image_url }}" style="width:170px"></td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
             <td class="text-center hidden-xs">{{ movie.year }}</td>
             <td class="text-center hidden-xs"><a href="{{ movie.imdb_link }}" target="_blank">IMDB</a></td>
