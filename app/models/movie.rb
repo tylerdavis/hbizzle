@@ -13,40 +13,29 @@ class Movie < ActiveRecord::Base
 
   def self.current
     @movies = Movie.where("expire >= ?", Time.now).order('plays').select {|m| !m.title.downcase.include? 'hbo'}
-    @play_map = Movie.plays_percentile_map(@movies)
-    @recency_map = Movie.time_delta_percentle_map(@movies)
+    @play_map = Movie.percentile_map(@movies, 'plays')
+    @recency_map = Movie.percentile_map(@movies, 'created_at')
     @movies.each do |movie|
       movie.set_play_rating(@play_map)
       movie.set_recency_rating(@recency_map)
       movie.set_meta_score
     end
-    return @movies
+
   end
 
-  def self.plays_percentile_map(movies)
-    movie_array = movies.map {|m| m.plays}.uniq.sort
+  def self.percentile_map(movies, action)
+    movie_array = movies.map {|m| m[action]}.uniq.sort
     count = movie_array.count
-    plays_percentile_map = {}
-    movie_array.each_with_index do |play_count, index|
-      plays_percentile_map[play_count] = ((index + 1) / count.to_f * 100).round
+    percentile_map = {}
+    movie_array.each_with_index do |key, index|
+      percentile_map[key] = ((index + 1) / count.to_f * 100).round
     end
-    return plays_percentile_map
-  end
-
-  def self.time_delta_percentle_map(movies)
-    movie_array = movies.map {|m| m.created_at}.uniq.sort
-    count = movie_array.count
-    time_delta_percentle_map = {}
-    movie_array.each_with_index do |time_delta, index|
-      time_delta_percentle_map[time_delta] = ((index + 1) / count.to_f * 100).round
-    end
-    return time_delta_percentle_map
+    return percentile_map
   end
 
   def self.fetch_update
     self.fetch_listing
     self.fetch_posters
-    self.fetch_imdb_info
     self.fetch_mmapi_info
     self.fetch_rotten_info
   end
@@ -72,7 +61,10 @@ class Movie < ActiveRecord::Base
 
   def self.fetch_imdb_info
     Movie.where(imdb_rating: nil).each do |movie|
-      ImdbWorker.perform_async(movie.id)
+      movie.fetch_imdb_info
+    end
+  end
+
   def self.fetch_mmapi_info
     Movie.all.where(imdb_rating: nil).each do |movie|
       movie.fetch_mmapi_info
@@ -81,19 +73,32 @@ class Movie < ActiveRecord::Base
 
   def self.fetch_posters
     Movie.where(poster_uid: nil).each do |movie|
-      PosterWorker.perform_async(self.id)
+      movie.fetch_poster
     end
   end
 
   def self.fetch_rotten_info
     Movie.where(rotten_critics_score: nil).each do |movie|
-      RottenWorker.perform_async(movie.id)
+      movie.fetch_rotten_info
     end
+  end
+
+  def fetch_imdb_info
+    ImdbWorker.perform_async(self.id)
   end
 
   def fetch_mmapi_info
     MovieAPIWorker.perform_async(self.id)
   end
+
+  def fetch_poster
+    PosterWorker.perform_async(self.id)
+  end
+
+  def fetch_rotten_info
+    RottenWorker.perform_async(self.id)
+  end
+
   def hbo_link
     return "http://www.hbogo.com/#movies/video&assetID=#{self.hbo_id}?videoMode=embeddedVideo"
   end
@@ -110,7 +115,7 @@ class Movie < ActiveRecord::Base
     if (self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score)
       self.meta_score = (
         (
-          self.imdb_rating.to_f*10 +
+          self.imdb_rating.to_f * 10 +
           self.rotten_critics_score.to_f + 
           self.rotten_audience_score.to_f +
           self.play_rating +
