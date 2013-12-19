@@ -1,5 +1,8 @@
 class Movie < ActiveRecord::Base
 
+  has_and_belongs_to_many :actors
+  has_and_belongs_to_many :directors
+
   attr_accessor :meta_score, :play_rating, :recency_rating
 
   validates :title, uniqueness: true

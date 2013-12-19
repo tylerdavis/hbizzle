@@ -11,10 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131207185934) do
+ActiveRecord::Schema.define(version: 20131219014527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actors", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "actors_movies", force: true do |t|
+    t.integer "actor_id"
+    t.integer "movie_id"
+  end
+
+  add_index "actors_movies", ["actor_id"], name: "index_actors_movies_on_actor_id", using: :btree
+  add_index "actors_movies", ["movie_id"], name: "index_actors_movies_on_movie_id", using: :btree
+
+  create_table "directors", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "directors_movies", force: true do |t|
+    t.integer "director_id"
+    t.integer "movie_id"
+  end
+
+  add_index "directors_movies", ["director_id"], name: "index_directors_movies_on_director_id", using: :btree
+  add_index "directors_movies", ["movie_id"], name: "index_directors_movies_on_movie_id", using: :btree
 
   create_table "movies", force: true do |t|
     t.datetime "expire"
@@ -32,6 +60,7 @@ ActiveRecord::Schema.define(version: 20131207185934) do
     t.string   "rotten_audience_score"
     t.integer  "plays",                 default: 0
     t.string   "poster_uid"
+    t.integer  "provider"
   end
 
 end
