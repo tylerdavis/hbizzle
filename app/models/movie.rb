@@ -47,6 +47,7 @@ class Movie < ActiveRecord::Base
     self.fetch_listing
     self.fetch_posters
     self.fetch_imdb_info
+    self.fetch_mmapi_info
     self.fetch_rotten_info
   end
 
@@ -72,6 +73,9 @@ class Movie < ActiveRecord::Base
   def self.fetch_imdb_info
     Movie.where(imdb_rating: nil).each do |movie|
       ImdbWorker.perform_async(movie.id)
+  def self.fetch_mmapi_info
+    Movie.all.where(imdb_rating: nil).each do |movie|
+      movie.fetch_mmapi_info
     end
   end
 
@@ -87,6 +91,9 @@ class Movie < ActiveRecord::Base
     end
   end
 
+  def fetch_mmapi_info
+    MovieAPIWorker.perform_async(self.id)
+  end
   def hbo_link
     return "http://www.hbogo.com/#movies/video&assetID=#{self.hbo_id}?videoMode=embeddedVideo"
   end

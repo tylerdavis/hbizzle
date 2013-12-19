@@ -9,6 +9,7 @@ gem 'dragonfly-s3_data_store'
 gem 'imdb'
 gem 'jbuilder', '~> 1.2'
 gem 'jquery-rails'
+gem 'mmapi'
 gem 'nokogiri'
 gem 'newrelic_rpm'
 gem 'oj'
@@ -25,6 +26,8 @@ gem 'unf'
 gem 'unicorn'
 
 group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'figaro'
   gem 'meta_request'
 end
