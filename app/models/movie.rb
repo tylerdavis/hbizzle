@@ -20,7 +20,7 @@ class Movie < ActiveRecord::Base
       movie.set_recency_rating(@recency_map)
       movie.set_meta_score
     end
-
+    @movies.select! {|m| m.meta_score > 19}
   end
 
   def self.percentile_map(movies, action)
