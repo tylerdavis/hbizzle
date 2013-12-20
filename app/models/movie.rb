@@ -66,7 +66,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.fetch_mmapi_info
-    Movie.all.where(imdb_rating: nil).each do |movie|
+    Movie.where(imdb_rating: nil).each do |movie|
       movie.fetch_mmapi_info
     end
   end
