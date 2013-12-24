@@ -3,7 +3,7 @@ class Movie < ActiveRecord::Base
   has_and_belongs_to_many :actors
   has_and_belongs_to_many :directors
 
-  attr_accessor :meta_score, :play_rating, :recency_rating
+  attr_accessor :meta_score, :plays_rating, :created_at_rating, :imdb_rating_rating, :rotten_critics_score_rating, :rotten_audience_score_rating
 
   validates :title, uniqueness: true
 
@@ -12,19 +12,25 @@ class Movie < ActiveRecord::Base
   HBO_XML_URL = 'http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'
 
   def self.current
-    @movies = Movie.where("expire >= ?", Time.now).order('plays').select {|m| !m.title.downcase.include? 'hbo'}
-    @play_map = Movie.percentile_map(@movies, 'plays')
-    @recency_map = Movie.percentile_map(@movies, 'created_at')
+    @movies = self.where("expire >= ?", Time.now).order('plays').select {|m| !m.title.downcase.include? 'hbo'}
+    @play_map = self.percentile_map(@movies, 'plays')
+    @recency_map = self.percentile_map(@movies, 'created_at')
+    @imdb_map = self.percentile_map(@movies, 'imdb_rating')
+    @rotten_critics_map = self.percentile_map(@movies, 'rotten_critics_score')
+    @rotten_audience_map = self.percentile_map(@movies, 'rotten_audience_score')
     @movies.each do |movie|
-      movie.set_play_rating(@play_map)
-      movie.set_recency_rating(@recency_map)
+      movie.set_rating('plays', @play_map)
+      movie.set_rating('created_at', @recency_map)
+      movie.set_rating('imdb_rating', @imdb_map)
+      movie.set_rating('rotten_critics_score', @rotten_critics_map)
+      movie.set_rating('rotten_audience_score', @rotten_audience_map)
       movie.set_meta_score
     end
     @movies.select! {|m| m.meta_score > 19}
   end
 
   def self.percentile_map(movies, action)
-    movie_array = movies.map {|m| m[action]}.uniq.sort
+    movie_array = movies.map {|m| m[action].to_f}.uniq.sort
     count = movie_array.count
     percentile_map = {}
     movie_array.each_with_index do |key, index|
@@ -115,11 +121,11 @@ class Movie < ActiveRecord::Base
     if (self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score)
       self.meta_score = (
         (
-          self.imdb_rating.to_f * 10 +
-          self.rotten_critics_score.to_f + 
-          self.rotten_audience_score.to_f +
-          self.play_rating +
-          self.recency_rating * 1.2
+          self.imdb_rating_rating +
+          self.rotten_critics_score_rating + 
+          self.rotten_audience_score_rating +
+          self.plays_rating +
+          self.created_at_rating * 1.2
         ) / 5
       ).round
     else
@@ -127,12 +133,8 @@ class Movie < ActiveRecord::Base
     end
   end
 
-  def set_play_rating(plays_percentile_map)
-    self.play_rating = plays_percentile_map[self.plays]
-  end
-
-  def set_recency_rating(time_delta_percentle_map)
-    self.recency_rating = time_delta_percentle_map[self.created_at]
+  def set_rating(value, percentile_map)
+    self.instance_variable_set("@#{value.to_s}_rating", percentile_map[self[value].to_f])
   end
 
 end
