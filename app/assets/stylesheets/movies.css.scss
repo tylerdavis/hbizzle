@@ -142,6 +142,20 @@ table.movies td.title {
   padding-right: 20px;
 }
 
+table.movies td.image {
+  position: relative;
+  img.play {
+    position: absolute;
+    top: 11px;
+    left: 20px;
+    height: 28px;
+    opacity: 0.4;
+  }
+  &:hover img.play {
+    opacity: 0.8;
+  }
+}
+
 table.movies thead th {
   background-color: #EEEEEE;
 }
