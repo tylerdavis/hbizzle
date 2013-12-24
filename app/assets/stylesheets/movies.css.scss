@@ -144,15 +144,18 @@ table.movies td.title {
 
 table.movies td.image {
   position: relative;
+  vertical-align: top;
   img.play {
     position: absolute;
-    top: 11px;
-    left: 20px;
-    height: 28px;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    margin-top: -15px;
+    margin-left: -15px;
     opacity: 0.4;
   }
   &:hover img.play {
-    opacity: 0.8;
+    opacity: 0.7;
   }
 }
 
