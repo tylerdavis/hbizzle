@@ -24,6 +24,23 @@ p.kurt {
   margin: 55px 20px 0 0;
 }
 
+span.deleteicon {
+  position: relative;
+}
+span.deleteicon span {
+  position: absolute;
+  display: block;
+  top: 3px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  background: url('http://cdn.sstatic.net/stackoverflow/img/sprites.png?v=4') 0 -690px;
+  cursor: pointer;
+}
+span.deleteicon input {
+  padding-right: 16px;
+}
+
 .movies-container {
   margin: 0 0 20px 0;
   .header {
