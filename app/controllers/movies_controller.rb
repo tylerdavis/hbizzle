@@ -6,7 +6,13 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.current
+    if cookies['hbizzle']
+      played_movie_ids = JSON.parse(cookies['hbizzle']).uniq
+      played_movies = Movie.includes(:actors, :directors).where(hbo_id: played_movie_ids)
+      @movies = Movie.current(played_movies)
+    else
+      @movies = Movie.current
+    end
   end
 
   # GET /movies/1

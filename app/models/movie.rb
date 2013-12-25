@@ -1,36 +1,68 @@
 class Movie < ActiveRecord::Base
 
+  validates :title, uniqueness: true
   has_and_belongs_to_many :actors
   has_and_belongs_to_many :directors
-
-  attr_accessor :meta_score, :plays_rating, :created_at_rating, :imdb_rating_rating, :rotten_critics_score_rating, :rotten_audience_score_rating
-
-  validates :title, uniqueness: true
-
   dragonfly_accessor :poster
+
+  attr_accessor :meta_score,
+                :plays_rating,
+                :created_at_rating,
+                :imdb_rating_rating,
+                :rotten_critics_score_rating,
+                :rotten_audience_score_rating,
+                :actors_similarity,
+                :actors_similarity_rating,
+                :directors_similarity,
+                :directors_similarity_rating
 
   HBO_XML_URL = 'http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'
 
-  def self.current
-    @movies = self.where("expire >= ?", Time.now).order('plays').select {|m| !m.title.downcase.include? 'hbo'}
-    @play_map = self.percentile_map(@movies, 'plays')
-    @recency_map = self.percentile_map(@movies, 'created_at')
-    @imdb_map = self.percentile_map(@movies, 'imdb_rating')
-    @rotten_critics_map = self.percentile_map(@movies, 'rotten_critics_score')
-    @rotten_audience_map = self.percentile_map(@movies, 'rotten_audience_score')
+  def self.current(played_movies = nil)
+
+    @movies = self.includes(:actors, :directors).where("expire >= ?", Time.now).select {|m| !m.title.downcase.include? 'hbo'}
+
+    if played_movies
+      @actors, @directors = [], []
+      played_movies.each do |movie|
+        @actors.concat(movie.actors)
+        @directors.concat(movie.directors)
+      end
+      @movies.each do |movie|
+        actors_similarity = !(played_movies.include? movie) ? (movie.actors & @actors).count : 0
+        directors_similarity = !(played_movies.include? movie) ? (movie.directors & @directors).count : 0
+        movie.actors_similarity = actors_similarity
+        movie.directors_similarity = directors_similarity
+      end
+    end
+
+    # Percentile maps
+    @play_map = self.percentile_map(:plays, @movies)
+    @recency_map = self.percentile_map(:created_at, @movies)
+    @imdb_map = self.percentile_map(:imdb_rating, @movies)
+    @rotten_critics_map = self.percentile_map(:rotten_critics_score, @movies)
+    @rotten_audience_map = self.percentile_map(:rotten_audience_score, @movies)
+    @actors_similarity_map = self.percentile_map(:actors_similarity, @movies)
+    @directors_similarity_map = self.percentile_map(:directors_similarity, @movies)
+
     @movies.each do |movie|
-      movie.set_rating('plays', @play_map)
-      movie.set_rating('created_at', @recency_map)
-      movie.set_rating('imdb_rating', @imdb_map)
-      movie.set_rating('rotten_critics_score', @rotten_critics_map)
-      movie.set_rating('rotten_audience_score', @rotten_audience_map)
-      movie.set_meta_score
+      movie.set_rating(:plays, @play_map)
+      movie.set_rating(:created_at, @recency_map)
+      movie.set_rating(:imdb_rating, @imdb_map)
+      movie.set_rating(:rotten_critics_score, @rotten_critics_map)
+      movie.set_rating(:rotten_audience_score, @rotten_audience_map)
+      if played_movies
+        movie.set_rating(:actors_similarity, @actors_similarity_map)
+        movie.set_rating(:directors_similarity, @directors_similarity_map)
+      end
+      movie.set_meta_score # (played_movies.include? movie)
     end
     @movies.select! {|m| m.meta_score > 19}
   end
 
-  def self.percentile_map(movies, action)
-    movie_array = movies.map {|m| m[action].to_f}.uniq.sort
+
+  def self.percentile_map(action, movies)
+    movie_array = movies.map {|m| m.send(action).to_f}.uniq.sort
     count = movie_array.count
     percentile_map = {}
     movie_array.each_with_index do |key, index|
@@ -125,8 +157,11 @@ class Movie < ActiveRecord::Base
           self.rotten_critics_score_rating + 
           self.rotten_audience_score_rating +
           self.plays_rating +
-          self.created_at_rating * 1.2
-        ) / 5
+          self.created_at_rating * 1.2 +
+          self.actors_similarity_rating.to_f +
+          self.directors_similarity_rating.to_f # -
+          # (played ? 70 : 0)
+        ) / 7
       ).round
     else
       self.meta_score = 0
@@ -134,7 +169,7 @@ class Movie < ActiveRecord::Base
   end
 
   def set_rating(value, percentile_map)
-    self.instance_variable_set("@#{value.to_s}_rating", percentile_map[self[value].to_f])
+    self.instance_variable_set("@#{value.to_s}_rating", percentile_map[self.send(value).to_f])
   end
 
 end
