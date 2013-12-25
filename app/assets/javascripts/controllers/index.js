@@ -10,6 +10,15 @@ angular.module('controllers.index').controller('IndexCtrl', ['$cookies', '$http'
 
     var cookies = (!!$cookies.hbizzle) ? JSON.parse($cookies.hbizzle) : [];
 
+    $scope.color = function (value) {
+      if (value < 20 && value > 100) return false;
+      
+      var r = Math.floor(255 * (100 - value) / 100),
+          g = Math.floor(255 * value / 100),
+          b = 0;
+      return 'rgba(' + [r,g,b].join(',') + ',0.7)';
+    };
+
     $scope.goToCurrentPage = function () {
       $scope.currentPage = 1;
       $scope.predicate = '-meta_score';
