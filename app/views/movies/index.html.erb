@@ -33,25 +33,29 @@
       <table class="table movies">
         <thead>
           <tr>
-            <th data-sorted="{{predicate == '-meta_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center" width="110px" ng-click="updatePredicate('-meta_score')"><a>Hbizzle</a></th>
             <th data-sorted="{{predicate == '-title'}}" data-sorted-direction="{{sortDirection()}}" class="text-left title" width="12%" ng-click="updatePredicate('-title')"><a>Title</a></th>
             <th data-sortable="false" class="text-center image hidden-xs" width="180px">Image</th>
             <th data-sortable="false" class="text-center summary hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
             <th data-sorted="{{predicate == '-created_at'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs" ng-click="updatePredicate('-created_at')"><a>Added</a></th>
             <th data-sorted="{{predicate == '-rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs" ng-click="updatePredicate('-rating')"><a>Rating</a></th>
             <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs" ng-click="updatePredicate('-year')"><a>Year</a></th>
+            <th data-sorted="{{predicate == '-meta_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center" ng-click="updatePredicate('-meta_score')"><a>Hbizzle</a></th>
           </tr>
         </thead>
 
         <tbody ng-cloak>
           <tr ng-repeat="movie in (filteredMovies = (movies | filter:textFilter | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize))">
-            <td class="text-center score" style="font-size:1.6em;font-weight:bold;color:{{color(movie.meta_score)}}">{{ movie.meta_score }}</td>
             <td class="title"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a></td>
             <td class="image hidden-xs text-center" width="180px"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank"><img ng-src="{{ movie.image_url }}" style="width:170px"><img src="http://dsbu8p9bw9q44.cloudfront.net/static/play.png" alt="play" class="play"></a></td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
             <td class="text-center hidden-xs">{{ movie.created_at | date:'shortDate' }}</td>
             <td class="text-center hidden-xs">{{ movie.rating }}</td>
             <td class="text-center hidden-xs">{{ movie.year }}</td>
+            <td class="text-center score">
+              <div class="wrap">
+                {{ movie.meta_score }}
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
