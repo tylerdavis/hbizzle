@@ -4,6 +4,7 @@ gem 'rails', '4.0.1'
 
 gem 'angularjs-rails'
 gem 'bootstrap-sass', '~> 3.0.2.0'
+gem 'capistrano', '~> 3.0.1'
 gem 'dragonfly', "~>1.0.0"
 gem 'dragonfly-s3_data_store'
 gem 'imdb'

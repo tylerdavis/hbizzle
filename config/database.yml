@@ -24,4 +24,6 @@ production:
   adapter: postgresql
   encoding: unicode
   database: movies
+  pool: 25
+  username: postgres
   host: localhost
