@@ -7,6 +7,7 @@ gem 'bootstrap-sass', '~> 3.0.2.0'
 gem 'capistrano', '~> 3.0.1'
 gem 'dragonfly', "~>1.0.0"
 gem 'dragonfly-s3_data_store'
+gem 'figaro'
 gem 'imdb'
 gem 'jbuilder', '~> 1.2'
 gem 'jquery-rails'
@@ -29,7 +30,6 @@ gem 'unicorn'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'figaro'
   gem 'meta_request'
 end
 
