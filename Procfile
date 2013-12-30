@@ -1,2 +1,2 @@
-web: bundle exec unicorn -p 8080 -c ./config/unicorn.rb -E production
+web: bundle exec unicorn_rails -p 8080 -E production
 worker: bundle exec sidekiq -c 20
