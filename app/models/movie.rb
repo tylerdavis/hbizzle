@@ -42,7 +42,8 @@ class Movie < ActiveRecord::Base
   def self.fetch_update
     self.fetch_listing
     self.fetch_posters
-    self.fetch_mmapi_info
+    self.fetch_imdb_info
+    # self.fetch_mmapi_info
     self.fetch_rotten_info
   end
 
@@ -94,7 +95,7 @@ class Movie < ActiveRecord::Base
   end
 
   def fetch_mmapi_info
-    MovieAPIWorker.perform_async(self.id)
+    # MovieAPIWorker.perform_async(self.id)
   end
 
   def fetch_poster

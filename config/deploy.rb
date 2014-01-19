@@ -1,13 +1,22 @@
-set :application, 'hbizzle'
+set :application, 'hbizzle.com'
 set :repo_url, 'git@github.com:tylerdavis/hbizzle.git'
 
-set :user, 'root'
-set :deploy_to, "/home/hbizzle"
-set :use_sudo, false
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
+
+set :deploy_to, '/home/hbizzle/hbizzle.com'
 set :scm, :git
 
-set :web, "192.241.239.165"
-set :app, "192.241.239.165"
+set :rails_env, 'production'
+
+# set :format, :pretty
+# set :log_level, :debug
+# set :pty, true
+
+# set :linked_files, %w{config/database.yml}
+# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :keep_releases, 5
 
 namespace :deploy do
 
