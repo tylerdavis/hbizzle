@@ -7,6 +7,7 @@ set :deploy_to, '/home/hbizzle/hbizzle.com'
 set :scm, :git
 
 set :rvm_type, :user
+set :default_shell, '/bin/bash -l'
 set :rails_env, 'production'
 
 # set :format, :pretty
