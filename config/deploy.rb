@@ -7,6 +7,9 @@ set :deploy_to, '/home/hbizzle/hbizzle.com'
 set :scm, :git
 
 set :rails_env, 'production'
+set :default_env, { rvm_bin_path: '~/.rvm/bin' } 
+
+SSHKit.config.command_map[:rake] = "#{fetch(:default_env)[:rvm_bin_path]}/rvm ruby-#{fetch(:rvm_ruby_version)} do bundle exec rake"
 
 # set :format, :pretty
 # set :log_level, :debug
