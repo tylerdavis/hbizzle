@@ -149,6 +149,8 @@ GEM
       json
     ruby-hmac (0.4.0)
     ruby-prof (0.13.1)
+    rvm-capistrano (1.5.0)
+      capistrano (>= 2.15.4)
     sass (3.2.12)
     sass-rails (4.0.1)
       railties (>= 4.0.0, < 5.0)
@@ -233,6 +235,7 @@ DEPENDENCIES
   rails_12factor
   rottentomatoes
   ruby-prof
+  rvm-capistrano
   sass-rails (~> 4.0.0)
   sdoc
   sidekiq

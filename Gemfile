@@ -6,6 +6,7 @@ gem 'angularjs-rails'
 gem 'bootstrap-sass', '~> 3.0.2.0'
 gem 'capistrano', '~> 3.1'
 gem 'capistrano-rails', '~> 1.1'
+gem 'rvm-capistrano'
 gem 'dragonfly', "~>1.0.0"
 gem 'dragonfly-s3_data_store'
 gem 'figaro'
