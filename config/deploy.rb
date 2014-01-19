@@ -6,7 +6,12 @@ set :repo_url, 'git@github.com:tylerdavis/hbizzle.git'
 set :deploy_to, '/home/hbizzle/hbizzle.com'
 set :scm, :git
 
+set :rvm_type, :system
 set :rails_env, 'production'
+
+set :default_environment, {
+  'PATH' => "~/.rvm/bin/:$PATH"
+}
 
 # set :format, :pretty
 # set :log_level, :debug
@@ -39,4 +44,16 @@ namespace :deploy do
 
   after :finishing, 'deploy:cleanup'
 
+end
+
+task :query_interactive do
+  on 'hbizzle@beta.hbizzle.com' do
+    info capture("[[ $- == *i* ]] && echo 'Interactive' || echo 'Not interactive'")
+  end
+end
+
+task :query_login do
+  on 'hbizzle@beta.hbizzle.com' do
+    info capture("shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'")
+  end
 end
