@@ -4,10 +4,15 @@ set :repo_url, 'git@github.com:tylerdavis/hbizzle.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 set :deploy_to, '/home/hbizzle/hbizzle.com'
+
+set :default_env, {
+  'PATH' => "#{deploy_to}/bin:$PATH",
+  'GEM_HOME' => "#{deploy_to}/gems" 
+}
+
 set :scm, :git
 
 set :rvm_type, :user
-set :default_shell, '/bin/bash -l'
 set :rails_env, 'production'
 
 # set :format, :pretty
