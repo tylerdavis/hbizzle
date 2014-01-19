@@ -9,7 +9,5 @@ require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'rvm/capistrano'
 
-set :rvm_ruby_string, :local
-
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
