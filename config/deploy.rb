@@ -5,15 +5,10 @@ set :repo_url, 'git@github.com:tylerdavis/hbizzle.git'
 
 set :deploy_to, '/home/hbizzle/hbizzle.com'
 
-set :default_env, {
-  'PATH' => "#{deploy_to}/bin:$PATH",
-  'GEM_HOME' => "#{deploy_to}/gems" 
-}
-
 set :scm, :git
 
 set :rvm_type, :user
-set :rails_env, 'production'
+# set :rails_env, 'production'
 
 # set :format, :pretty
 # set :log_level, :debug
