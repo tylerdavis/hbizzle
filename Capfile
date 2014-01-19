@@ -2,10 +2,10 @@
 require 'capistrano/setup'
 
 # Includes default deployment tasks
+require 'capistrano/bundler'
 require 'capistrano/deploy'
 require 'capistrano/rails'
 require 'rvm/capistrano'
-require 'bundler/capistrano'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 
