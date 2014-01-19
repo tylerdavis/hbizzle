@@ -7,7 +7,6 @@ set :deploy_to, '/home/hbizzle/hbizzle.com'
 set :scm, :git
 
 set :rails_env, 'production'
-set :default_env, { rvm_bin_path: '~/.rvm/bin' }
 
 # set :format, :pretty
 # set :log_level, :debug
