@@ -2,12 +2,12 @@
 require 'capistrano/setup'
 
 # Includes default deployment tasks
-require 'capistrano/bundler'
 require 'capistrano/deploy'
+require 'capistrano/bundler'
 require 'capistrano/rails'
-require 'rvm/capistrano'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
+require 'rvm/capistrano'
 
 set :rvm_ruby_string, :local
 
