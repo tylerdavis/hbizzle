@@ -95,7 +95,7 @@ class Movie < ActiveRecord::Base
   end
 
   def fetch_mmapi_info
-    # MovieAPIWorker.perform_async(self.id)
+    MovieAPIWorker.perform_async(self.id)
   end
 
   def fetch_poster
