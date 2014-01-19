@@ -6,12 +6,8 @@ set :repo_url, 'git@github.com:tylerdavis/hbizzle.git'
 set :deploy_to, '/home/hbizzle/hbizzle.com'
 set :scm, :git
 
-set :rvm_type, :system
+set :rvm_type, :user
 set :rails_env, 'production'
-
-set :default_environment, {
-  'PATH' => "~/.rvm/bin/:$PATH"
-}
 
 # set :format, :pretty
 # set :log_level, :debug
