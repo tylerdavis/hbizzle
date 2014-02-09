@@ -100,7 +100,7 @@ class Movie < ActiveRecord::Base
   end
 
   def image_url
-    self.poster.remote_url
+    self.poster.remote_url(expires: 1.year.from_now)
   end
 
   def play
