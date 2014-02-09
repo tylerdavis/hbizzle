@@ -5,7 +5,9 @@ task update_created: :environment do
   hbo_features = Hash.from_xml(xml.to_s)['response']['body']['productResponses']['featureResponse']
   hbo_features.each do |feature|
     @movie = Movie.where(title: feature['title']).first
-    @movie.created_at = feature['startDate']
-    @movie.save
+    if @movie
+      @movie.created_at = feature['startDate']
+      @movie.save
+    end
   end
 end
