@@ -100,7 +100,6 @@
 
   <script>
     window.movies = <%= raw @movies.to_json(except: [:id, :expire, :updated_at, :poster_uid, :image, :imdb_link, :imdb_rating, :rotten_critics_score, :rotten_audience_score, :plays, :provider], methods: [:hbo_link, :image_url, :meta_score]) %>;
-    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
   </script>
 
 </div>
