@@ -8,6 +8,25 @@ class ImdbWorker
     imdb_movie = imdb_movies.first
     if imdb_movie
       @movie.imdb_rating = imdb_movie.rating.to_s || nil
+
+      # Directors
+      imdb_movie.director.each do |name|
+        director = Director.where(name: name).first || Director.new(name: name)
+        unless @directors.include? director
+          @movie.directors << director
+          director.save
+        end
+      end
+
+      # Cast
+      imdb_movie.cast_members.each do |name|
+        actor = Actor.where(name: name).first || Actor.new(name: name)
+        unless @actors.include? actor
+          @movie.actors << actor
+          actor.save
+        end
+      end
+
       if @movie.save
         logger.info("ImdbWorker - Updated #{@movie.title}")
       end

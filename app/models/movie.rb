@@ -43,7 +43,6 @@ class Movie < ActiveRecord::Base
     self.fetch_listing
     self.fetch_posters
     self.fetch_imdb_info
-    # self.fetch_mmapi_info
     self.fetch_rotten_info
   end
 
@@ -72,12 +71,6 @@ class Movie < ActiveRecord::Base
     end
   end
 
-  def self.fetch_mmapi_info
-    Movie.where(imdb_rating: nil).each do |movie|
-      movie.fetch_mmapi_info
-    end
-  end
-
   def self.fetch_posters
     Movie.where(poster_uid: nil).each do |movie|
       movie.fetch_poster
@@ -92,10 +85,6 @@ class Movie < ActiveRecord::Base
 
   def fetch_imdb_info
     ImdbWorker.perform_async(self.id)
-  end
-
-  def fetch_mmapi_info
-    MovieAPIWorker.perform_async(self.id)
   end
 
   def fetch_poster
