@@ -2,7 +2,11 @@ class ImdbWorker
   include Sidekiq::Worker
 
   def perform(id)
+    
+    @actors = Actor.all
+    @directors = Director.all
     @movie = Movie.find(id)
+
     imdb_movies = Imdb::Movie.search(@movie.title)
     # imdb_movie = imdb_movies.select { |m| m.title.include? @movie.year }.first
     imdb_movie = imdb_movies.first

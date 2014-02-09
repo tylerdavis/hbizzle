@@ -2,11 +2,19 @@ from fabric.api import cd, env, local, run, sudo
 
 ##Hbizzle Specific
 
+# Environments
+def development():
+  pass
+
 def production():
   env.host_string = 'beta.hbizzle.com'
   env.user = 'rails'
   env.cwd ='/home/rails/hbizzle'
 
+def staging():
+  pass
+
+# Tasks
 def deploy():
   __pull('hbizzle')
   __bundle_install()
@@ -14,7 +22,6 @@ def deploy():
   sudo('restart hbizzle', pty=False)
 
 def fetch():
-  # Fetch new listings
   rake('fetch')
 
 def rake(command):
