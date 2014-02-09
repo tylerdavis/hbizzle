@@ -15,10 +15,15 @@ def staging():
   pass
 
 # Tasks
+
+def compile_assets():
+  rake('assets:precompile')
+
 def deploy():
   __pull('hbizzle')
   __bundle_install()
   rake('db:migrate')
+  compile_assets()
   __restart('hbizzle')
 
 def fetch():
