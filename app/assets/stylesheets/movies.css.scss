@@ -14,6 +14,19 @@ h1.title {
   color: #4D4D4D;
 }
 
+#fb-share, #twitter-share {
+  position: absolute;
+  top: 16px;
+}
+
+#fb-share {
+right: 38px;
+}
+
+#twitter-share {
+  right: 120px;
+}
+
 p.kurt {
   color: #7E7E7E;
   margin-bottom: 30px;
