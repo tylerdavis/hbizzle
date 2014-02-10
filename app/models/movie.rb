@@ -7,6 +7,7 @@ class Movie < ActiveRecord::Base
 
   validates :title, uniqueness: true
 
+  dragonfly_accessor :big_poster
   dragonfly_accessor :poster
 
   HBO_XML_URL = 'http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'
@@ -26,7 +27,11 @@ class Movie < ActiveRecord::Base
       movie.set_rating('rotten_audience_score', @rotten_audience_map)
       movie.set_meta_score
     end
-    @movies.select! {|m| m.meta_score > 19}
+    @movies.select! {|m| m.meta_score > 19}.sort! { |a, b| b.meta_score <=> a.meta_score }
+  end
+
+  def self.latest
+    @movies = self.current.select{ |m| m.created_at >= Date.today.beginning_of_week }
   end
 
   def self.percentile_map(movies, action)
@@ -87,6 +92,10 @@ class Movie < ActiveRecord::Base
     ImdbWorker.perform_async(self.id)
   end
 
+  def fetch_big_poster
+    BigPosterWorker.perform_async(self.id)
+  end
+
   def fetch_poster
     PosterWorker.perform_async(self.id)
   end
@@ -101,6 +110,10 @@ class Movie < ActiveRecord::Base
 
   def image_url
     self.poster.remote_url(expires: 1.year.from_now)
+  end
+
+  def poster_url
+    self.big_poster.remote_url(expires: 1.year.from_now)
   end
 
   def play

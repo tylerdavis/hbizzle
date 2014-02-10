@@ -1,0 +1,28 @@
+.latest {
+  .movies {
+    padding: 0 20px;
+    text-align: center;
+    .movie {
+      background-color: white;
+      display: inline-block;
+      height: 360px;
+      padding: 2px;
+      position: relative;
+      margin: 0 3px 3px 0;
+      img {
+        height: 100%;
+      }
+      .meta-score {
+        background-color: #428BCA;
+        border-radius: 14px;
+        bottom: 10px;
+        color: #FFFFFF;
+        font-size: 3em;
+        line-height: 0.8em;
+        position: absolute;
+        right: 12px;
+        padding: 5px;
+      }
+    }
+  }
+}

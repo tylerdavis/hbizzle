@@ -9,6 +9,10 @@ class MoviesController < ApplicationController
     @movies = Movie.current
   end
 
+  def latest
+    @movies = Movie.latest
+  end
+
   # GET /movies/1
   # GET /movies/1.json
   def show
