@@ -116,7 +116,7 @@ class Movie < ActiveRecord::Base
   end
 
   def image_url
-    (self.big_poster) ? self.big_poster.remote_url(expires: 1.year.from_now) : 'http://placekitten.com/200/300'
+    self.poster.remote_url(expires: 1.year.from_now)
   end
 
   def poster_url
