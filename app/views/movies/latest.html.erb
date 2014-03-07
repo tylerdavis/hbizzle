@@ -13,8 +13,7 @@
   <div class="row movies">
     <% @movies.each do |movie| %>
       <div class="movie">
-        <%= image_tag movie.poster_url %>
-        <span class="meta-score"><%= movie.meta_score %></span>
+        <%= image_tag movie.big_poster.thumb('x260').url if movie.big_poster_stored? %>
       </div>
     <% end %>
   </div>

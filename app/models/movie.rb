@@ -6,6 +6,7 @@ class Movie < ActiveRecord::Base
   attr_accessor :meta_score, :plays_rating, :created_at_rating, :imdb_rating_rating, :rotten_critics_score_rating, :rotten_audience_score_rating
 
   validates :title, uniqueness: true
+  validates :hbo_id, uniqueness: true
 
   dragonfly_accessor :big_poster
   dragonfly_accessor :poster
@@ -31,7 +32,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.latest
-    @movies = self.current.select{ |m| m.created_at >= Date.today.beginning_of_week }
+    @movies = self.current.select{ |m| m.created_at >= 10.days.ago }
   end
 
   def self.percentile_map(movies, action)
@@ -55,7 +56,7 @@ class Movie < ActiveRecord::Base
     xml = Nokogiri::XML(open(HBO_XML_URL))
     hbo_features = Hash.from_xml(xml.to_s)['response']['body']['productResponses']['featureResponse']
     hbo_features.each do |feature|
-      if self.where(title: feature['title']).blank?
+      if self.where(hbo_id: feature['TKey']).blank?
         @movie = self.new(
           expire: feature['endDate'],
           hbo_id: feature['TKey'],
@@ -79,6 +80,12 @@ class Movie < ActiveRecord::Base
   def self.fetch_posters
     Movie.where(poster_uid: nil).each do |movie|
       movie.fetch_poster
+    end
+  end
+
+  def self.fetch_big_posters
+    Movie.where(big_poster_uid: nil).each do |movie|
+      movie.fetch_big_poster
     end
   end
 
@@ -109,11 +116,11 @@ class Movie < ActiveRecord::Base
   end
 
   def image_url
-    self.poster.remote_url(expires: 1.year.from_now)
+    (self.big_poster) ? self.big_poster.remote_url(expires: 1.year.from_now) : 'http://placekitten.com/200/300'
   end
 
   def poster_url
-    self.big_poster.remote_url(expires: 1.year.from_now)
+    (self.big_poster) ? self.big_poster.remote_url(expires: 1.year.from_now) : 'http://placekitten.com/200/300'
   end
 
   def play
