@@ -10,12 +10,7 @@
     <a id="twitter-share" href="https://twitter.com/share" class="twitter-share-button" data-text="Discovering amazing movies on hbizzle.com" data-hashtags="hbizzle">Tweet</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
-    <div class="input-group search-input col-lg-4 col-md-4 col-sm-6">
-      <input type="text" class="form-control" ng-model="textFilter" placeholder="Search for a movie!">
-      <span class="input-group-btn">
-        <button class="btn btn-default disabled" type="button">Go!</button>
-      </span>
-    </div>
+
   </div>
 
   <div class="clearfix"></div>
@@ -31,46 +26,10 @@
     </div>
   </div>
 
-  <div class="movies-container">
+  <div class="movies-container" style="text-align: center;">
 
-    <div class="table-responsive table-wrapper" ng-show="(movies | filter:textFilter).length">
-      <table class="table movies">
-        <thead>
-          <tr>
-            <th data-sorted="{{predicate == '-title'}}" data-sorted-direction="{{sortDirection()}}" class="text-left title" width="12%" ng-click="updatePredicate('-title')"><a>Title</a></th>
-            <th data-sortable="false" class="text-center image hidden-xs" width="180px">Image</th>
-            <th data-sortable="false" class="text-center summary hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
-            <th data-sorted="{{predicate == '-created_at'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs" ng-click="updatePredicate('-created_at')"><a>Added</a></th>
-            <th data-sorted="{{predicate == '-rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs" ng-click="updatePredicate('-rating')"><a>Rating</a></th>
-            <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs" ng-click="updatePredicate('-year')"><a>Year</a></th>
-            <th data-sorted="{{predicate == '-meta_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center" ng-click="updatePredicate('-meta_score')"><a>Hbizzle</a></th>
-          </tr>
-        </thead>
+    <h1 style="margin: 100px;">Sorry for the inconvenience, but we're offline at the moment.  Stay tuned.</h1>
 
-        <tbody ng-cloak>
-          <tr ng-repeat="movie in (filteredMovies = (movies | filter:textFilter | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize))">
-            <td class="title"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a></td>
-            <td class="image hidden-xs text-center" width="180px"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank"><img ng-src="{{ movie.image_url }}" style="width:170px"><img src="http://dsbu8p9bw9q44.cloudfront.net/static/play.png" alt="play" class="play"></a></td>
-            <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
-            <td class="text-center hidden-xs">{{ movie.created_at | date:'shortDate' }}</td>
-            <td class="text-center hidden-xs">{{ movie.rating }}</td>
-            <td class="text-center hidden-xs">{{ movie.year }}</td>
-            <td class="text-center score">
-              <div class="wrap">
-                {{ movie.meta_score }}
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="text-center no-match" ng-cloak ng-hide="(movies | filter:textFilter)">I couldn't find anything that matched your query, Bizzle.</p>
-
-  </div>
-  <div class="page text-center">
-    <pagination class="hidden-xs" total-items="(movies | filter:textFilter).length" page="currentPage" items-per-page="pageSize" max-size="showPagesNum" boundary-links="true" rotate="false" first-text="&laquo;" last-text="&raquo;" class="pagination"></pagination>
-    <pager class="visible-xs col-centered" total-items="(movies | filter:textFilter).length" page="currentPage"></pager>
   </div>
 
   <hr />

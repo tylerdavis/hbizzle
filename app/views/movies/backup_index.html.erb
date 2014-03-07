@@ -1,0 +1,88 @@
+<div class="container" ng-app="controllers.index" ng-controller="IndexCtrl">
+  
+  <div class="big-head hidden-xs">
+    <div class="headline" ng-click="goToCurrentPage()">
+      <h1 class="text-left title">Hbizzle</h1>
+      <p class="text-left kurt"><em>It's Go Time.</em></p>
+    </div>
+
+    <div id="fb-share" class="fb-share-button" data-href="http://www.hbizzle.com" data-type="button_count"></div>
+    <a id="twitter-share" href="https://twitter.com/share" class="twitter-share-button" data-text="Discovering amazing movies on hbizzle.com" data-hashtags="hbizzle">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <div class="input-group search-input col-lg-4 col-md-4 col-sm-6">
+      <input type="text" class="form-control" ng-model="textFilter" placeholder="Search for a movie!">
+      <span class="input-group-btn">
+        <button class="btn btn-default disabled" type="button">Go!</button>
+      </span>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="small-head visible-xs">
+    <div ng-click="goToCurrentPage()">
+      <h1 class="text-center title">Hbizzle</h1>
+      <p class="text-center kurt"><em>It's Go Time.</em></p>
+    </div>
+
+    <div style="padding: 0 15px 15px 15px;">
+      <input type="text" class="form-control" ng-model="textFilter" placeholder="Search for a movie!">
+    </div>
+  </div>
+
+  <div class="movies-container">
+
+    <div class="table-responsive table-wrapper" ng-show="(movies | filter:textFilter).length">
+      <table class="table movies">
+        <thead>
+          <tr>
+            <th data-sorted="{{predicate == '-title'}}" data-sorted-direction="{{sortDirection()}}" class="text-left title" width="12%" ng-click="updatePredicate('-title')"><a>Title</a></th>
+            <th data-sortable="false" class="text-center image hidden-xs" width="180px">Image</th>
+            <th data-sortable="false" class="text-center summary hidden-md hidden-sm hidden-xs" width="26%">Summary</th>
+            <th data-sorted="{{predicate == '-created_at'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs" ng-click="updatePredicate('-created_at')"><a>Added</a></th>
+            <th data-sorted="{{predicate == '-rating'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs" ng-click="updatePredicate('-rating')"><a>Rating</a></th>
+            <th data-sorted="{{predicate == '-year'}}" data-sorted-direction="{{sortDirection()}}" class="text-center hidden-xs" ng-click="updatePredicate('-year')"><a>Year</a></th>
+            <th data-sorted="{{predicate == '-meta_score'}}" data-sorted-direction="{{sortDirection()}}" class="text-center" ng-click="updatePredicate('-meta_score')"><a>Hbizzle</a></th>
+          </tr>
+        </thead>
+
+        <tbody ng-cloak>
+          <tr ng-repeat="movie in (filteredMovies = (movies | filter:textFilter | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize))">
+            <td class="title"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a></td>
+            <td class="image hidden-xs text-center" width="180px"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank"><img ng-src="{{ movie.image_url }}" style="width:170px"><img src="http://dsbu8p9bw9q44.cloudfront.net/static/play.png" alt="play" class="play"></a></td>
+            <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
+            <td class="text-center hidden-xs">{{ movie.created_at | date:'shortDate' }}</td>
+            <td class="text-center hidden-xs">{{ movie.rating }}</td>
+            <td class="text-center hidden-xs">{{ movie.year }}</td>
+            <td class="text-center score">
+              <div class="wrap">
+                {{ movie.meta_score }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-center no-match" ng-cloak ng-hide="(movies | filter:textFilter)">I couldn't find anything that matched your query, Bizzle.</p>
+
+  </div>
+  <div class="page text-center">
+    <pagination class="hidden-xs" total-items="(movies | filter:textFilter).length" page="currentPage" items-per-page="pageSize" max-size="showPagesNum" boundary-links="true" rotate="false" first-text="&laquo;" last-text="&raquo;" class="pagination"></pagination>
+    <pager class="visible-xs col-centered" total-items="(movies | filter:textFilter).length" page="currentPage"></pager>
+  </div>
+
+  <hr />
+
+  <footer class="text-center">
+    <p class="who-are-we"><strong><a href="http://tmd.io/journal/2013/12/08/hbizzle/">What is Hbizzle?</a></strong></p>
+    <p>Made with ambivalence by <a href="http://www.twitter.com/tylermdavis">@tylermdavis</a>.</p>
+    <p>Code available on <a href="https://github.com/tylerdavis/hbizzle">Github</a>, licensed under <a href="http://opensource.org/licenses/MIT">MIT</a>.</p>
+  </footer>
+
+  <script>
+    window.movies = <%= raw @movies.to_json(except: [:id, :expire, :updated_at, :poster_uid, :image, :imdb_link, :imdb_rating, :rotten_critics_score, :rotten_audience_score, :plays, :provider], methods: [:hbo_link, :image_url, :meta_score]) %>;
+  </script>
+
+</div>
