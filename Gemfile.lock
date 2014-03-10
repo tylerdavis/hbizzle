@@ -25,6 +25,7 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    addressable (2.3.5)
     angularjs-rails (1.2.5)
     arel (4.0.1)
     atomic (1.1.14)
@@ -35,6 +36,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.0.2.1)
       sass (~> 3.2)
+    buftok (0.2.0)
     builder (3.1.4)
     callsite (0.0.11)
     celluloid (0.15.2)
@@ -49,9 +51,12 @@ GEM
     dragonfly-s3_data_store (1.0.2)
       dragonfly (~> 1.0)
       fog
+    equalizer (0.0.9)
     erubis (2.7.0)
     excon (0.28.0)
     execjs (2.0.2)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
@@ -67,6 +72,9 @@ GEM
       ruby-hmac
     formatador (0.2.4)
     hike (1.2.3)
+    http (0.5.0)
+      http_parser.rb
+    http_parser.rb (0.6.0)
     i18n (0.6.9)
     imdb (0.8.0)
       nokogiri (>= 1.6.0)
@@ -81,6 +89,8 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memoizable (0.4.0)
+      thread_safe (~> 0.1.3)
     meta_request (0.2.8)
       callsite
       rack-contrib
@@ -89,6 +99,8 @@ GEM
     mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.2)
+    multipart-post (2.0.0)
+    naught (1.0.0)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.7.0)
@@ -154,6 +166,7 @@ GEM
       redis-namespace (>= 1.3.1)
     sidekiq-failures (0.2.2)
       sidekiq (>= 2.9.0)
+    simple_oauth (0.2.0)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -175,6 +188,17 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    twitter (5.7.1)
+      addressable (~> 2.3)
+      buftok (~> 0.2.0)
+      equalizer (~> 0.0.9)
+      faraday (~> 0.9.0)
+      http (~> 0.5.0)
+      http_parser.rb (~> 0.6.0)
+      json (~> 1.8)
+      memoizable (~> 0.4.0)
+      naught (~> 1.0)
+      simple_oauth (~> 0.2.0)
     tzinfo (0.3.38)
     uglifier (2.3.3)
       execjs (>= 0.3.0)
@@ -217,6 +241,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-failures
   sinatra (>= 1.3.0)
+  twitter
   uglifier (>= 1.3.0)
   unf
   unicorn

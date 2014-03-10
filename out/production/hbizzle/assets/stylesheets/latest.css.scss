@@ -8,24 +8,9 @@
       height: 260px;
       padding: 1px;
       position: relative;
-      margin: 0 8px 8px 0;
-      img.poster {
+      margin: 0 5px 5px 0;
+      img {
         height: 100%;
-      }
-      position: relative;
-      vertical-align: top;
-      img.play {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 30px;
-        margin-top: -15px;
-        margin-left: -15px;
-        opacity: 0.4;
-        cursor: pointer;
-      }
-      &:hover img.play {
-        opacity: 0.7;
       }
       .meta-score {
         background-color: #428BCA;

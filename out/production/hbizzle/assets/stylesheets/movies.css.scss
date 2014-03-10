@@ -1,0 +1,222 @@
+$lightGrey: #F5F5F5;
+$grey: #DDDDDD;
+$greyBorder: 1px solid $grey;
+
+.headline {
+  float: left;
+  margin-left: 30px;
+  cursor: pointer;
+}
+
+h1.title {
+  font-size: 5em;
+  margin-bottom: 0;
+  color: #4D4D4D;
+}
+
+#fb-share, #twitter-share {
+  position: absolute;
+  top: 16px;
+}
+
+#fb-share {
+right: 38px;
+}
+
+#twitter-share {
+  right: 104px;
+}
+
+p.kurt {
+  color: #7E7E7E;
+  margin-bottom: 30px;
+}
+
+.search-input {
+  float: right;
+  margin: 55px 20px 0 0;
+}
+
+.movies-container {
+  margin: 0 0 20px 0;
+  .header {
+    background-color: $lightGrey;
+    padding: 10px;
+  }
+  .no-match {
+    margin: 40px;
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 767px) {
+  .table-responsive {
+    margin-bottom: 0;
+    table.movies {
+      thead {
+        border-bottom: none;
+      }
+      th.title, td.title {
+        width: 66%;
+        text-overflow: ellipsis;
+        white-space: normal;
+      }
+      td.score {
+        vertical-align: middle;
+        .wrap { 
+          background-color: inherit;
+          color: #428BCA;
+        }
+      }
+    }
+  }
+  ul {
+    padding: 0 20px;
+  }
+}
+
+table.movies {
+  color: #333333;
+  background: white;
+  margin-bottom: 0;
+}
+
+table.movies > thead > tr > th {
+  border-bottom: none;
+}
+
+table.movies th {
+  vertical-align: bottom;
+  font-weight: bold;
+  font-size: 1.1em;
+  position: relative;
+}
+
+table.movies th.title {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+table.movies th.image {
+  width: 196px;
+}
+
+table.movies th, table.movies td {
+  padding: 10px;
+  vertical-align: middle !important;
+  border-top: none !important;
+}
+
+table.movies th:not([data-sortable="false"]) {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;
+  cursor: pointer;
+}
+
+table.movies th:after {
+  content: "";
+  visibility: hidden;
+  display: inline-block;
+  vertical-align: inherit;
+  height: 0;
+  width: 0;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent;
+  margin-right: 1px;
+  margin-left: 10px;
+  float: right;
+  position: absolute;
+  right: 10px;
+}
+
+table.movies th[data-sorted="true"]:after {
+  visibility: visible;
+}
+
+table.movies th[data-sorted-direction="descending"]:after {
+  border-top-color: inherit;
+  margin-top: 8px;
+}
+
+table.movies th[data-sorted-direction="ascending"]:after {
+  border-bottom-color: inherit;
+  margin-top: 3px;
+}
+
+table.movies td.title {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+table.movies td.image {
+  position: relative;
+  vertical-align: top;
+  img.play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    margin-top: -15px;
+    margin-left: -15px;
+    opacity: 0.4;
+  }
+  &:hover img.play {
+    opacity: 0.7;
+  }
+}
+
+table.movies td.score {
+  font-size: 1.2em;
+  font-weight: bold;
+  .wrap {
+    background-color: #428BCA;
+    color: #fff;
+    border-radius: 8px;
+    margin: 0 auto;
+    width: 32px;
+  }
+}
+
+table.movies thead th {
+  background-color: #EEEEEE;
+}
+
+table.movies tbody td {
+}
+
+table.movies tbody > tr:nth-child(odd) > td {
+  background-color: #f9f9f9;
+}
+
+table.movies th[data-sorted="true"] {
+  -webkit-box-shadow: inset 1px 0 #bce8f1, inset -1px 0 #bce8f1;
+  -moz-box-shadow: inset 1px 0 #bce8f1, inset -1px 0 #bce8f1;
+  box-shadow: inset 1px 0 #bce8f1, inset -1px 0 #bce8f1;
+  color: #3a87ad;
+  background: #d9edf7;
+
+}
+
+table.movies th[data-sorted="true"]:first-child {
+  -webkit-box-shadow: inset -1px 0 #bce8f1;
+  -moz-box-shadow: inset -1px 0 #bce8f1;
+  box-shadow: inset -1px 0 #bce8f1;
+}
+
+table.movies th[data-sorted="true"]:last-child {
+  -webkit-box-shadow: inset 1px 0 #bce8f1;
+  -moz-box-shadow: inset 1px 0 #bce8f1;
+  box-shadow: inset 1px 0 #bce8f1;
+}
+
+table.movies th[data-sorted="true"][data-sorted-direction="descending"]:after {
+}
+
+table.movies th[data-sorted="true"][data-sorted-direction="ascending"]:after {
+}

@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #F1F1F1;
+  font-family: "proxima-nova", "Helvetica Neue", sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "proxima-nova", "Helvetica Neue", sans-serif;
+  font-weight: 300;
+}
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.form-control {
+  box-shadow: none;
+}
+
+.col-centered{
+  float: none;
+  margin: 0 auto;
+}
+
+.container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  color: #AAAAAA;
+  font-weight: 300;
+}

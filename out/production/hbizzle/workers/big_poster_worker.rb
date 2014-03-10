@@ -5,8 +5,8 @@ class BigPosterWorker
     @movie = Movie.find(id)
 
     imdb_movie = Imdb::Movie.search(@movie.title).first
-    if imdb_movie and imdb_movie.poster
-      @movie.big_poster = Dragonfly.app.fetch_url(imdb_movie.poster).thumb('x260')
+    if imdb_movie
+      @movie.big_poster = Dragonfly.app.fetch_url(imdb_movie.poster).thumb('300x')
       @movie.save
     end
   end

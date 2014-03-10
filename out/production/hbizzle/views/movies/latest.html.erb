@@ -10,21 +10,15 @@
   
   <div class="clearfix"></div>
 
-    <h2 class="text-center">Just added!</h2>
-
   <div class="row movies">
     <% @movies.each do |movie| %>
-      <% if movie.big_poster_stored? %>
-        <div class="movie">
-          <%= link_to image_tag(movie.big_poster.remote_url(expires: 1.year.from_now), class: 'poster'), movie.hbo_link, target: "_blank" %>
-          <img src="http://dsbu8p9bw9q44.cloudfront.net/static/play.png" alt="play" class="play">
-        </div>
-      <% end %>
+      <div class="movie">
+        <%= image_tag movie.big_poster.thumb('x260').url if movie.big_poster_stored? %>
+      </div>
     <% end %>
   </div>
 
   <div class="row text-center">
     <h2><a href="/">See more on Hbizzle ></a></h2>
-      <p><em>Follow <a href="https://twitter.com/hbizzledotcom">@hbizzledotcom</a> on Twitter to get notified on the latest releases!</em></p>
   </div>
 </div>

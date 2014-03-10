@@ -21,6 +21,7 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'sidekiq'
 gem 'sidekiq-failures'
 gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'twitter'
 gem 'uglifier', '>= 1.3.0'
 gem 'unf'
 gem 'unicorn'

@@ -32,12 +32,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.latest
-    @movies = self.current.select{ |m| m.created_at > DateTime.now.beginning_of_week }
-  end
-
-  def self.notify_latest
-    @movies = Movie.latest
-    $twitter_client.update("Just added! \"#{@movies.first.title}\" - See more new movies at http://www.hbizzle.com/latest! #hbizzle")
+    @movies = self.current.select{ |m| m.created_at >= 10.days.ago }
   end
 
   def self.percentile_map(movies, action)
@@ -117,7 +112,7 @@ class Movie < ActiveRecord::Base
   end
 
   def hbo_link
-    "http://www.hbogo.com/#movies/video&assetID=#{self.hbo_id}?videoMode=embeddedVideo"
+    return "http://www.hbogo.com/#movies/video&assetID=#{self.hbo_id}?videoMode=embeddedVideo"
   end
 
   def image_url
@@ -133,7 +128,7 @@ class Movie < ActiveRecord::Base
   end
 
   def set_meta_score
-    if self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score
+    if (self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score)
       self.meta_score = (
         (
           self.imdb_rating_rating +
