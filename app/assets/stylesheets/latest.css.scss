@@ -1,4 +1,24 @@
 .latest {
+  .title a {
+    color: #4D4D4D;
+    font-weight: 300;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .beta {
+    color: #fff;
+    font-size: 0.3em;
+    padding: 3px 5px 2px 5px;
+    border-radius: 4px;
+    background: #428BCA;
+    position: relative;
+    bottom: 10px;
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+    }
+  }
   .movies {
     padding: 0 20px;
     text-align: center;

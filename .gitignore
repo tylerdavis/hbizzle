@@ -20,3 +20,6 @@
 /config/database.yml
 
 *.pyc
+
+# Idea Files
+*.iml
