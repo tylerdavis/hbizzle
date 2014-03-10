@@ -32,7 +32,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.latest
-    @movies = self.current.select{ |m| m.created_at > DateTime.now.beginning_of_week }
+    @movies = self.current.select{ |m| m.created_at > DateTime.now.beginning_of_week - 3.days }
   end
 
   def self.notify_latest

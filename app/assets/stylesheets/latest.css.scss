@@ -1,4 +1,5 @@
 .latest {
+  padding-bottom: 120px;
   .title a {
     color: #4D4D4D;
     font-weight: 300;
@@ -22,6 +23,7 @@
   .movies {
     padding: 0 20px;
     text-align: center;
+    display: none;
     .movie {
       background-color: white;
       display: inline-block;

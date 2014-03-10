@@ -15,4 +15,5 @@
 //= require angular-cookies
 //= require bootstrap/transition
 //= require bootstrap/modal
+//= require bootstrap/tooltip
 //= require_tree .
