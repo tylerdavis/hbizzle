@@ -2,6 +2,29 @@ $lightGrey: #F5F5F5;
 $grey: #DDDDDD;
 $greyBorder: 1px solid $grey;
 
+.announcement {
+  position: absolute;
+  left: 25%;
+  background: rgb(66, 139, 202);
+  color: #FFFFFF;
+  border-radius: 0 0 5px 5px;
+  font-size: 1.1em;
+  margin: 0;
+  padding: 4px 8px;
+  opacity: 0.8;
+  p {
+    margin: 0;
+    font-weight: 100;
+    a {
+      color: #FFFFFF;
+    }
+    i {
+      position: relative;
+      top: 3px;
+    }
+  }
+}
+
 .headline {
   float: left;
   margin-left: 30px;
