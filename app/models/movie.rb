@@ -28,11 +28,11 @@ class Movie < ActiveRecord::Base
       movie.set_rating('rotten_audience_score', @rotten_audience_map)
       movie.set_meta_score
     end
-    @movies.select! {|m| m.meta_score > 19}.sort! { |a, b| b.meta_score <=> a.meta_score }
+    @movies.select! {|m| m.meta_score > 19}
   end
 
   def self.latest
-    @movies = self.current.select{ |m| m.created_at > DateTime.now.beginning_of_week - 2.days }
+    @movies = self.current.select{ |m| m.id > (Movie.last.id - 10) }
   end
 
   def self.notify_latest

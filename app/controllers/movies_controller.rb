@@ -6,7 +6,7 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.current
+    @movies = Movie.current.sort! { |a, b| b.meta_score <=> a.meta_score }
   end
 
   def latest
