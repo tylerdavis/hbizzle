@@ -36,7 +36,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.notify_latest
-    @movies = Movie.latest
+    @movies = Movie.latest.sort! { |a, b| b.meta_score <=> a.meta_score }
     $twitter_client.update("Just added! \"#{@movies.first.title}\" - See more new movies at http://www.hbizzle.com/latest! #hbizzle")
   end
 
