@@ -20,11 +20,14 @@ gem 'rottentomatoes'
 gem 'sass-rails', '~> 4.0.0'
 gem 'sidekiq'
 gem 'sidekiq-failures'
+gem 'sidekiq-throttler'
 gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'themoviedb'
 gem 'twitter'
 gem 'uglifier', '>= 1.3.0'
 gem 'unf'
 gem 'unicorn'
+gem 'whenever', :require => false
 
 group :development do
   gem 'better_errors'
@@ -41,4 +44,4 @@ group :production do
   gem 'rails_12factor'
 end
 
-ruby "2.1.0"
+ruby '2.1.2'

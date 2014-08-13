@@ -1,6 +1,8 @@
 class RottenWorker
   include Sidekiq::Worker
 
+  sidekiq_options throttle: { threshold: 240, period: 1.minute }
+
   def perform(id)
     @movie = Movie.find(id)
     @rotten_movie = RottenMovie.find(:title => @movie.title, :limit => 1)

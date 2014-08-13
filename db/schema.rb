@@ -60,10 +60,7 @@ ActiveRecord::Schema.define(version: 20140210045804) do
     t.string   "rotten_audience_score"
     t.integer  "plays",                 default: 0
     t.string   "poster_uid"
-    t.integer  "provider"
     t.string   "big_poster_uid"
   end
-
-  add_index "movies", ["hbo_id"], name: "index_movies_on_hbo_id", unique: true, using: :btree
 
 end
