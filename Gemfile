@@ -2,9 +2,11 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.0.1'
 
+gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'angularjs-rails'
 gem 'bootstrap-sass', '~> 3.0.2.0'
-gem 'dragonfly', "~>1.0.0"
+gem 'devise'
+gem 'dragonfly', '~>1.0.0'
 gem 'dragonfly-s3_data_store'
 gem 'figaro'
 gem 'imdb'

@@ -1,3 +1,20 @@
+GIT
+  remote: git://github.com/gregbell/active_admin.git
+  revision: bf9dabe6a568f2e17a65c3310530cbba77dfce9c
+  specs:
+    activeadmin (1.0.0.pre)
+      arbre (~> 1.0)
+      bourbon
+      coffee-rails
+      formtastic (~> 2.3.0.rc3)
+      inherited_resources (~> 1.4.1)
+      jquery-rails
+      jquery-ui-rails (~> 5.0)
+      kaminari (~> 0.15)
+      rails (>= 3.2, < 4.2)
+      ransack (~> 1.0)
+      sass-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -27,8 +44,11 @@ GEM
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
     angularjs-rails (1.2.5)
+    arbre (1.0.1)
+      activesupport (>= 3.0.0)
     arel (4.0.1)
     atomic (1.1.14)
+    bcrypt (3.1.7)
     better_errors (1.0.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -36,6 +56,9 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.0.2.1)
       sass (~> 3.2)
+    bourbon (3.2.3)
+      sass (~> 3.2)
+      thor
     buftok (0.2.0)
     builder (3.1.4)
     callsite (0.0.11)
@@ -43,9 +66,22 @@ GEM
       timers (~> 1.1.0)
     chronic (0.10.2)
     coderay (1.1.0)
+    coffee-rails (4.0.1)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0, < 5.0)
+    coffee-script (2.3.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.7.1)
     connection_pool (1.2.0)
     debug_inspector (0.0.2)
     deepopenstruct (0.1.2)
+    devise (3.2.4)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     dragonfly (1.0.1)
       multi_json (~> 1.0)
       rack
@@ -72,6 +108,11 @@ GEM
       nokogiri (~> 1.5)
       ruby-hmac
     formatador (0.2.4)
+    formtastic (2.3.0.rc4)
+      actionpack (>= 3.0)
+    has_scope (0.6.0.rc)
+      actionpack (>= 3.2, < 5)
+      activesupport (>= 3.2, < 5)
     hashugar (0.0.6)
     hike (1.2.3)
     http (0.5.0)
@@ -83,13 +124,21 @@ GEM
     i18n (0.6.9)
     imdb (0.8.0)
       nokogiri (>= 1.6.0)
+    inherited_resources (1.4.1)
+      has_scope (~> 0.6.0.rc)
+      responders (~> 1.0.0.rc)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (5.0.0)
+      railties (>= 3.2.16)
     json (1.8.1)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.8.1)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -114,7 +163,10 @@ GEM
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     oj (2.4.3)
+    orm_adapter (0.5.0)
     pg (0.17.1)
+    polyamorous (1.0.0)
+      activerecord (>= 3.0)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-cache (1.2)
@@ -146,11 +198,19 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.12.0)
     rake (10.1.0)
+    ransack (1.2.3)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      i18n
+      polyamorous (~> 1.0.0)
     rdoc (3.12.2)
       json (~> 1.4)
     redis (3.0.6)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
+    responders (1.0.0)
+      railties (>= 3.2, < 5)
     rottentomatoes (1.1.0)
       deepopenstruct (>= 0.1.2)
       json
@@ -222,6 +282,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    warden (1.2.3)
+      rack (>= 1.0)
     whenever (0.9.2)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
@@ -230,10 +292,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activeadmin!
   angularjs-rails
   better_errors
   binding_of_caller
   bootstrap-sass (~> 3.0.2.0)
+  devise
   dragonfly (~> 1.0.0)
   dragonfly-s3_data_store
   figaro

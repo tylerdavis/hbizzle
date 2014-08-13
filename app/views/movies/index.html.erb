@@ -55,7 +55,7 @@
         <tbody ng-cloak>
           <tr ng-repeat="movie in (filteredMovies = (movies | filter:textFilter | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize))">
             <td class="title">
-              <a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a>
+              <a class="title" href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a>
               <br/>
               <a class="trailer" href="" ng-click="playTrailer(movie)">PLAY TRAILER</a>
             </td>

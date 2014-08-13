@@ -125,15 +125,21 @@ class Movie < ActiveRecord::Base
   end
 
   def image_url
-    (self.poster) ? self.poster.remote_url(expires: 1.year.from_now) : 'http://placekitten.com/200/300'
+    (self.poster) ? self.poster.remote_url(expires: 1.year.from_now) : self.image
   end
 
   def poster_url
-    (self.big_poster) ? self.big_poster.remote_url(expires: 1.year.from_now) : 'http://placekitten.com/200/300'
+    (self.big_poster) ? self.big_poster.remote_url(expires: 1.year.from_now) : self.image
   end
 
   def youtube
     'http://www.youtube.com/embed/' + self.youtube_id + '?autoplay=1&origin=http://hbizzle.com' if self.youtube_id
+  end
+
+  def simple_score
+    (self.rotten_critics_score && self.rotten_audience_score && self.imdb_rating) ?
+      ((self.rotten_critics_score.to_f + self.rotten_audience_score.to_f + (self.imdb_rating.to_f * 10)) / 3).round :
+      false
   end
 
   def play

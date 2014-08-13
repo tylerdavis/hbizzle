@@ -175,9 +175,12 @@ table.movies th[data-sorted-direction="ascending"]:after {
 table.movies td.title {
   padding-left: 20px;
   padding-right: 20px;
+  a.title {
+    font-size: 1.2em;
+  }
   a.trailer {
     color: #CCCCCC;
-    font-size: 0.9em;
+    font-size: 0.8em;
   }
 }
 
