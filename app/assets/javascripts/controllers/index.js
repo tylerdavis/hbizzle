@@ -1,6 +1,6 @@
-angular.module('controllers.index', ['filters.start_from', 'ngCookies', 'ui.bootstrap', 'ui.bootstrap.tpls', 'factories.youtube']);
-angular.module('controllers.index').controller('IndexCtrl', ['$cookies', '$http', '$scope', 'Youtube',
-  function ($cookies, $http, $scope, Youtube) {
+angular.module('controllers.index', ['filters.start_from', 'ngCookies', 'ui.bootstrap', 'ui.bootstrap.tpls']);
+angular.module('controllers.index').controller('IndexCtrl', ['$cookies', '$http', '$scope',
+  function ($cookies, $http, $scope) {
 
     $scope.currentPage = 1;
     $scope.movies = window.movies;
