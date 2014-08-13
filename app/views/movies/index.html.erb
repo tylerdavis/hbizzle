@@ -54,7 +54,11 @@
 
         <tbody ng-cloak>
           <tr ng-repeat="movie in (filteredMovies = (movies | filter:textFilter | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize))">
-            <td class="title"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a></td>
+            <td class="title">
+              <a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a>
+              <br/>
+              <a class="trailer" href="" ng-click="playTrailer(movie)">PLAY TRAILER</a>
+            </td>
             <td class="image hidden-xs text-center" width="180px"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank"><img ng-src="{{ movie.image_url }}" style="width:170px"><img src="http://dsbu8p9bw9q44.cloudfront.net/static/play.png" alt="play" class="play"></a></td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
             <td class="text-center hidden-xs">{{ movie.created_at | date:'shortDate' }}</td>
@@ -85,9 +89,13 @@
     <p>Made with ambivalence by <a href="http://www.twitter.com/tylermdavis">@tylermdavis</a>.</p>
     <p>Code available on <a href="https://github.com/tylerdavis/hbizzle">Github</a>, licensed under <a href="http://opensource.org/licenses/MIT">MIT</a>.</p>
   </footer>
-
+  
+  <div id="trailer-container" ng-click="stopTrailer()">
+    <h2><a href="" ng-click="stopTrailer()">CLOSE</a></h2>
+  </div>
+  
   <script>
-    window.movies = <%= raw @movies.to_json(except: [:id, :expire, :updated_at, :poster_uid, :image, :imdb_link, :imdb_rating, :rotten_critics_score, :rotten_audience_score, :plays, :provider], methods: [:hbo_link, :image_url, :meta_score]) %>;
+    window.movies = <%= raw @movies.to_json(except: [:id, :expire, :updated_at, :poster_uid, :image, :imdb_link, :imdb_rating, :rotten_critics_score, :rotten_audience_score, :plays, :provider], methods: [:hbo_link, :image_url, :meta_score, :youtube]) %>;
   </script>
 
 </div>

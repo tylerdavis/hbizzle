@@ -116,16 +116,24 @@ class Movie < ActiveRecord::Base
     RottenWorker.perform_async(self.id)
   end
 
+  def fetch_youtube
+    YoutubeWorker.perform_async(self.id)
+  end
+
   def hbo_link
     "http://www.hbogo.com/#movies/video&assetID=#{self.hbo_id}?videoMode=embeddedVideo"
   end
 
   def image_url
-    self.poster.remote_url(expires: 1.year.from_now)
+    (self.poster) ? self.poster.remote_url(expires: 1.year.from_now) : 'http://placekitten.com/200/300'
   end
 
   def poster_url
     (self.big_poster) ? self.big_poster.remote_url(expires: 1.year.from_now) : 'http://placekitten.com/200/300'
+  end
+
+  def youtube
+    'http://www.youtube.com/embed/' + self.youtube_id + '?autoplay=1&origin=http://hbizzle.com' if self.youtube_id
   end
 
   def play

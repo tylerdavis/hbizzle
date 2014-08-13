@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140210045804) do
+ActiveRecord::Schema.define(version: 20140813043247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20140210045804) do
     t.integer  "plays",                 default: 0
     t.string   "poster_uid"
     t.string   "big_poster_uid"
+    t.string   "youtube_id"
   end
 
 end

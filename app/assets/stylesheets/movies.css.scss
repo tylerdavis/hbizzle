@@ -175,6 +175,10 @@ table.movies th[data-sorted-direction="ascending"]:after {
 table.movies td.title {
   padding-left: 20px;
   padding-right: 20px;
+  a.trailer {
+    color: #CCCCCC;
+    font-size: 0.9em;
+  }
 }
 
 table.movies td.image {
@@ -242,4 +246,22 @@ table.movies th[data-sorted="true"][data-sorted-direction="descending"]:after {
 }
 
 table.movies th[data-sorted="true"][data-sorted-direction="ascending"]:after {
+}
+
+#trailer-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  padding-top: 20px;
+  display: none;
+  a {
+    color: #FFF;
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
