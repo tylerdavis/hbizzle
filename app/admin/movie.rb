@@ -1,22 +1,23 @@
 ActiveAdmin.register Movie do
 
 
-  # See permitted parameters documentation:
-  # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #  permitted = [:permitted, :attributes]
-  #  permitted << :other if resource.something?
-  #  permitted
-  # end
+  scope :all do
+    Movie.all
+  end
+
+  scope :current do
+    Movie.where("expire >= ?", Time.now)
+  end
+
+  scope :no_youtube do
+    Movie.where(youtube_id: nil)
+  end
+
+  scope :missing_score do
+    Movie.where('CAST(rotten_critics_score AS float8) < 1 OR CAST(rotten_audience_score AS float8) < 1 OR imdb_rating = null OR rotten_critics_score = null OR rotten_audience_score = null')
+  end
 
   permit_params :expire,
-                :image,
-                :imdb_link,
                 :imdb_rating,
                 :rating,
                 :summary,
@@ -24,18 +25,53 @@ ActiveAdmin.register Movie do
                 :year,
                 :rotten_critics_score,
                 :rotten_audience_score,
-                :plays
+                :plays,
+                :youtube
 
   index do
-    column :title
+    column :title do |movie|
+      link_to movie.title, admin_movie_path(movie)
+    end
     column :image do |movie|
       image_tag movie.image_url, style: 'max-width: 100px;'
     end
-    column :simple_score do |movie|
-      movie.simple_score || 'Missing Data'
-    end
+    column :simple_score
     column :created_at
     column :expire
-    actions
   end
+
+  show do
+    attributes_table do
+      row :title
+      row :image do
+        image_tag movie.image_url
+      end
+      row :trailer do
+        link_to 'Trailer', "https://www.youtube.com/watch?v=#{movie.youtube_id}" if movie.youtube_id.present?
+      end
+      row :year
+      row :rating
+      row :summary
+      row :title
+      row :rotten_critics_score
+      row :rotten_audience_score
+      row :plays
+    end
+  end
+
+  form do |f|
+    f.semantic_errors
+    f.inputs :expire,
+             :imdb_link,
+             :imdb_rating,
+             :rating,
+             :summary,
+             :title,
+             :year,
+             :rotten_critics_score,
+             :rotten_audience_score,
+             :youtube_id
+    f.actions
+  end
+
 end
