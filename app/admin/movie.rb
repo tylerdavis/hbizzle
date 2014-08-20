@@ -53,6 +53,7 @@ ActiveAdmin.register Movie do
       row :rating
       row :summary
       row :title
+      row :imdb_rating
       row :rotten_critics_score
       row :rotten_audience_score
       row :plays
