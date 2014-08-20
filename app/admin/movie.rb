@@ -14,7 +14,7 @@ ActiveAdmin.register Movie do
   end
 
   scope :missing_score do
-    Movie.where('imdb_rating = null OR rotten_critics_score = null OR rotten_audience_score = null')
+    Movie.where("imdb_rating = null OR rotten_critics_score = null OR rotten_audience_score = null AND expire >= ?", Time.now)
   end
 
   permit_params :expire,
