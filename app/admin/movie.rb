@@ -1,20 +1,15 @@
 ActiveAdmin.register Movie do
 
-
-  scope :all do
-    Movie.all
-  end
-
   scope :current do
-    Movie.where("expire >= ?", Time.now).sort_by { |movie| movie.created_at }.reverse!
+    Movie.order("created_at DESC").where("expire >= ?", Time.now)
   end
 
   scope :no_youtube do
-    Movie.where("youtube_id IS NULL AND expire >= ?", Time.now).sort_by { |movie| movie.created_at }.reverse!
+    Movie.order("created_at DESC").where("youtube_id IS NULL AND expire >= ?", Time.now)
   end
 
   scope :missing_score do
-    Movie.where("imdb_rating IS NULL OR rotten_critics_score IS NULL OR rotten_audience_score IS NULL AND expire >= ?", Time.now).sort_by { |movie| movie.created_at }.reverse!
+    Movie.order("created_at DESC").where("imdb_rating IS NULL OR rotten_critics_score IS NULL OR rotten_audience_score IS NULL AND expire >= ?", Time.now)
   end
 
   permit_params :expire,
@@ -44,18 +39,40 @@ ActiveAdmin.register Movie do
     attributes_table do
       row :title
       row :image do
-        image_tag movie.image_url
+        image_tag movie.image_url, style: 'max-width: 400px;'
       end
       row :trailer do
-        link_to 'Trailer', "https://www.youtube.com/watch?v=#{movie.youtube_id}" if movie.youtube_id.present?
+        if movie.youtube_id.nil?
+          link_to_youtube_search movie
+        else
+          link_to_youtube_video(movie)
+        end
       end
       row :year
       row :rating
       row :summary
       row :title
-      row :imdb_rating
-      row :rotten_critics_score
-      row :rotten_audience_score
+      row :imdb_rating do
+        if movie.imdb_rating.nil?
+          link_to_google_search(movie, :google)
+        else
+          movie.imdb_rating
+        end
+      end
+      row :rotten_critics_score do
+        if movie.rotten_critics_score.nil?
+          link_to_google_search(movie, :rotten_tomatoes)
+        else
+          movie.rotten_critics_score
+        end
+      end
+      row :rotten_audience_score do
+        if movie.rotten_audience_score.nil?
+          link_to_google_search(movie, :rotten_tomatoes)
+        else
+          movie.rotten_audience_score
+        end
+      end
       row :plays
     end
   end
@@ -75,4 +92,16 @@ ActiveAdmin.register Movie do
     f.actions
   end
 
+end
+
+def link_to_google_search(movie, provider)
+  link_to 'Find on Google', "http://www.google.com/search?ie=UTF-8&q=#{provider.to_s.gsub('_', ' ')} #{movie.title}", :target => "_blank"
+end
+
+def link_to_youtube_search(movie)
+  link_to 'Find on Youtube', "https://www.youtube.com/results?search_query=#{movie.title} search", :target => "_blank"
+end
+
+def link_to_youtube_video(movie)
+  link_to 'Trailer', "https://www.youtube.com/watch?v=#{movie.youtube_id}", :target => "_blank"
 end
