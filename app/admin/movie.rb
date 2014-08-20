@@ -10,11 +10,11 @@ ActiveAdmin.register Movie do
   end
 
   scope :no_youtube do
-    Movie.where("youtube_id = null AND expire >= ?", Time.now)
+    Movie.where("youtube_id IS NULL AND expire >= ?", Time.now)
   end
 
   scope :missing_score do
-    Movie.where("imdb_rating = null OR rotten_critics_score = null OR rotten_audience_score = null AND expire >= ?", Time.now)
+    Movie.where("imdb_rating IS NULL OR rotten_critics_score IS NULL OR rotten_audience_score IS NULL AND expire >= ?", Time.now)
   end
 
   permit_params :expire,
