@@ -10,7 +10,7 @@ ActiveAdmin.register Movie do
   end
 
   scope :no_youtube do
-    Movie.where(youtube_id: nil)
+    Movie.where("youtube_id = null AND expire >= ?", Time.now)
   end
 
   scope :missing_score do
