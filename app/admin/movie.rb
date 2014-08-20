@@ -99,7 +99,7 @@ def link_to_google_search(movie, provider)
 end
 
 def link_to_youtube_search(movie)
-  link_to 'Find on Youtube', "https://www.youtube.com/results?search_query=#{movie.title} search", :target => "_blank"
+  link_to 'Find on Youtube', "https://www.youtube.com/results?search_query=#{movie.title} trailer", :target => "_blank"
 end
 
 def link_to_youtube_video(movie)
