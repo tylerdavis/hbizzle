@@ -55,6 +55,7 @@ class Movie < ActiveRecord::Base
     self.fetch_posters
     self.fetch_imdb_info
     self.fetch_rotten_info
+    self.fetch_trailer
   end
 
   def self.fetch_listing
@@ -100,6 +101,12 @@ class Movie < ActiveRecord::Base
     end
   end
 
+  def self.fetch_trailer
+    Movie.where(youtube_id: nil).each do |movie|
+      movie.fetch_trailer
+    end
+  end
+
   def fetch_imdb_info
     ImdbWorker.perform_async(self.id)
   end
@@ -116,7 +123,7 @@ class Movie < ActiveRecord::Base
     RottenWorker.perform_async(self.id)
   end
 
-  def fetch_youtube
+  def fetch_trailer
     YoutubeWorker.perform_async(self.id)
   end
 
