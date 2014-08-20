@@ -6,15 +6,15 @@ ActiveAdmin.register Movie do
   end
 
   scope :current do
-    Movie.where("expire >= ?", Time.now)
+    Movie.where("expire >= ?", Time.now).sort_by { |movie| movie.created_at }.reverse!
   end
 
   scope :no_youtube do
-    Movie.where("youtube_id IS NULL AND expire >= ?", Time.now)
+    Movie.where("youtube_id IS NULL AND expire >= ?", Time.now).sort_by { |movie| movie.created_at }.reverse!
   end
 
   scope :missing_score do
-    Movie.where("imdb_rating IS NULL OR rotten_critics_score IS NULL OR rotten_audience_score IS NULL AND expire >= ?", Time.now)
+    Movie.where("imdb_rating IS NULL OR rotten_critics_score IS NULL OR rotten_audience_score IS NULL AND expire >= ?", Time.now).sort_by { |movie| movie.created_at }.reverse!
   end
 
   permit_params :expire,
