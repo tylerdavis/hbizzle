@@ -21,7 +21,7 @@ ActiveAdmin.register Movie do
                 :rotten_critics_score,
                 :rotten_audience_score,
                 :plays,
-                :youtube
+                :youtube_id
 
   index do
     column :title do |movie|
