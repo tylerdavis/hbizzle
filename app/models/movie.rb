@@ -15,17 +15,17 @@ class Movie < ActiveRecord::Base
 
   def self.current
     @movies = self.where("expire >= ?", Time.now).order('plays').select {|m| !m.title.downcase.include? 'hbo'}
-    @play_map = self.percentile_map(@movies, 'plays')
-    @recency_map = self.percentile_map(@movies, 'created_at')
-    @imdb_map = self.percentile_map(@movies, 'imdb_rating')
-    @rotten_critics_map = self.percentile_map(@movies, 'rotten_critics_score')
-    @rotten_audience_map = self.percentile_map(@movies, 'rotten_audience_score')
+    # @play_map = self.percentile_map(@movies, 'plays')
+    # @recency_map = self.percentile_map(@movies, 'created_at')
+    # @imdb_map = self.percentile_map(@movies, 'imdb_rating')
+    # @rotten_critics_map = self.percentile_map(@movies, 'rotten_critics_score')
+    # @rotten_audience_map = self.percentile_map(@movies, 'rotten_audience_score')
     @movies.each do |movie|
-      movie.set_rating('plays', @play_map)
-      movie.set_rating('created_at', @recency_map)
-      movie.set_rating('imdb_rating', @imdb_map)
-      movie.set_rating('rotten_critics_score', @rotten_critics_map)
-      movie.set_rating('rotten_audience_score', @rotten_audience_map)
+      movie.set_rating_from_cached_map('plays')
+      movie.set_rating_from_cached_map('created_at')
+      movie.set_rating_from_cached_map('imdb_rating')
+      movie.set_rating_from_cached_map('rotten_critics_score')
+      movie.set_rating_from_cached_map('rotten_audience_score')
       movie.set_meta_score
     end
     @movies.select! {|m| m.meta_score > 19}
@@ -50,12 +50,20 @@ class Movie < ActiveRecord::Base
     return percentile_map
   end
 
+  def self.set_cached_maps
+    @movies = self.where('expire >= ?', Time.now).order('plays').select {|m| !m.title.downcase.include? 'hbo'}
+    %w(plays created_at imdb_rating rotten_critics_score rotten_audience_score).each do |field|
+      MovieCache.set_map_cache(field, self.percentile_map(@movies, field))
+    end
+  end
+
   def self.fetch_update
     self.fetch_listing
     self.fetch_posters
     self.fetch_imdb_info
     self.fetch_rotten_info
     self.fetch_trailer
+    self.set_cached_maps
   end
 
   def self.fetch_listing
@@ -171,6 +179,10 @@ class Movie < ActiveRecord::Base
 
   def set_rating(value, percentile_map)
     self.instance_variable_set("@#{value.to_s}_rating", percentile_map[self[value].to_f])
+  end
+
+  def set_rating_from_cached_map(name)
+    self.instance_variable_set("@#{name.to_s}_rating", MovieCache.get_cached_map_value(name, self[name]))
   end
 
 end
