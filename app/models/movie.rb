@@ -66,6 +66,7 @@ class Movie < ActiveRecord::Base
   def self.fetch_update
     self.fetch_listing
     self.fetch_posters
+    self.fetch_big_posters
     self.fetch_imdb_info
     self.fetch_rotten_info
     self.fetch_trailer
