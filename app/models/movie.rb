@@ -37,12 +37,12 @@ class Movie < ActiveRecord::Base
   def self.latest
     @movies = self.current.order('created_at DESC')
     @movies = @movies.select { |movie| movie.created_at == @movies.first.created_at }
-    @movies = @movies.sort { |a, b| a.meta_score <=> b.meta_score }
+    @movies = @movies.sort! { |a, b| a.meta_score <=> b.meta_score }
     @movies
   end
 
   def self.notify_latest
-    @movies = Movie.latest.sort! { |a, b| b.meta_score <=> a.meta_score }
+    @movies = Movie.latest
     $twitter_client.update("Just added! \"#{@movies.first.title}\" - See more new movies at http://www.hbizzle.com/latest! #hbizzle")
   end
 
