@@ -10,4 +10,8 @@ module MovieCache
     $redis.hgetall("#{PREFIX}#{name}")[field.to_f.to_s].to_i
   end
 
+  def self.get_cached_map(name)
+    $redis.hgetall("#{PREFIX}#{name}")
+  end
+
 end

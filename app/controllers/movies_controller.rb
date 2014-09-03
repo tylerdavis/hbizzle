@@ -6,7 +6,7 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.current.sort! { |a, b| b.meta_score <=> a.meta_score }
+    @movies = Movie.current.sort { |a, b| b.meta_score <=> a.meta_score }
   end
 
   def latest
@@ -44,12 +44,8 @@ class MoviesController < ApplicationController
   end
 
   def play
-    @movie.play
-    if @movie.save
-      render json: {}, status: :ok
-    else
-      render json: @movie.errors, status: :unprocessable_entity
-    end
+    @movie.play!
+    render json: {}, status: :ok
   end
 
   # PATCH/PUT /movies/1

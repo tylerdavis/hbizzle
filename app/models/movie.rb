@@ -11,28 +11,34 @@ class Movie < ActiveRecord::Base
   dragonfly_accessor :big_poster
   dragonfly_accessor :poster
 
+  scope :active, -> { where("expire >= ? and position('hbo' in lower(title)) = 0", Time.now) }
+
   HBO_XML_URL = 'http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'
 
   def self.current
-    @movies = self.where("expire >= ?", Time.now).order('plays').select {|m| !m.title.downcase.include? 'hbo'}
-    # @play_map = self.percentile_map(@movies, 'plays')
-    # @recency_map = self.percentile_map(@movies, 'created_at')
-    # @imdb_map = self.percentile_map(@movies, 'imdb_rating')
-    # @rotten_critics_map = self.percentile_map(@movies, 'rotten_critics_score')
-    # @rotten_audience_map = self.percentile_map(@movies, 'rotten_audience_score')
+    @play_map = MovieCache.get_cached_map('plays')
+    @recency_map = MovieCache.get_cached_map('created_at')
+    @imdb_map = MovieCache.get_cached_map('imdb_rating')
+    @rotten_critics_map = MovieCache.get_cached_map('rotten_critics_score')
+    @rotten_audience_map = MovieCache.get_cached_map('rotten_audience_score')
+
+    @movies = self.active
     @movies.each do |movie|
-      movie.set_rating_from_cached_map('plays')
-      movie.set_rating_from_cached_map('created_at')
-      movie.set_rating_from_cached_map('imdb_rating')
-      movie.set_rating_from_cached_map('rotten_critics_score')
-      movie.set_rating_from_cached_map('rotten_audience_score')
+      movie.set_rating('plays', @play_map)
+      movie.set_rating('created_at', @recency_map)
+      movie.set_rating('imdb_rating', @imdb_map)
+      movie.set_rating('rotten_critics_score', @rotten_critics_map)
+      movie.set_rating('rotten_audience_score', @rotten_audience_map)
       movie.set_meta_score
     end
-    @movies.select! {|m| m.meta_score > 19}
+    @movies
   end
 
   def self.latest
-    @movies = self.current.select{ |m| m.id > (Movie.last.id - 10) }
+    @movies = self.current.order('created_at DESC')
+    @movies = @movies.select { |movie| movie.created_at == @movies.first.created_at }
+    @movies = @movies.sort { |a, b| a.meta_score <=> b.meta_score }
+    @movies
   end
 
   def self.notify_latest
@@ -51,7 +57,7 @@ class Movie < ActiveRecord::Base
   end
 
   def self.set_cached_maps
-    @movies = self.where('expire >= ?', Time.now).order('plays').select {|m| !m.title.downcase.include? 'hbo'}
+    @movies = self.active
     %w(plays created_at imdb_rating rotten_critics_score rotten_audience_score).each do |field|
       MovieCache.set_map_cache(field, self.percentile_map(@movies, field))
     end
@@ -157,8 +163,9 @@ class Movie < ActiveRecord::Base
       false
   end
 
-  def play
+  def play!
     self.plays += 1
+    self.save
   end
 
   def set_meta_score
@@ -178,7 +185,7 @@ class Movie < ActiveRecord::Base
   end
 
   def set_rating(value, percentile_map)
-    self.instance_variable_set("@#{value.to_s}_rating", percentile_map[self[value].to_f])
+    self.instance_variable_set("@#{value.to_s}_rating", percentile_map[self[value].to_f.to_s].to_i)
   end
 
   def set_rating_from_cached_map(name)

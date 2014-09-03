@@ -4,16 +4,21 @@ require 'dragonfly'
 Dragonfly.app.configure do
   plugin :imagemagick
 
-  protect_from_dos_attacks true
-  secret ENV['DRAGONFLY_SECRET']
+  secret "9e3dcf213f38eea3486f6ba6891a029e5a49ce1a2f588766ab82f46fa211f188"
 
   url_format "/media/:job/:name"
 
-  datastore :s3,
-    bucket_name: ENV['AWS_BUCKET'],
-    access_key_id: ENV['AWS_ACCESS_KEY'],
-    secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-    url_host: 'dsbu8p9bw9q44.cloudfront.net'
+  if Rails.env.development?
+    datastore :file,
+              root_path: Rails.root.join('public/system/dragonfly', Rails.env),
+              server_root: Rails.root.join('public')
+  elsif Rails.env.production?
+    datastore :s3,
+              bucket_name: ENV['AWS_BUCKET'],
+              access_key_id: ENV['AWS_ACCESS_KEY'],
+              secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+              url_host: 'dsbu8p9bw9q44.cloudfront.net'
+  end
 
 end
 
