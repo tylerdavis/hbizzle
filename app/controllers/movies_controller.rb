@@ -72,6 +72,11 @@ class MoviesController < ApplicationController
     end
   end
 
+  def tweet_update
+    Movie.notify_latest unless current_admin_user.nil?
+    redirect_to admin_dashboard_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_movie

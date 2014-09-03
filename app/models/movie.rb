@@ -16,34 +16,35 @@ class Movie < ActiveRecord::Base
   HBO_XML_URL = 'http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'
 
   def self.current
-    @play_map = MovieCache.get_cached_map('plays')
-    @recency_map = MovieCache.get_cached_map('created_at')
-    @imdb_map = MovieCache.get_cached_map('imdb_rating')
-    @rotten_critics_map = MovieCache.get_cached_map('rotten_critics_score')
-    @rotten_audience_map = MovieCache.get_cached_map('rotten_audience_score')
+    play_map = MovieCache.get_cached_map('plays')
+    recency_map = MovieCache.get_cached_map('created_at')
+    imdb_map = MovieCache.get_cached_map('imdb_rating')
+    rotten_critics_map = MovieCache.get_cached_map('rotten_critics_score')
+    rotten_audience_map = MovieCache.get_cached_map('rotten_audience_score')
 
-    @movies = self.active
-    @movies.each do |movie|
-      movie.set_rating('plays', @play_map)
-      movie.set_rating('created_at', @recency_map)
-      movie.set_rating('imdb_rating', @imdb_map)
-      movie.set_rating('rotten_critics_score', @rotten_critics_map)
-      movie.set_rating('rotten_audience_score', @rotten_audience_map)
+    movies = self.active
+    movies.each do |movie|
+      movie.set_rating('plays', play_map)
+      movie.set_rating('created_at', recency_map)
+      movie.set_rating('imdb_rating', imdb_map)
+      movie.set_rating('rotten_critics_score', rotten_critics_map)
+      movie.set_rating('rotten_audience_score', rotten_audience_map)
       movie.set_meta_score
     end
-    @movies
+    movies
   end
 
   def self.latest
-    @movies = self.current.order('created_at DESC')
-    @movies = @movies.select { |movie| movie.created_at == @movies.first.created_at }
-    @movies = @movies.sort! { |a, b| a.meta_score <=> b.meta_score }
-    @movies
+    movies = self.current.sort_by { |m| m.created_at }.reverse
+    latest_movies = movies.select { |m| m.created_at == movies.first.created_at }
+    latest_movies.sort_by! { |m| m.meta_score }.reverse
   end
 
   def self.notify_latest
     @movies = Movie.latest
-    $twitter_client.update("Just added! \"#{@movies.first.title}\" - See more new movies at http://www.hbizzle.com/latest! #hbizzle")
+    if Rails.env.production?
+      $twitter_client.update("Just added! \"#{@movies.first.title}\" - See more new movies at http://www.hbizzle.com/latest! #hbizzle")
+    end
   end
 
   def self.percentile_map(movies, action)

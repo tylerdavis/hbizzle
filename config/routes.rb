@@ -11,6 +11,8 @@ Rbo::Application.routes.draw do
 
   post '/play' => 'movies#play'
 
+  get '/admin/tweet_update' => 'movies#tweet_update', as: 'tweet_update'
+
   mount Sidekiq::Web => '/sidekiq'
 
 end
