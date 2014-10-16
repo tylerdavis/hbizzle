@@ -20,14 +20,14 @@ class CreatePlatformMovies < ActiveRecord::Migration
     remove_column :movies, :expire
     remove_column :movies, :imdb_link
 
-    add_column :movies, :imdb_id
-    add_column :movies, :rotten_tomatoes_id
+    add_column :movies, :imdb_id, :string
+    add_column :movies, :rotten_tomatoes_id, :string
   end
 
   def down
-    add_column :movies, :hbo_id
-    add_column :movies, :expire
-    add_column :movies, :imdb_link
+    add_column :movies, :hbo_id, :string
+    add_column :movies, :expire, :datetime
+    add_column :movies, :imdb_link, :string
 
     PlatformMovie.all.each do |pm|
       movie = pm.movie
