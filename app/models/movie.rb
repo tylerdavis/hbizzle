@@ -19,7 +19,8 @@ class Movie < ActiveRecord::Base
 
   # Main Update Function - This should go somewhere else
   def self.fetch_update
-    PlatformMovie.fetch_listing
+    ShowtimeMovie.fetch_listing
+    HboMovie.fetch_listing
     self.fetch_big_posters
     self.fetch_imdb_info
     self.fetch_rotten_info
