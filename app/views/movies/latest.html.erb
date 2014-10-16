@@ -14,10 +14,10 @@
 
   <div class="row movies">
     <% @movies.each do |movie| %>
-      <% if movie.big_poster_stored? %>
-        <div class="movie" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<h2><%= movie.title %></h2><p><%= movie.created_at.strftime("%B %d, %Y") %></p><p><%= movie.summary %></p>">
-          <%= link_to(movie.hbo_link, target: "_blank") do %>
-            <%= image_tag(movie.big_poster.remote_url(expires: 1.year.from_now), class: 'poster') %>
+      <% unless movie.movie.image_url.nil? %>
+        <div class="movie" data-toggle="tooltip" data-placement="bottom" data-html="true" title="<h2><%= movie.movie.title %></h2><p><%= movie.started.strftime("%B %d, %Y") %></p><p><%= movie.movie.summary %></p>">
+          <%= link_to(movie.platform_link, target: "_blank") do %>
+            <%= image_tag(movie.movie.big_poster.remote_url(expires: 1.year.from_now), class: 'poster') %>
             <img src="http://dsbu8p9bw9q44.cloudfront.net/static/play.png" alt="play" class="play">
           <% end %>
         </div>

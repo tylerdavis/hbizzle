@@ -6,11 +6,24 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.current.sort { |a, b| b.meta_score <=> a.meta_score }
+    @movies = PlatformMovie.current.sort { |a, b| b.meta_score <=> a.meta_score }.collect do |movie|
+      {
+        image_url: movie.movie.image_url,
+        platform_link: movie.platform_link,
+        platform: (movie.type == 'HboMovie') ? 'hbo' : 'Showtime',
+        meta_score: movie.meta_score,
+        youtube: movie.movie.youtube,
+        title: movie.movie.title,
+        summary: movie.movie.summary,
+        rating: movie.movie.rating,
+        year: movie.movie.year,
+        created_at: movie.started
+      }
+    end
   end
 
   def latest
-    @movies = Movie.latest
+    @movies = PlatformMovie.latest
   end
 
   # GET /movies/1

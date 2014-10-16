@@ -1,62 +1,15 @@
 class Movie < ActiveRecord::Base
 
+  has_many :platform_movies
   has_and_belongs_to_many :actors
   has_and_belongs_to_many :directors
 
-  attr_accessor :meta_score, :plays_rating, :created_at_rating, :imdb_rating_rating, :rotten_critics_score_rating, :rotten_audience_score_rating
-
   validates :title, uniqueness: true
-  validates :hbo_id, uniqueness: true
 
   dragonfly_accessor :big_poster
   dragonfly_accessor :poster
 
-  scope :active, -> { where("expire >= ? and position('hbo' in lower(title)) = 0", Time.now) }
-
-  HBO_XML_URL = 'http://catalog.lv3.hbogo.com/apps/mediacatalog/rest/productBrowseService/HBO/category/INDB487'
-
-  def self.current
-    play_map = MovieCache.get_cached_map('plays')
-    recency_map = MovieCache.get_cached_map('created_at')
-    imdb_map = MovieCache.get_cached_map('imdb_rating')
-    rotten_critics_map = MovieCache.get_cached_map('rotten_critics_score')
-    rotten_audience_map = MovieCache.get_cached_map('rotten_audience_score')
-
-    movies = self.active
-    movies.each do |movie|
-      movie.set_rating('plays', play_map)
-      movie.set_rating('created_at', recency_map)
-      movie.set_rating('imdb_rating', imdb_map)
-      movie.set_rating('rotten_critics_score', rotten_critics_map)
-      movie.set_rating('rotten_audience_score', rotten_audience_map)
-      movie.set_meta_score
-    end
-    movies
-  end
-
-  def self.latest
-    movies = self.current.sort_by { |m| m.created_at }.reverse
-    latest_movies = movies.select { |m| m.created_at == movies.first.created_at }
-    latest_movies.sort_by! { |m| m.meta_score }.reverse
-  end
-
-  def self.notify_latest
-    @movies = Movie.latest
-    if Rails.env.production?
-      $twitter_client.update("Just added! \"#{@movies.first.title}\" - See more new movies at http://www.hbizzle.com/latest! #hbizzle")
-    end
-  end
-
-  def self.percentile_map(movies, action)
-    movie_array = movies.map {|m| m[action].to_f}.uniq.sort
-    count = movie_array.count
-    percentile_map = {}
-    movie_array.each_with_index do |key, index|
-      percentile_map[key] = ((index + 1) / count.to_f * 100).round
-    end
-    return percentile_map
-  end
-
+  # Updated Cached Percentile Maps
   def self.set_cached_maps
     @movies = self.active
     %w(plays created_at imdb_rating rotten_critics_score rotten_audience_score).each do |field|
@@ -64,33 +17,14 @@ class Movie < ActiveRecord::Base
     end
   end
 
+  # Main Update Function - This should go somewhere else
   def self.fetch_update
-    self.fetch_listing
-    self.fetch_posters
+    PlatformMovie.fetch_listing
     self.fetch_big_posters
     self.fetch_imdb_info
     self.fetch_rotten_info
     self.fetch_trailer
-    self.set_cached_maps
-  end
-
-  def self.fetch_listing
-    xml = Nokogiri::XML(open(HBO_XML_URL))
-    hbo_features = Hash.from_xml(xml.to_s)['response']['body']['productResponses']['featureResponse']
-    hbo_features.each do |feature|
-      if self.where(hbo_id: feature['TKey']).blank?
-        @movie = self.new(
-          expire: feature['endDate'],
-          hbo_id: feature['TKey'],
-          title: feature['title'],
-          rating: feature['ratingResponse']['ratingDisplay'],
-          summary: feature['summary'],
-          year: feature['year'].to_s,
-          image: feature['imageResponses'].first['resourceUrl']
-        )
-        @movie.save
-      end
-    end
+    PlatformMovie.set_cached_maps
   end
 
   def self.fetch_imdb_info
@@ -143,12 +77,8 @@ class Movie < ActiveRecord::Base
     YoutubeWorker.perform_async(self.id)
   end
 
-  def hbo_link
-    "http://www.hbogo.com/#movies/video&assetID=#{self.hbo_id}?videoMode=embeddedVideo"
-  end
-
   def image_url
-    (self.poster) ? self.poster.remote_url(expires: 1.year.from_now) : self.image
+    (self.big_poster) ? self.big_poster.remote_url(expires: 1.year.from_now) : nil
   end
 
   def poster_url
@@ -157,41 +87,6 @@ class Movie < ActiveRecord::Base
 
   def youtube
     'http://www.youtube.com/embed/' + self.youtube_id + '?autoplay=1&origin=http://hbizzle.com' if self.youtube_id
-  end
-
-  def simple_score
-    (self.rotten_critics_score && self.rotten_audience_score && self.imdb_rating) ?
-      ((self.rotten_critics_score.to_f + self.rotten_audience_score.to_f + (self.imdb_rating.to_f * 10)) / 3).round :
-      false
-  end
-
-  def play!
-    self.plays += 1
-    self.save
-  end
-
-  def set_meta_score
-    if self.imdb_rating && self.rotten_critics_score && self.rotten_audience_score
-      self.meta_score = (
-        (
-          self.imdb_rating_rating +
-          self.rotten_critics_score_rating + 
-          self.rotten_audience_score_rating +
-          self.plays_rating +
-          self.created_at_rating * 1.2
-        ) / 5
-      ).round
-    else
-      self.meta_score = 0
-    end
-  end
-
-  def set_rating(value, percentile_map)
-    self.instance_variable_set("@#{value.to_s}_rating", percentile_map[self[value].to_f.to_s].to_i)
-  end
-
-  def set_rating_from_cached_map(name)
-    self.instance_variable_set("@#{name.to_s}_rating", MovieCache.get_cached_map_value(name, self[name]))
   end
 
 end

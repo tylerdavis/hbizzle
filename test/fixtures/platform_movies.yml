@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  expires: 2014-10-15 19:25:40
+  started: 2014-10-15 19:25:40
+  movie_id: 
+  plays: 1
+
+two:
+  type: 
+  expires: 2014-10-15 19:25:40
+  started: 2014-10-15 19:25:40
+  movie_id: 
+  plays: 1

@@ -55,11 +55,19 @@
         <tbody ng-cloak>
           <tr ng-repeat="movie in (filteredMovies = (movies | filter:textFilter | orderBy:predicate:reverse | startFrom:currentPage * pageSize - pageSize | limitTo:pageSize))">
             <td class="title">
-              <a class="title" href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a>
+              <a class="title" href="{{ movie.platform_link }}" ng-click="play(movie, $event)" target="_blank">{{ movie.title }}</a>
               <br/>
               <a class="trailer" href="" ng-click="playTrailer(movie)">PLAY TRAILER</a>
             </td>
-            <td class="image hidden-xs text-center" width="180px"><a href="{{ movie.hbo_link }}" ng-click="play(movie, $event)" target="_blank"><img ng-src="{{ movie.image_url }}" style="width:170px"><img src="http://dsbu8p9bw9q44.cloudfront.net/static/play.png" alt="play" class="play"></a></td>
+            <td class="image hidden-xs text-center" width="180px">
+              <a href="{{ movie.platform_link }}" ng-click="play(movie, $event)" target="_blank">
+                <img ng-src="{{ movie.image_url }}" style="width:170px">
+                <img src="http://dsbu8p9bw9q44.cloudfront.net/static/play.png" alt="play" class="play">
+                <div class="platform">
+                  <span ng-bind="movie.platform"></span>
+                </div>
+              </a>
+            </td>
             <td class="hidden-md hidden-sm hidden-xs summary">{{ movie.summary }}</td>
             <td class="text-center hidden-xs">{{ movie.created_at | date:'shortDate' }}</td>
             <td class="text-center hidden-xs">{{ movie.rating }}</td>
@@ -95,7 +103,7 @@
   </div>
   
   <script>
-    window.movies = <%= raw @movies.to_json(except: [:id, :expire, :updated_at, :poster_uid, :image, :imdb_link, :imdb_rating, :rotten_critics_score, :rotten_audience_score, :plays, :provider], methods: [:hbo_link, :image_url, :meta_score, :youtube]) %>;
+    window.movies = <%= raw @movies.to_json %>;
   </script>
 
 </div>

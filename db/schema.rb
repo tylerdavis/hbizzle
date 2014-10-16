@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813081237) do
+ActiveRecord::Schema.define(version: 20141015232540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,5 +96,19 @@ ActiveRecord::Schema.define(version: 20140813081237) do
     t.string   "big_poster_uid"
     t.string   "youtube_id"
   end
+
+  create_table "platform_movies", force: true do |t|
+    t.string   "type",                       null: false
+    t.string   "platform_id",                null: false
+    t.datetime "expires"
+    t.datetime "started"
+    t.integer  "movie_id"
+    t.integer  "plays",       default: 0,    null: false
+    t.boolean  "disabled",    default: true, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "platform_movies", ["movie_id"], name: "index_platform_movies_on_movie_id", using: :btree
 
 end
