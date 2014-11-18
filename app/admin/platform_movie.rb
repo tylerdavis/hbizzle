@@ -1,15 +1,23 @@
-ActiveAdmin.register Movie do
+ActiveAdmin.register PlatformMovie do
 
   scope :current do
-    Movie.order("created_at DESC").where("expire >= ?", Time.now)
+    PlatformMovie.order("started DESC").active
+  end
+
+  scope :hbo do
+    HboMovie.order("started DESC").active
+  end
+
+  scope :showtime do
+    ShowtimeMovie.order("started DESC").active
   end
 
   scope :no_youtube do
-    Movie.order("created_at DESC").where("youtube_id IS NULL AND expire >= ?", Time.now)
+    PlatformMovie.joins(:movie).merge(Movie.where(youtube_id: nil))
   end
 
   scope :missing_score do
-    Movie.order("created_at DESC").where("imdb_rating IS NULL OR rotten_critics_score IS NULL OR rotten_audience_score IS NULL AND expire >= ?", Time.now)
+    PlatformMovie.joins(:movie).merge(Movie.where("imdb_rating IS NULL OR rotten_critics_score IS NULL OR rotten_audience_score IS NULL"))
   end
 
   permit_params :expire,
@@ -24,53 +32,61 @@ ActiveAdmin.register Movie do
                 :youtube_id
 
   index do
-    column :title do |movie|
-      link_to movie.title, admin_movie_path(movie)
+    column :title do |pm|
+      link_to pm.movie.title, admin_platform_movie_path(pm)
     end
-    column :image do |movie|
-      image_tag movie.image_url, style: 'max-width: 100px;'
+    column :image do |pm|
+      image_tag pm.movie.image_url, style: 'max-height: 60px;'
     end
+    column :type
     column :simple_score
-    column :created_at
-    column :expire
+    column :started
+    column :expires
   end
 
-  show do
+  show do |pm|
     attributes_table do
-      row :title
+      row :title do |pm|
+        pm.movie.title
+      end
       row :image do
-        image_tag movie.image_url, style: 'max-width: 400px;'
+        image_tag pm.movie.image_url, style: 'max-width: 400px;'
       end
       row :trailer do
-        if movie.youtube_id.nil?
-          link_to_youtube_search movie
+        if pm.movie.youtube_id.nil?
+          link_to_youtube_search pm.movie
         else
-          link_to_youtube_video(movie)
+          link_to_youtube_video(pm.movie)
         end
       end
-      row :year
-      row :rating
-      row :summary
-      row :title
+      row :year do |pm|
+        pm.movie.year
+      end
+      row :rating do |pm|
+        pm.movie.rating
+      end
+      row :summary do |pm|
+        pm.movie.summary
+      end
       row :imdb_rating do
-        if movie.imdb_rating.nil?
-          link_to_google_search(movie, :google)
+        if pm.movie.imdb_rating.nil?
+          link_to_google_search(pm.movie, :google)
         else
-          movie.imdb_rating
+          pm.movie.imdb_rating
         end
       end
       row :rotten_critics_score do
-        if movie.rotten_critics_score.nil?
-          link_to_google_search(movie, :rotten_tomatoes)
+        if pm.movie.rotten_critics_score.nil?
+          link_to_google_search(pm.movie, :rotten_tomatoes)
         else
-          movie.rotten_critics_score
+          pm.movie.rotten_critics_score
         end
       end
       row :rotten_audience_score do
-        if movie.rotten_audience_score.nil?
+        if pm.movie.rotten_audience_score.nil?
           link_to_google_search(movie, :rotten_tomatoes)
         else
-          movie.rotten_audience_score
+          pm.movie.rotten_audience_score
         end
       end
       row :plays
@@ -79,7 +95,7 @@ ActiveAdmin.register Movie do
 
   form do |f|
     f.semantic_errors
-    f.inputs :expire,
+    f.inputs :expires,
              :imdb_link,
              :imdb_rating,
              :rating,

@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141015232540) do
+ActiveRecord::Schema.define(version: 20141016222744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "fuzzystrmatch"
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -110,5 +111,16 @@ ActiveRecord::Schema.define(version: 20141015232540) do
   end
 
   add_index "platform_movies", ["movie_id"], name: "index_platform_movies_on_movie_id", using: :btree
+
+  create_table "trigrams", force: true do |t|
+    t.string  "trigram",     limit: 3
+    t.integer "score",       limit: 2
+    t.integer "owner_id"
+    t.string  "owner_type"
+    t.string  "fuzzy_field"
+  end
+
+  add_index "trigrams", ["owner_id", "owner_type", "fuzzy_field", "trigram", "score"], name: "index_for_match", using: :btree
+  add_index "trigrams", ["owner_id", "owner_type"], name: "index_by_owner", using: :btree
 
 end

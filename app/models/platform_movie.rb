@@ -38,8 +38,8 @@ class PlatformMovie < ActiveRecord::Base
   end
 
   def simple_score
-    (self.rotten_critics_score && self.rotten_audience_score && self.imdb_rating) ?
-      ((self.rotten_critics_score.to_f + self.rotten_audience_score.to_f + (self.imdb_rating.to_f * 10)) / 3).round :
+    (self.movie.rotten_critics_score && self.movie.rotten_audience_score && self.movie.imdb_rating) ?
+      ((self.movie.rotten_critics_score.to_f + self.movie.rotten_audience_score.to_f + (self.movie.imdb_rating.to_f * 10)) / 3).round :
       false
   end
 

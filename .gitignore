@@ -25,5 +25,6 @@
 
 # Idea Files
 *.iml
+.powenv
 
 /public/system
