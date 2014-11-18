@@ -110,7 +110,7 @@ ActiveAdmin.setup do |config|
   # roots for each namespace.
   #
   # Default:
-  config.root_to = 'movies#index'
+  config.root_to = 'platform_movies#index'
 
 
   # == Admin Comments
