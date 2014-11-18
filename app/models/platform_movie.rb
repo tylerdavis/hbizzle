@@ -30,11 +30,16 @@ class PlatformMovie < ActiveRecord::Base
     latest_movies.sort_by! { |m| m.meta_score }.reverse
   end
 
-  def self.notify_latest
-    @movies = self.latest
+  def notify!
     if Rails.env.production?
-      $twitter_client.update("Just added! \"#{@movies.first.title}\" - See more new movies at http://www.hbizzle.com/latest! #hbizzle")
+      $twitter_client.update("Just added! \"#{self.movie.title}\" - See more new movies at http://www.hbizzle.com! #hbizzle")
+    else
+      Rails.logger.info("NOT TWEETING THIS!!! - Just added! \"#{self.movie.title}\" - See more new movies at http://www.hbizzle.com! #hbizzle")
     end
+  end
+
+  def self.notify_latest!
+    @movies = self.latest.first.notify
   end
 
   def simple_score

@@ -86,8 +86,12 @@ class MoviesController < ApplicationController
   end
 
   def tweet_update
-    Movie.notify_latest unless current_admin_user.nil?
-    redirect_to admin_dashboard_path
+    if current_admin_user.present?
+      PlatformMovie.find(params[:id]).notify!
+      redirect_to admin_dashboard_path
+    else
+      redirect_to root_path
+    end
   end
 
   private

@@ -42,6 +42,9 @@ ActiveAdmin.register PlatformMovie do
     column :simple_score
     column :started
     column :expires
+    column :tweet do |pm|
+      link_to 'Tweet!', tweet_update_path(pm), data: { confirm: "Are you sure you really want to tweet about #{pm.movie.title}?" }
+    end
   end
 
   show do |pm|
@@ -90,6 +93,9 @@ ActiveAdmin.register PlatformMovie do
         end
       end
       row :plays
+      row :tweet do |pm|
+        link_to 'Tweet!', tweet_update_path(pm), data: { confirm: "Are you sure?" }
+      end
     end
   end
 

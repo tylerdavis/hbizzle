@@ -6,10 +6,6 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-        panel "Twitter" do
-          para "Just added! \"#{PlatformMovie.latest.first.movie.title}\" - See more new movies at http://www.hbizzle.com/latest! #hbizzle"
-          a 'Tweet!', href: tweet_update_path
-        end
       end
     end
   end # content
