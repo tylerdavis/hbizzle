@@ -4,6 +4,7 @@ class PlatformMovie < ActiveRecord::Base
   scope :active, -> { where("expires >= ?", Time.now) }
 
   attr_accessor :meta_score, :plays_rating, :started_rating, :imdb_rating_rating, :rotten_critics_score_rating, :rotten_audience_score_rating
+  accepts_nested_attributes_for :movie
 
   def self.current
     play_map = MovieCache.get_cached_map('plays')

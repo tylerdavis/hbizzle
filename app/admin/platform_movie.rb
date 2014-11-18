@@ -20,16 +20,18 @@ ActiveAdmin.register PlatformMovie do
     PlatformMovie.joins(:movie).merge(Movie.where("imdb_rating IS NULL OR rotten_critics_score IS NULL OR rotten_audience_score IS NULL"))
   end
 
-  permit_params :expire,
-                :imdb_rating,
-                :rating,
-                :summary,
-                :title,
-                :year,
-                :rotten_critics_score,
-                :rotten_audience_score,
-                :plays,
-                :youtube_id
+  permit_params :started,
+                :expires,
+                movie_attributes: [
+                  :youtube_id,
+                  :rotten_critics_score,
+                  :rotten_audience_score,
+                  :imdb_rating,
+                  :rating,
+                  :summary,
+                  :title,
+                  :year
+                ]
 
   index do
     column :title do |pm|
@@ -101,16 +103,16 @@ ActiveAdmin.register PlatformMovie do
 
   form do |f|
     f.semantic_errors
-    f.inputs :expires,
-             :imdb_link,
-             :imdb_rating,
-             :rating,
-             :summary,
-             :title,
-             :year,
-             :rotten_critics_score,
-             :rotten_audience_score,
-             :youtube_id
+    f.inputs for: :movie, new_record: false do |movie|
+      movie.input :title, input_html: { value: platform_movie.movie.title }
+      movie.input :summary, input_html: { value: platform_movie.movie.summary }
+      movie.input :year, input_html: { value: platform_movie.movie.year }
+      movie.input :rating, input_html: { value: platform_movie.movie.rating }
+      movie.input :imdb_rating, input_html: { value: platform_movie.movie.imdb_rating }, required: false
+      movie.input :rotten_critics_score, input_html: { value: platform_movie.movie.rotten_critics_score }, required: false
+      movie.input :rotten_audience_score, input_html: { value: platform_movie.movie.rotten_audience_score }, required: false
+      movie.input :youtube_id, input_html: { value: platform_movie.movie.youtube_id }, required: false
+    end
     f.actions
   end
 
