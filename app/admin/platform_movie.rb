@@ -57,7 +57,7 @@ ActiveAdmin.register PlatformMovie do
       end
       row :trailer do
         if pm.movie.youtube_id.nil?
-          link_to_youtube_search pm.movie
+          link_to_youtube_search(pm.movie)
         else
           link_to_youtube_video(pm.movie)
         end
@@ -87,7 +87,7 @@ ActiveAdmin.register PlatformMovie do
       end
       row :rotten_audience_score do
         if pm.movie.rotten_audience_score.nil?
-          link_to_google_search(movie, :rotten_tomatoes)
+          link_to_google_search(pm.movie, :rotten_tomatoes)
         else
           pm.movie.rotten_audience_score
         end
