@@ -38,7 +38,7 @@ h1.title {
 }
 
 #fb-share, #twitter-share {
-  position: absolute;
+  position: absolute !important;
   top: 16px;
 }
 
@@ -47,7 +47,7 @@ right: 38px;
 }
 
 #twitter-share {
-  right: 104px;
+  right: 140px;
 }
 
 p.kurt {

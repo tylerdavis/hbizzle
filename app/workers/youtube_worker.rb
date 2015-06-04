@@ -5,12 +5,11 @@ class YoutubeWorker
 
   def perform(movie_id)
     @movie = Movie.find(movie_id)
-    movies = Tmdb::Movie.find(@movie.title)
-    if movies.any?
-      id = movies.first.id
-      trailers = Tmdb::Movie.trailers(id)
-      if trailers.youtube.any?
-        @movie.update_attribute(:youtube_id, trailers.youtube.first.source)
+    movies = Enceladus::Movie.find_by_title(@movie.title)
+    if movies.total_results > 0
+      movie = movies.first
+      if movie.youtube_trailers.any?
+        @movie.update_attribute(:youtube_id, movie.youtube_trailers.first.source)
       end
     end
   end
