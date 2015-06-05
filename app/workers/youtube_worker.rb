@@ -8,7 +8,7 @@ class YoutubeWorker
     movies = Enceladus::Movie.find_by_title(@movie.title)
     if movies.total_results > 0
       movie = movies.first
-      if movie.youtube_trailers.any?
+      if movie.youtube_trailers
         @movie.update_attribute(:youtube_id, movie.youtube_trailers.first.source)
       end
     end
